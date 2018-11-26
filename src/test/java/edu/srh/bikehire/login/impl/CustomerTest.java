@@ -17,10 +17,7 @@ public class CustomerTest {
 	public void testValidateCustomer() throws BikeHireSystemException {
 		thrown.expect(BikeHireSystemException.class);
 		
-		//fail("Not yet implemented");
 		Customer lCustomer = new Customer();
-		//lCustomer.setFirstName("Viraj");
-		lCustomer.validateCustomer();
 		
 		
 		

@@ -7,8 +7,10 @@ public interface Login {
 	//LogOut
 	public Entity authenticate(EntityCredential pInputEntityCredentials);
 	
-	public void resetPassword(String pEmailAddress);
+	public ResetPasswordValidator resetPassword(String pEmailAddress);
 	
+	public ResetPasswordValidator registerUserAccount(Entity pEntity, EntityCredential pEntityCredential);
 	
+	public boolean logout(Entity pEntity);
 	
 }

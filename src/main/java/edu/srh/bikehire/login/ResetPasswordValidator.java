@@ -1,5 +1,7 @@
 package edu.srh.bikehire.login;
 
+import edu.srh.bikehire.exception.BikeHireSystemException;
+
 public interface ResetPasswordValidator {
-	public boolean isValidToken(String pToken);
+	public void validateToken(String pToken) throws BikeHireSystemException;
 }

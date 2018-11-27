@@ -1,22 +1,26 @@
 package edu.srh.bikehire.booking;
 
-import java.sql.Date;
+import java.math.BigInteger;
+import java.security.Timestamp;
 
 public interface BookingEntity {
 	
-	public long bookingId();
+	public BigInteger OrderID();
 	
-	public String customerName();
+	public String FirstName();
 	
-	public String emailId();
+	public String Lastname();
 	
 	public String phoneNumber();
 	
-	public String bikeName();
+	public BigInteger BikeID();
 	
-	public Date rentFrom();
+	public Timestamp PickupTimestamp();
 	
-	public Date rentTill();
+	public Timestamp DropoffTimestamp();
 	
-	public Boolean paymentDone();
+	public Timestamp ReturnedTimeStamp();
+	
+	public String OrderMode();
+	
 }

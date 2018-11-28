@@ -20,22 +20,33 @@ public class DBBasedLogin implements Login {
 		return null;
 	}
 
-	public ResetPasswordValidator sendSecurityTokenForResetPassword(String pEmailAddress) {
-		// Validate whether user email address exists 
+	public ResetPasswordValidator sendSecurityTokenForResetPassword(String pEmailAddress) throws BikeHireSystemException {
+		//TODO: Validate whether user with pEmailAddress Exists
+		
 		// Initialize resetpassword validator
+		DBBasedResetPasswordValidator lResetPasswordValidator = new DBBasedResetPasswordValidator(pEmailAddress);
+		lResetPasswordValidator.generateToken();
+
 		//send email notification for security code
-		//return ResetPasswordValidator
-		return null;
+		lResetPasswordValidator.sendNotfificationForSecurityCode();
+		
+		return lResetPasswordValidator;
 	}
 
-	public ResetPasswordValidator registerUserAccount(Entity pEntity, EntityRegistrationCredential pEntityCredential) {
+	public ResetPasswordValidator registerUserAccount(Entity pEntity, EntityRegistrationCredential pEntityCredential) throws BikeHireSystemException {
 		//Validate entity details
-		//Validate entity credentials
-		//insert data into DB
-		//Intialize resetpassword validator for email verification
+		AccountRegistrationValidator lValidator = new AccountRegistrationValidator(pEntity, pEntityCredential);
+		lValidator.validateEntityInformation();
+		lValidator.validateEntityCredentials();
+		
+		//TODO: Validate whether username exist in system or not. USERNAME SHOULD NOT EXIST
+		
+		DBBasedResetPasswordValidator lResetPasswordValidator = new DBBasedResetPasswordValidator(pEntity.getEmailId());
+		lResetPasswordValidator.generateToken();
+
 		//send email notification for security code
-		//return ResetPasswordValidator
-		return null;
+		lResetPasswordValidator.sendNotfificationForSecurityCode();
+		return lResetPasswordValidator;
 	}
 	
 	public void resetPassword(EntityRegistrationCredential pEntityCredential)
@@ -47,6 +58,10 @@ public class DBBasedLogin implements Login {
 	public boolean logout(Entity pEntity) {
 		// Ideally One who manages session should terminate session.
 		return false;
+	}
+	
+	public void deactivateAccount(Entity pEntity) {
+		
 	}
 
 }

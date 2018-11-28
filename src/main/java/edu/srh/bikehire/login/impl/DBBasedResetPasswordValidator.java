@@ -23,6 +23,11 @@ public class DBBasedResetPasswordValidator implements ResetPasswordValidator {
 	
 	private String mstrUserEmailId;
 	
+	public DBBasedResetPasswordValidator(String pEmailAddress)
+	{
+		mstrUserEmailId = pEmailAddress;
+	}
+	
 	public void validateToken(String pToken) throws BikeHireSystemException {
 		
 		mLastAttemptTime = Calendar.getInstance();
@@ -54,6 +59,12 @@ public class DBBasedResetPasswordValidator implements ResetPasswordValidator {
 		
 		//Token matched successfully, remove PasswordReset Validator from cache. 
 		AppInitializer.getResetPasswordCache().removeFromCache(mstrUserEmailId);
+	}
+	
+	public void sendNotfificationForSecurityCode()
+	{
+		//TODO: Create instance of EmailNotification from factory
+		//Call Send email and pass mstrUserEmailId and SecurityCode
 	}
 	
 	public void generateToken()

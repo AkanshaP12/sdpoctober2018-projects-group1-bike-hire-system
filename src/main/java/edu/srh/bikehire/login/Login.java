@@ -9,12 +9,14 @@ public interface Login {
 	//LogOut
 	public Entity authenticate(EntityLoginCredential pInputEntityCredentials) throws BikeHireSystemException;
 	
-	public ResetPasswordValidator sendSecurityTokenForResetPassword(String pEmailAddress);
+	public ResetPasswordValidator sendSecurityTokenForResetPassword(String pEmailAddress) throws BikeHireSystemException;
 	
-	public ResetPasswordValidator registerUserAccount(Entity pEntity, EntityRegistrationCredential pEntityCredential);
+	public ResetPasswordValidator registerUserAccount(Entity pEntity, EntityRegistrationCredential pEntityCredential) throws BikeHireSystemException;
 	
 	public void resetPassword(EntityRegistrationCredential pEntityCredential);
 	
 	public boolean logout(Entity pEntity);
+	
+	public void deactivateAccount(Entity pEntity);
 	
 }

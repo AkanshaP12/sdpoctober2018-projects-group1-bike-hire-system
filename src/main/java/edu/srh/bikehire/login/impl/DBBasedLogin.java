@@ -1,5 +1,6 @@
 package edu.srh.bikehire.login.impl;
 
+import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.login.Entity;
 import edu.srh.bikehire.login.EntityLoginCredential;
 import edu.srh.bikehire.login.EntityRegistrationCredential;
@@ -8,12 +9,13 @@ import edu.srh.bikehire.login.ResetPasswordValidator;
 
 public class DBBasedLogin implements Login {
 
-	public Entity authenticate(EntityLoginCredential pInputEntityCredentials) {
+	public Entity authenticate(EntityLoginCredential pInputEntityCredentials) throws BikeHireSystemException {
 		
-		// Validate User Credentials
-		// Return Entity Object from DB , If users exits
-		// validate password, hash generate and check with DB
-		// Fetch user object from DB and return
+		CustomerCredentialValidator lLoginCredentialValidator = new CustomerCredentialValidator(pInputEntityCredentials);
+		lLoginCredentialValidator.validateLoginCredentials();
+		//If correct password, fetch entity object and return it
+		//TODO: Fetch entity object and return
+		
 		// Client should maintain User Sessions
 		return null;
 	}

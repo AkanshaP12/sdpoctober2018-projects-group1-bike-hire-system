@@ -12,4 +12,19 @@ public class Util {
 		Matcher matcher = pattern.matcher(pEmailAddress);
 		return matcher.matches();
 	}
+	
+	public static boolean isEmptyOrNullString(String pInputString)
+	{
+		if(pInputString == null)
+		{
+			return true;
+		}
+		
+		if(pInputString.isEmpty())
+		{
+			return true;
+		}
+		
+		return false;
+	}
 }

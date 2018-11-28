@@ -17,6 +17,9 @@ public class ExceptionUtil {
 		smapErrorCodesToMessages.put(10001L, new ErrorMessage("Invalid token provided.", "Invalid security code provided."));
 		smapErrorCodesToMessages.put(10002L, new ErrorMessage("Maximum allowed attempts reached.", "You have exceeded maximum allowed attempts. Please try after sometime."));
 		smapErrorCodesToMessages.put(10003L, new ErrorMessage("Token has expired.", "Your security code has expired. Please request new security code."));
+		smapErrorCodesToMessages.put(10004L, new ErrorMessage("Unable to generate password hash.", "Unexpected Error Occured!"));
+		smapErrorCodesToMessages.put(10005L, new ErrorMessage("Login credentials not provided.", "Please enter valid login credentials."));
+		smapErrorCodesToMessages.put(10006L, new ErrorMessage("Invalid login credentials provided.", "Please enter valid login credentials."));
 		
 	}
 	

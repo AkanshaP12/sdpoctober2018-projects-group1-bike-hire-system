@@ -1,6 +1,5 @@
 package edu.srh.bikehire.dto;
 
-import java.math.BigInteger;
 
 public class OrderPayment {
 	
@@ -15,22 +14,21 @@ public class OrderPayment {
 	);
  */
 
-	private BigInteger paymentReference;
-	private BigInteger orderID;
+	private String paymentReference;
+	private String orderID;
 	private int depositAmount;
 	private int rentPerHour;
 	private int rentPerDay;
-	
-	public BigInteger getPaymentReference() {
+	public String getPaymentReference() {
 		return paymentReference;
 	}
-	public void setPaymentReference(BigInteger paymentReference) {
+	public void setPaymentReference(String paymentReference) {
 		this.paymentReference = paymentReference;
 	}
-	public BigInteger getOrderID() {
+	public String getOrderID() {
 		return orderID;
 	}
-	public void setOrderID(BigInteger orderID) {
+	public void setOrderID(String orderID) {
 		this.orderID = orderID;
 	}
 	public int getDepositAmount() {
@@ -52,5 +50,6 @@ public class OrderPayment {
 		this.rentPerDay = rentPerDay;
 	}
 	
+
 	
 }

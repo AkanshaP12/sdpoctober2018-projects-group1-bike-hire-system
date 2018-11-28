@@ -1,6 +1,6 @@
 package edu.srh.bikehire.dto;
 
-import java.sql.Timestamp;
+import java.util.Calendar;
 
 public class Credentials {
 	
@@ -19,7 +19,7 @@ public class Credentials {
 	private String userName;
 	private String passwordSalt;
 	private String passwordHash;
-	private Timestamp lastModifiedTimeStamp;
+	private Calendar lastModifiedTimeStamp;
 	public String getUserID() {
 		return userID;
 	}
@@ -44,12 +44,16 @@ public class Credentials {
 	public void setPasswordHash(String passwordHash) {
 		this.passwordHash = passwordHash;
 	}
-	public Timestamp getLastModifiedTimeStamp() {
+	public Calendar getLastModifiedTimeStamp() {
 		return lastModifiedTimeStamp;
 	}
-	public void setLastModifiedTimeStamp(Timestamp lastModifiedTimeStamp) {
+	public void setLastModifiedTimeStamp(Calendar lastModifiedTimeStamp) {
 		this.lastModifiedTimeStamp = lastModifiedTimeStamp;
 	}
+	
+	
+	
+	
 	
 	
 }

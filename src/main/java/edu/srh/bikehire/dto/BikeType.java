@@ -1,7 +1,6 @@
 package edu.srh.bikehire.dto;
 
-import java.math.BigInteger;
-import java.sql.Timestamp;
+import java.util.Calendar;
 
 public class BikeType {
 	
@@ -17,14 +16,14 @@ public class BikeType {
 	
 	 */
 
-	private BigInteger bikeTypeId;
+	private String bikeTypeId;
 	private String type;
 	private String ageCategory;
-	private Timestamp creationTimeStamp;
-	public BigInteger getBikeTypeId() {
+	private Calendar creationTimeStamp;
+	public String getBikeTypeId() {
 		return bikeTypeId;
 	}
-	public void setBikeTypeId(BigInteger bikeTypeId) {
+	public void setBikeTypeId(String bikeTypeId) {
 		this.bikeTypeId = bikeTypeId;
 	}
 	public String getType() {
@@ -39,12 +38,13 @@ public class BikeType {
 	public void setAgeCategory(String ageCategory) {
 		this.ageCategory = ageCategory;
 	}
-	public Timestamp getCreationTimeStamp() {
+	public Calendar getCreationTimeStamp() {
 		return creationTimeStamp;
 	}
-	public void setCreationTimeStamp(Timestamp creationTimeStamp) {
+	public void setCreationTimeStamp(Calendar creationTimeStamp) {
 		this.creationTimeStamp = creationTimeStamp;
 	}
-	
 
+	
+	
 }

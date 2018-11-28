@@ -1,6 +1,5 @@
 package edu.srh.bikehire.dto;
 
-import java.math.BigInteger;
 
 public class BikeStock {
 
@@ -13,15 +12,20 @@ public class BikeStock {
 	);
 
  */
-	private BigInteger bikeTypeId;
-	private BigInteger totalQuantity;
+	private String bikeTypeId;
+	private String totalQuantity;
 	private String creationTimeStamp;
 	private String lastModifiedTimeStamp;
-	
-	public BigInteger getTotalQuantity() {
+	public String getBikeTypeId() {
+		return bikeTypeId;
+	}
+	public void setBikeTypeId(String bikeTypeId) {
+		this.bikeTypeId = bikeTypeId;
+	}
+	public String getTotalQuantity() {
 		return totalQuantity;
 	}
-	public void setTotalQuantity(BigInteger totalQuantity) {
+	public void setTotalQuantity(String totalQuantity) {
 		this.totalQuantity = totalQuantity;
 	}
 	public String getCreationTimeStamp() {
@@ -36,12 +40,6 @@ public class BikeStock {
 	public void setLastModifiedTimeStamp(String lastModifiedTimeStamp) {
 		this.lastModifiedTimeStamp = lastModifiedTimeStamp;
 	}
-	public BigInteger getBikeTypeId() {
-		return bikeTypeId;
-	}
-	public void setBikeTypeId(BigInteger bikeTypeId) {
-		this.bikeTypeId = bikeTypeId;
-	}
-
-
+		
+	
 }

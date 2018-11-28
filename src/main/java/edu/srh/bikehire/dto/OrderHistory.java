@@ -1,7 +1,6 @@
 package edu.srh.bikehire.dto;
 
-import java.math.BigInteger;
-import java.sql.Timestamp;
+import java.util.Calendar;
 
 public class OrderHistory {
 
@@ -17,25 +16,23 @@ public class OrderHistory {
 	);
 	 */
 	
-	private BigInteger orderID;
-	private BigInteger invoiceID;
+	private String orderID;
+	private String invoiceID;
 	private String userID;
-	private BigInteger bikeID;
-	private Timestamp bookingTimeStamp;
-	private Timestamp pickupTimeStamp;
-	private Timestamp returnedTimeStamp;
-	
-	
-	public BigInteger getOrderID() {
+	private String bikeID;
+	private Calendar bookingTimeStamp;
+	private Calendar pickupTimeStamp;
+	private Calendar returnedTimeStamp;
+	public String getOrderID() {
 		return orderID;
 	}
-	public void setOrderID(BigInteger orderID) {
+	public void setOrderID(String orderID) {
 		this.orderID = orderID;
 	}
-	public BigInteger getInvoiceID() {
+	public String getInvoiceID() {
 		return invoiceID;
 	}
-	public void setInvoiceID(BigInteger invoiceID) {
+	public void setInvoiceID(String invoiceID) {
 		this.invoiceID = invoiceID;
 	}
 	public String getUserID() {
@@ -44,30 +41,32 @@ public class OrderHistory {
 	public void setUserID(String userID) {
 		this.userID = userID;
 	}
-	public BigInteger getBikeID() {
+	public String getBikeID() {
 		return bikeID;
 	}
-	public void setBikeID(BigInteger bikeID) {
+	public void setBikeID(String bikeID) {
 		this.bikeID = bikeID;
 	}
-	public Timestamp getBookingTimeStamp() {
+	public Calendar getBookingTimeStamp() {
 		return bookingTimeStamp;
 	}
-	public void setBookingTimeStamp(Timestamp bookingTimeStamp) {
+	public void setBookingTimeStamp(Calendar bookingTimeStamp) {
 		this.bookingTimeStamp = bookingTimeStamp;
 	}
-	public Timestamp getPickupTimeStamp() {
+	public Calendar getPickupTimeStamp() {
 		return pickupTimeStamp;
 	}
-	public void setPickupTimeStamp(Timestamp pickupTimeStamp) {
+	public void setPickupTimeStamp(Calendar pickupTimeStamp) {
 		this.pickupTimeStamp = pickupTimeStamp;
 	}
-	public Timestamp getReturnedTimeStamp() {
+	public Calendar getReturnedTimeStamp() {
 		return returnedTimeStamp;
 	}
-	public void setReturnedTimeStamp(Timestamp returnedTimeStamp) {
+	public void setReturnedTimeStamp(Calendar returnedTimeStamp) {
 		this.returnedTimeStamp = returnedTimeStamp;
 	}
 	
-		
+	
+	
+	
 }

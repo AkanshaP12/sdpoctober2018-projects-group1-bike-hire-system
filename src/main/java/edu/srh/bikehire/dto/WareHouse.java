@@ -1,7 +1,6 @@
 package edu.srh.bikehire.dto;
 
-import java.math.BigInteger;
-import java.sql.Timestamp;
+import java.util.Calendar;
 
 public class WareHouse {
 	
@@ -17,17 +16,16 @@ public class WareHouse {
 	);
 	 */
 
-	private BigInteger wareHouseID;
+	private String wareHouseID;
 	private String name;
 	private String location;
 	private int storageCapacity;
-	private Timestamp creationTimeStamp;
-	private Timestamp lastModifiedTimeStamp;
-	
-	public BigInteger getWareHouseID() {
+	private Calendar creationTimeStamp;
+	private Calendar lastModifiedTimeStamp;
+	public String getWareHouseID() {
 		return wareHouseID;
 	}
-	public void setWareHouseID(BigInteger wareHouseID) {
+	public void setWareHouseID(String wareHouseID) {
 		this.wareHouseID = wareHouseID;
 	}
 	public String getName() {
@@ -48,18 +46,19 @@ public class WareHouse {
 	public void setStorageCapacity(int storageCapacity) {
 		this.storageCapacity = storageCapacity;
 	}
-	public Timestamp getCreationTimeStamp() {
+	public Calendar getCreationTimeStamp() {
 		return creationTimeStamp;
 	}
-	public void setCreationTimeStamp(Timestamp creationTimeStamp) {
+	public void setCreationTimeStamp(Calendar creationTimeStamp) {
 		this.creationTimeStamp = creationTimeStamp;
 	}
-	public Timestamp getLastModifiedTimeStamp() {
+	public Calendar getLastModifiedTimeStamp() {
 		return lastModifiedTimeStamp;
 	}
-	public void setLastModifiedTimeStamp(Timestamp lastModifiedTimeStamp) {
+	public void setLastModifiedTimeStamp(Calendar lastModifiedTimeStamp) {
 		this.lastModifiedTimeStamp = lastModifiedTimeStamp;
 	}
 	
 	
+
 }

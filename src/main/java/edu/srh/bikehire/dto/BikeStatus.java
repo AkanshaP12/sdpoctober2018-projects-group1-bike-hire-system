@@ -1,6 +1,5 @@
 package edu.srh.bikehire.dto;
 
-import java.math.BigInteger;
 
 public class BikeStatus {
 
@@ -14,16 +13,15 @@ public class BikeStatus {
  );
 
  */
-	private BigInteger bikeId;
+	private String bikeId;
 	private String status;
 	private String lastServiceDate;
 	private String lastModifiedDate;
 	private String manufacturer;
-	
-	public BigInteger getBikeId() {
+	public String getBikeId() {
 		return bikeId;
 	}
-	public void setBikeId(BigInteger bikeId) {
+	public void setBikeId(String bikeId) {
 		this.bikeId = bikeId;
 	}
 	public String getStatus() {
@@ -51,5 +49,6 @@ public class BikeStatus {
 		this.manufacturer = manufacturer;
 	}
 
-
+	
+	
 }

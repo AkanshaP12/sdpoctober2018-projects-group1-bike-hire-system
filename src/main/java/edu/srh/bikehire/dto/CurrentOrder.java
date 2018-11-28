@@ -1,7 +1,6 @@
 package edu.srh.bikehire.dto;
 
-import java.math.BigInteger;
-import java.sql.Timestamp;
+import java.util.Calendar;
 
 public class CurrentOrder {
 	
@@ -19,19 +18,18 @@ public class CurrentOrder {
 	);
 	 */
 
-	private BigInteger orderID;
+	private String orderID;
 	private String userID;
-	private BigInteger bikeID;
-	private Timestamp bookingTimeStamp;
-	private Timestamp pickupTimeStamp;
-	private Timestamp dropOffTimeStamp;
-	private Timestamp actualDropOffTimeStamp;
+	private String bikeID;
+	private Calendar bookingTimeStamp;
+	private Calendar pickupTimeStamp;
+	private Calendar dropOffTimeStamp;
+	private Calendar actualDropOffTimeStamp;
 	private String orderMode;
-	
-	public BigInteger getOrderID() {
+	public String getOrderID() {
 		return orderID;
 	}
-	public void setOrderID(BigInteger orderID) {
+	public void setOrderID(String orderID) {
 		this.orderID = orderID;
 	}
 	public String getUserID() {
@@ -40,34 +38,34 @@ public class CurrentOrder {
 	public void setUserID(String userID) {
 		this.userID = userID;
 	}
-	public BigInteger getBikeID() {
+	public String getBikeID() {
 		return bikeID;
 	}
-	public void setBikeID(BigInteger bikeID) {
+	public void setBikeID(String bikeID) {
 		this.bikeID = bikeID;
 	}
-	public Timestamp getBookingTimeStamp() {
+	public Calendar getBookingTimeStamp() {
 		return bookingTimeStamp;
 	}
-	public void setBookingTimeStamp(Timestamp bookingTimeStamp) {
+	public void setBookingTimeStamp(Calendar bookingTimeStamp) {
 		this.bookingTimeStamp = bookingTimeStamp;
 	}
-	public Timestamp getPickupTimeStamp() {
+	public Calendar getPickupTimeStamp() {
 		return pickupTimeStamp;
 	}
-	public void setPickupTimeStamp(Timestamp pickupTimeStamp) {
+	public void setPickupTimeStamp(Calendar pickupTimeStamp) {
 		this.pickupTimeStamp = pickupTimeStamp;
 	}
-	public Timestamp getDropOffTimeStamp() {
+	public Calendar getDropOffTimeStamp() {
 		return dropOffTimeStamp;
 	}
-	public void setDropOffTimeStamp(Timestamp dropOffTimeStamp) {
+	public void setDropOffTimeStamp(Calendar dropOffTimeStamp) {
 		this.dropOffTimeStamp = dropOffTimeStamp;
 	}
-	public Timestamp getActualDropOffTimeStamp() {
+	public Calendar getActualDropOffTimeStamp() {
 		return actualDropOffTimeStamp;
 	}
-	public void setActualDropOffTimeStamp(Timestamp actualDropOffTimeStamp) {
+	public void setActualDropOffTimeStamp(Calendar actualDropOffTimeStamp) {
 		this.actualDropOffTimeStamp = actualDropOffTimeStamp;
 	}
 	public String getOrderMode() {
@@ -76,6 +74,10 @@ public class CurrentOrder {
 	public void setOrderMode(String orderMode) {
 		this.orderMode = orderMode;
 	}
+	
+	
+	
+	
 	
 	
 }

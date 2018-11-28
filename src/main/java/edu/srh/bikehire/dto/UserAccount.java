@@ -1,6 +1,6 @@
 package edu.srh.bikehire.dto;
 
-import java.sql.Timestamp;
+import java.util.Calendar;
 
 public class UserAccount {
 	
@@ -19,8 +19,8 @@ public class UserAccount {
 	private String userName;
 	private String role;
 	private String accountStatus;
-	private Timestamp creationTimeStamp;
-	private Timestamp lastModifiedTimeStamp;
+	private Calendar creationTimeStamp;
+	private Calendar lastModifiedTimeStamp;
 	public String getiD() {
 		return iD;
 	}
@@ -45,18 +45,19 @@ public class UserAccount {
 	public void setAccountStatus(String accountStatus) {
 		this.accountStatus = accountStatus;
 	}
-	public Timestamp getCreationTimeStamp() {
+	public Calendar getCreationTimeStamp() {
 		return creationTimeStamp;
 	}
-	public void setCreationTimeStamp(Timestamp creationTimeStamp) {
+	public void setCreationTimeStamp(Calendar creationTimeStamp) {
 		this.creationTimeStamp = creationTimeStamp;
 	}
-	public Timestamp getLastModifiedTimeStamp() {
+	public Calendar getLastModifiedTimeStamp() {
 		return lastModifiedTimeStamp;
 	}
-	public void setLastModifiedTimeStamp(Timestamp lastModifiedTimeStamp) {
+	public void setLastModifiedTimeStamp(Calendar lastModifiedTimeStamp) {
 		this.lastModifiedTimeStamp = lastModifiedTimeStamp;
 	}
+	
 	
 	
 }

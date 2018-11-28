@@ -1,6 +1,5 @@
 package edu.srh.bikehire.dto;
 
-import java.math.BigInteger;
 
 public class BikeRentMapping {
 
@@ -12,15 +11,14 @@ public class BikeRentMapping {
 	`LastModifiedTimeStamp` TIMESTAMP NOT NULL
 	); 	
  */
-	private BigInteger bikeTypeId;
+	private String bikeTypeId;
 	private int rentPerHour;
 	private int rentPerDay;
 	private String lastModifiedTimeStamp;
-	
-	public BigInteger getBikeTypeId() {
+	public String getBikeTypeId() {
 		return bikeTypeId;
 	}
-	public void setBikeTypeId(BigInteger bikeTypeId) {
+	public void setBikeTypeId(String bikeTypeId) {
 		this.bikeTypeId = bikeTypeId;
 	}
 	public int getRentPerHour() {
@@ -42,7 +40,5 @@ public class BikeRentMapping {
 		this.lastModifiedTimeStamp = lastModifiedTimeStamp;
 	}
 	
-	
-	
-	
+		
 }

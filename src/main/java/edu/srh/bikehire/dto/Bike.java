@@ -1,7 +1,7 @@
 package edu.srh.bikehire.dto;
 
-import java.math.BigInteger;
-import java.sql.Timestamp;
+import java.util.Calendar;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -13,69 +13,114 @@ public class Bike {
 
 	
 /**
-	CREATE TABLE `BikeType` (
-			`BikeTypeId` bigint NOT NULL,
-			`Type` varchar(100) NOT NULL,
-			`AgeCategory` varchar(100) NOT NULL,
-			`CreationTimeStamp` TIMESTAMP NOT NULL,
-			PRIMARY KEY (`BikeTypeId`)
-		);
+	CREATE TABLE `Bike` (
+	`BikeId` bigint NOT NULL,
+	`BikeTypeId` bigint NOT NULL,
+	`Manufacturer` varchar(200) NOT NULL,
+	`YearOfManufacture` int(4) NOT NULL,
+	`BikeTitle` varchar(200) NOT NULL,
+	`WareHouseID` bigint NOT NULL,
+	`DepositAmount` int(10) NOT NULL,
+	`CreationTimeStamp` TIMESTAMP NOT NULL,
+	PRIMARY KEY (`BikeId`)
+	);
 **/
 	
 	@Id
+	@Column(name = "bikeId")
+	private String bikeId;
+	
+	@Id
 	@Column(name = "bikeTypeId")
-	private BigInteger bikeTypeId;
+	private String bikeTypeId;
 	
 	@Id
-	@Column(name = "typeI")
-	private String type;
+	@Column(name = "manufacturer")
+	private String manufacturer;
 	
 	@Id
-	@Column(name = "ageCategory")
-	private String ageCategory;
+	@Column(name = "yearOfManufacture")
+	private int yearOfManufacture;
 	
+	@Id
+	@Column(name = "bikeTitle")
+	private String bikeTitle;
+	
+	@Id
+	@Column(name = "wareHouseID")
+	private String wareHouseID;
+
+	@Id
+	@Column(name = "depositAmount")
+	private int depositAmount;
+
 	@Id
 	@Column(name = "creationTimeStamp")
-	private Timestamp creationTimeStamp;
-	
-	public Bike() {
+	private Calendar creationTimeStamp;
+
+	public String getBikeId() {
+		return bikeId;
 	}
 
-	public Bike(BigInteger bikeTypeId, String type, String ageCategory) {
-		this.bikeTypeId = bikeTypeId;
-		this.type = type;
-		this.ageCategory = ageCategory;
+	public void setBikeId(String bikeId) {
+		this.bikeId = bikeId;
 	}
-	
-	public Bike(BigInteger bikeTypeId, String type) {
-		this.bikeTypeId = bikeTypeId;
-		this.type = type;
-	}
-	
-	public BigInteger getBikeTypeId() {
+
+	public String getBikeTypeId() {
 		return bikeTypeId;
 	}
-	public void setBikeTypeId(BigInteger bikeTypeId) {
+
+	public void setBikeTypeId(String bikeTypeId) {
 		this.bikeTypeId = bikeTypeId;
 	}
-	public String getType() {
-		return type;
+
+	public String getManufacturer() {
+		return manufacturer;
 	}
-	public void setType(String type) {
-		this.type = type;
+
+	public void setManufacturer(String manufacturer) {
+		this.manufacturer = manufacturer;
 	}
-	public String getAgeCategory() {
-		return ageCategory;
+
+	public int getYearOfManufacture() {
+		return yearOfManufacture;
 	}
-	public void setAgeCategory(String ageCategory) {
-		this.ageCategory = ageCategory;
+
+	public void setYearOfManufacture(int yearOfManufacture) {
+		this.yearOfManufacture = yearOfManufacture;
 	}
-	public Timestamp getCreationTimeStamp() {
+
+	public String getBikeTitle() {
+		return bikeTitle;
+	}
+
+	public void setBikeTitle(String bikeTitle) {
+		this.bikeTitle = bikeTitle;
+	}
+
+	public String getWareHouseID() {
+		return wareHouseID;
+	}
+
+	public void setWareHouseID(String wareHouseID) {
+		this.wareHouseID = wareHouseID;
+	}
+
+	public int getDepositAmount() {
+		return depositAmount;
+	}
+
+	public void setDepositAmount(int depositAmount) {
+		this.depositAmount = depositAmount;
+	}
+
+	public Calendar getCreationTimeStamp() {
 		return creationTimeStamp;
 	}
-	public void setCreationTimeStamp(Timestamp creationTimeStamp) {
+
+	public void setCreationTimeStamp(Calendar creationTimeStamp) {
 		this.creationTimeStamp = creationTimeStamp;
 	}
-	
-	
-	}
+
+		
+}

@@ -1,6 +1,6 @@
 package edu.srh.bikehire.dto;
 
-import java.sql.Blob;
+import java.io.File;
 
 public class User {
 
@@ -26,10 +26,10 @@ public class User {
 	private String gender;
 	private int age;
 	private String address;
-	private Blob photo;
+	private File photo;
 	private String emailId;
 	private String phoneNo;
-	private Blob identityProof;
+	private File identityProof;
 	public String getiD() {
 		return iD;
 	}
@@ -66,10 +66,10 @@ public class User {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public Blob getPhoto() {
+	public File getPhoto() {
 		return photo;
 	}
-	public void setPhoto(Blob photo) {
+	public void setPhoto(File photo) {
 		this.photo = photo;
 	}
 	public String getEmailId() {
@@ -84,12 +84,11 @@ public class User {
 	public void setPhoneNo(String phoneNo) {
 		this.phoneNo = phoneNo;
 	}
-	public Blob getIdentityProof() {
+	public File getIdentityProof() {
 		return identityProof;
 	}
-	public void setIdentityProof(Blob identityProof) {
+	public void setIdentityProof(File identityProof) {
 		this.identityProof = identityProof;
 	}
-	
-	
+
 }

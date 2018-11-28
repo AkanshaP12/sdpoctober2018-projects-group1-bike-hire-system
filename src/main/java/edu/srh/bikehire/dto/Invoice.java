@@ -1,7 +1,6 @@
 package edu.srh.bikehire.dto;
 
-import java.math.BigInteger;
-import java.sql.Timestamp;
+import java.util.Calendar;
 
 public class Invoice {
 	
@@ -18,30 +17,29 @@ public class Invoice {
 	);
 	 */
 
-	private BigInteger invoiceID;
-	private BigInteger orderID;
-	private Timestamp creationTimeStamp;
+	private String invoiceID;
+	private String orderID;
+	private Calendar creationTimeStamp;
 	private int finalAmount;
 	private int returnDeposit;
 	private int	damageCharges;
-	private BigInteger warehouseID;
-	
-	public BigInteger getInvoiceID() {
+	private String warehouseID;
+	public String getInvoiceID() {
 		return invoiceID;
 	}
-	public void setInvoiceID(BigInteger invoiceID) {
+	public void setInvoiceID(String invoiceID) {
 		this.invoiceID = invoiceID;
 	}
-	public BigInteger getOrderID() {
+	public String getOrderID() {
 		return orderID;
 	}
-	public void setOrderID(BigInteger orderID) {
+	public void setOrderID(String orderID) {
 		this.orderID = orderID;
 	}
-	public Timestamp getCreationTimeStamp() {
+	public Calendar getCreationTimeStamp() {
 		return creationTimeStamp;
 	}
-	public void setCreationTimeStamp(Timestamp creationTimeStamp) {
+	public void setCreationTimeStamp(Calendar creationTimeStamp) {
 		this.creationTimeStamp = creationTimeStamp;
 	}
 	public int getFinalAmount() {
@@ -62,12 +60,13 @@ public class Invoice {
 	public void setDamageCharges(int damageCharges) {
 		this.damageCharges = damageCharges;
 	}
-	public BigInteger getWarehouseID() {
+	public String getWarehouseID() {
 		return warehouseID;
 	}
-	public void setWarehouseID(BigInteger warehouseID) {
+	public void setWarehouseID(String warehouseID) {
 		this.warehouseID = warehouseID;
 	}
+		
 	
 	
 }

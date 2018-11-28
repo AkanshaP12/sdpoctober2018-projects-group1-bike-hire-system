@@ -1,11 +1,11 @@
 package edu.srh.bikehire.login.core;
 
-import edu.srh.bikehire.login.EntityCredential;
+import edu.srh.bikehire.login.EntityLoginCredential;
 
 public class UserCredentialValidator {
-	private EntityCredential mEntityCredential;
+	private EntityLoginCredential mEntityCredential;
 	
-	public UserCredentialValidator(EntityCredential pEntityCredential) {
+	public UserCredentialValidator(EntityLoginCredential pEntityCredential) {
 		mEntityCredential = pEntityCredential;
 	}
 	

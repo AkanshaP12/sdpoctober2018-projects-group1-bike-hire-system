@@ -5,11 +5,13 @@ public interface Login {
 	//Forgot Password
 	//Register
 	//LogOut
-	public Entity authenticate(EntityCredential pInputEntityCredentials);
+	public Entity authenticate(EntityLoginCredential pInputEntityCredentials);
 	
-	public ResetPasswordValidator resetPassword(String pEmailAddress);
+	public ResetPasswordValidator sendSecurityTokenForResetPassword(String pEmailAddress);
 	
-	public ResetPasswordValidator registerUserAccount(Entity pEntity, EntityCredential pEntityCredential);
+	public ResetPasswordValidator registerUserAccount(Entity pEntity, EntityRegistrationCredential pEntityCredential);
+	
+	public void resetPassword(EntityRegistrationCredential pEntityCredential);
 	
 	public boolean logout(Entity pEntity);
 	

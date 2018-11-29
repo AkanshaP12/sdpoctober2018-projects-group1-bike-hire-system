@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 public interface Entity {
 	
-	public long getUserId();
+	public String getUserId();
 	
 	public String getFirstName();
 	
@@ -16,7 +16,10 @@ public interface Entity {
 	
 	public Calendar getDOB();
 	
+	public String getEmailId();
 	
+	public String getPhoneNumber();
 	
+	public EntityAccount getEntityAccount();
 	
 }

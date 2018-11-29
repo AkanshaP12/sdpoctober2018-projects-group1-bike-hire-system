@@ -1,24 +1,18 @@
-package edu.srh.bikehire.login.impl;
+package edu.srh.bikehire.login.core;
 
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.login.Entity;
-import edu.srh.bikehire.login.EntityRegistrationCredential;
-import edu.srh.bikehire.login.util.LoginUtil;
 import edu.srh.bikehire.util.Util;
 
-public class AccountRegistrationValidator {
-
+public class UserDetailsValidator {
 	private Entity mEntity;
 	
-	private EntityRegistrationCredential mEntityRegistrationCredential;
-	
-	public AccountRegistrationValidator(Entity pEntity, EntityRegistrationCredential pEntityCredential)
+	public UserDetailsValidator(Entity pEntity)
 	{
 		mEntity = pEntity;
-		mEntityRegistrationCredential = pEntityCredential;
 	}
 	
-	public void validateEntityInformation() throws BikeHireSystemException
+	public void validateUserInformationForRegistartion() throws BikeHireSystemException
 	{
 		if(mEntity == null)
 		{
@@ -68,7 +62,7 @@ public class AccountRegistrationValidator {
 			throw new BikeHireSystemException(10014);
 		}
 		
-		if(mEntity.getPhoneNumber().length() < 10)
+		if(mEntity.getPhoneNumber().length() <= 10)
 		{
 			//Error_Message: Entity phone number is invalid.
 			throw new BikeHireSystemException(10016);
@@ -81,42 +75,25 @@ public class AccountRegistrationValidator {
 		}
 	}
 	
-	public void validateEntityCredentials() throws BikeHireSystemException
+	public void validateUserInformationForDeactiviation() throws BikeHireSystemException
 	{
-		if(mEntityRegistrationCredential == null)
+		if(mEntity == null)
 		{
-			//Error_Message : Entity credentials not provided.
-			throw new BikeHireSystemException(10017);
+			//Error_Message : Entity information not provided.
+			throw new BikeHireSystemException(10007);
 		}
 		
-		if(Util.isEmptyOrNullString(mEntityRegistrationCredential.getUserName()))
+		if(Util.isEmptyOrNullString(mEntity.getEmailId()))
 		{
-			//Error_Message : Entity username is not provided.
-			throw new BikeHireSystemException(10018);
+			//Error_Message : Entity email id is not provided.
+			throw new BikeHireSystemException(10010);
 		}
 		
-		if(Util.isEmptyOrNullString(mEntityRegistrationCredential.getNewPassword()))
+		if(Util.isValidEmailAddress(mEntity.getEmailId()))
 		{
-			//Error_Message : Entity new password is not provided.
-			throw new BikeHireSystemException(10019);
-		}
-		
-		if(Util.isEmptyOrNullString(mEntityRegistrationCredential.getConfirmPassword()))
-		{
-			//Error_Message : Entity confirm password is not provided.
-			throw new BikeHireSystemException(10020);
-		}
-		
-		if(!mEntityRegistrationCredential.getNewPassword().equals(mEntityRegistrationCredential.getConfirmPassword()))
-		{
-			//Error_Message : Password mismatch.
-			throw new BikeHireSystemException(10021);
-		}
-		
-		if(!LoginUtil.isValidPassword(mEntityRegistrationCredential.getNewPassword()))
-		{
-			//Error_Message : Password does not match password criteria.
-			throw new BikeHireSystemException(10022);
+			//Error_Message : Entity email id {0} is not valid.
+			throw new BikeHireSystemException(10011, new Object[] {mEntity.getEmailId()});
 		}
 	}
+	
 }

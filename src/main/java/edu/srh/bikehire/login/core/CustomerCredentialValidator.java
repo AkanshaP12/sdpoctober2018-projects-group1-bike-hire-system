@@ -1,4 +1,4 @@
-package edu.srh.bikehire.login.impl;
+package edu.srh.bikehire.login.core;
 
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.login.EntityLoginCredential;

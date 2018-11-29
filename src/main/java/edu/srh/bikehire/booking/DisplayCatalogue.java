@@ -9,5 +9,7 @@ public interface DisplayCatalogue {
 	//Sort according to price
 	
 	public List<?> getAvailability(String PickupTimeStamp, String ReturnedTimeStamp, Integer RentPerDay);
+	
+	public void selectBike(String BikeID);
 
 }

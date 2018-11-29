@@ -23,4 +23,6 @@ public interface BookingEntity {
 	
 	public String OrderMode();
 	
+	public BigInteger PaymentReference();
+	
 }

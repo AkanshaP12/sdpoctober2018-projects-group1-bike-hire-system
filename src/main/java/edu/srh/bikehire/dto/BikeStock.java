@@ -1,6 +1,9 @@
 package edu.srh.bikehire.dto;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
+@Entity
 public class BikeStock {
 
 /* 
@@ -12,9 +15,13 @@ public class BikeStock {
 	);
 
  */
+	@Column(name = "BikeTypeId")
 	private String bikeTypeId;
+	@Column(name = "TotalQuantity")
 	private String totalQuantity;
+	@Column(name = "CreationTimeStamp")
 	private String creationTimeStamp;
+	@Column(name = "LastModifiedTimeStamp")
 	private String lastModifiedTimeStamp;
 	public String getBikeTypeId() {
 		return bikeTypeId;

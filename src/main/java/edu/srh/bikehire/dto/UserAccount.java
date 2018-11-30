@@ -2,6 +2,8 @@ package edu.srh.bikehire.dto;
 
 import java.util.Calendar;
 
+import javax.persistence.Column;
+
 public class UserAccount {
 	
 	/*
@@ -15,11 +17,17 @@ public class UserAccount {
 	);
 	 */
 
+	@Column(name = "ID")
 	private String iD;
+	@Column(name = "UserName")
 	private String userName;
+	@Column(name = "Role")
 	private String role;
+	@Column(name = "AccountStatus")
 	private String accountStatus;
+	@Column(name = "CreationTimeStamp")
 	private Calendar creationTimeStamp;
+	@Column(name = "LastModifiedTimeStamp")
 	private Calendar lastModifiedTimeStamp;
 	public String getiD() {
 		return iD;

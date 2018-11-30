@@ -2,6 +2,13 @@ package edu.srh.bikehire.dto;
 
 import java.util.Calendar;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class BikeType {
 	
 	/*
@@ -16,9 +23,15 @@ public class BikeType {
 	
 	 */
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "BikeTypeId")
 	private String bikeTypeId;
+	@Column(name = "Type")
 	private String type;
+	@Column(name = "AgeCategory")
 	private String ageCategory;
+	@Column(name = "CreationTimeStamp")
 	private Calendar creationTimeStamp;
 	public String getBikeTypeId() {
 		return bikeTypeId;

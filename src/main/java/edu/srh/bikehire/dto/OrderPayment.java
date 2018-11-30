@@ -1,5 +1,6 @@
 package edu.srh.bikehire.dto;
 
+import javax.persistence.Column;
 
 public class OrderPayment {
 	
@@ -14,10 +15,15 @@ public class OrderPayment {
 	);
  */
 
+	@Column(name = "PaymentReference")
 	private String paymentReference;
+	@Column(name = "OrderID")
 	private String orderID;
+	@Column(name = "DepositAmount")
 	private int depositAmount;
+	@Column(name = "RentPerHour")
 	private int rentPerHour;
+	@Column(name = "RentPerDay")
 	private int rentPerDay;
 	public String getPaymentReference() {
 		return paymentReference;

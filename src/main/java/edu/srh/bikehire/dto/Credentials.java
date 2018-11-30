@@ -2,6 +2,10 @@ package edu.srh.bikehire.dto;
 
 import java.util.Calendar;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+@Entity
 public class Credentials {
 	
 	/*
@@ -15,10 +19,15 @@ public class Credentials {
 	);
 	 */
 
+	@Column(name = "UserID")
 	private String userID;
+	@Column(name = "UserName")
 	private String userName;
+	@Column(name = "PasswordSalt")
 	private String passwordSalt;
+	@Column(name = "PasswordHash")
 	private String passwordHash;
+	@Column(name = "LastModifiedTimeStamp")
 	private Calendar lastModifiedTimeStamp;
 	public String getUserID() {
 		return userID;

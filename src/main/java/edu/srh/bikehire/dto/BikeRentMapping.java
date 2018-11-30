@@ -1,6 +1,9 @@
 package edu.srh.bikehire.dto;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
+@Entity
 public class BikeRentMapping {
 
 /*
@@ -11,10 +14,18 @@ public class BikeRentMapping {
 	`LastModifiedTimeStamp` TIMESTAMP NOT NULL
 	); 	
  */
+	@Column(name = "BikeTypeId")
 	private String bikeTypeId;
+	
+	@Column(name = "RentPerHour")
 	private int rentPerHour;
+	
+	@Column(name = "RentPerDay")
 	private int rentPerDay;
+
+	@Column(name = "LastModifiedTimeStamp")
 	private String lastModifiedTimeStamp;
+
 	public String getBikeTypeId() {
 		return bikeTypeId;
 	}

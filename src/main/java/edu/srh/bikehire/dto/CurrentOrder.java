@@ -2,6 +2,13 @@ package edu.srh.bikehire.dto;
 
 import java.util.Calendar;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class CurrentOrder {
 	
 	/*
@@ -18,13 +25,23 @@ public class CurrentOrder {
 	);
 	 */
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "OrderID")
 	private String orderID;
+	@Column(name = "UserID")
 	private String userID;
+	@Column(name = "BikeID")
 	private String bikeID;
+	@Column(name = "BookingTimeStamp")
 	private Calendar bookingTimeStamp;
+	@Column(name = "PickupTimeStamp")
 	private Calendar pickupTimeStamp;
+	@Column(name = "DropOffTimeStamp")
 	private Calendar dropOffTimeStamp;
+	@Column(name = "ActualDropOffTimeStamp")
 	private Calendar actualDropOffTimeStamp;
+	@Column(name = "UserID")
 	private String orderMode;
 	public String getOrderID() {
 		return orderID;

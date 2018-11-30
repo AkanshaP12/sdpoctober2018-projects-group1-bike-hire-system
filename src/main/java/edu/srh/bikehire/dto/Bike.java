@@ -4,59 +4,47 @@ import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
- 
+
 @Entity
-@Table(name = "bike")
+//@Table(name = "bike")
 public class Bike {
 
-	
-/**
-	CREATE TABLE `Bike` (
-	`BikeId` bigint NOT NULL,
-	`BikeTypeId` bigint NOT NULL,
-	`Manufacturer` varchar(200) NOT NULL,
-	`YearOfManufacture` int(4) NOT NULL,
-	`BikeTitle` varchar(200) NOT NULL,
-	`WareHouseID` bigint NOT NULL,
-	`DepositAmount` int(10) NOT NULL,
-	`CreationTimeStamp` TIMESTAMP NOT NULL,
-	PRIMARY KEY (`BikeId`)
-	);
-**/
-	
+	/**
+	 * CREATE TABLE `Bike` ( `BikeId` bigint NOT NULL, `BikeTypeId` bigint NOT NULL,
+	 * `Manufacturer` varchar(200) NOT NULL, `YearOfManufacture` int(4) NOT NULL,
+	 * `BikeTitle` varchar(200) NOT NULL, `WareHouseID` bigint NOT NULL,
+	 * `DepositAmount` int(10) NOT NULL, `CreationTimeStamp` TIMESTAMP NOT NULL,
+	 * PRIMARY KEY (`BikeId`) );
+	 **/
+
 	@Id
-	@Column(name = "bikeId")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "BikeId")
 	private String bikeId;
-	
-	@Id
-	@Column(name = "bikeTypeId")
+
+	@Column(name = "BikeTypeId")
 	private String bikeTypeId;
-	
-	@Id
-	@Column(name = "manufacturer")
+
+	@Column(name = "Manufacturer")
 	private String manufacturer;
-	
-	@Id
-	@Column(name = "yearOfManufacture")
+
+	@Column(name = "YearOfManufacture")
 	private int yearOfManufacture;
-	
-	@Id
-	@Column(name = "bikeTitle")
+
+	@Column(name = "BikeTitle")
 	private String bikeTitle;
-	
-	@Id
-	@Column(name = "wareHouseID")
+
+	@Column(name = "WareHouseID")
 	private String wareHouseID;
 
-	@Id
-	@Column(name = "depositAmount")
+	@Column(name = "DepositAmount")
 	private int depositAmount;
 
-	@Id
-	@Column(name = "creationTimeStamp")
-	private Calendar creationTimeStamp;
+	@Column(name = "CreationTimeStamp")
+	private String creationTimeStamp;  //make it calendar
 
 	public String getBikeId() {
 		return bikeId;
@@ -114,13 +102,12 @@ public class Bike {
 		this.depositAmount = depositAmount;
 	}
 
-	public Calendar getCreationTimeStamp() {
+	public String getCreationTimeStamp() {
 		return creationTimeStamp;
 	}
 
-	public void setCreationTimeStamp(Calendar creationTimeStamp) {
-		this.creationTimeStamp = creationTimeStamp;
+	public void setCreationTimeStamp(String string) {
+		this.creationTimeStamp = string;
 	}
 
-		
 }

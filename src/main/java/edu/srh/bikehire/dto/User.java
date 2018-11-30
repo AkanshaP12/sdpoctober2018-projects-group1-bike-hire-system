@@ -2,6 +2,11 @@ package edu.srh.bikehire.dto;
 
 import java.io.File;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 public class User {
 
 	/*
@@ -20,16 +25,29 @@ public class User {
 	);
 	 */
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
 	private String iD;
+	@Column(name = "FirstName")
 	private String firstName;
+	@Column(name = "LastName")
 	private String lastName;
+	@Column(name = "Gender")
 	private String gender;
+	@Column(name = "Age")
 	private int age;
+	@Column(name = "Address")
 	private String address;
+	@Column(name = "Photo")
 	private File photo;
+	@Column(name = "EmailId")
 	private String emailId;
+	@Column(name = "PhoneNo")
 	private String phoneNo;
+	@Column(name = "IdentityProof")
 	private File identityProof;
+	
 	public String getiD() {
 		return iD;
 	}

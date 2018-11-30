@@ -2,6 +2,8 @@ package edu.srh.bikehire.dto;
 
 import java.util.Calendar;
 
+import javax.persistence.Column;
+
 public class OrderHistory {
 
 	/*
@@ -16,12 +18,19 @@ public class OrderHistory {
 	);
 	 */
 	
+	@Column(name = "OrderID")
 	private String orderID;
+	@Column(name = "InvoiceID")
 	private String invoiceID;
+	@Column(name = "UserID")
 	private String userID;
+	@Column(name = "BikeID")
 	private String bikeID;
+	@Column(name = "BookingTimeStamp")
 	private Calendar bookingTimeStamp;
+	@Column(name = "PickupTimeStamp")
 	private Calendar pickupTimeStamp;
+	@Column(name = "ReturnedTimeStamp")
 	private Calendar returnedTimeStamp;
 	public String getOrderID() {
 		return orderID;

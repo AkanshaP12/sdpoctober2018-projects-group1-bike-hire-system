@@ -2,6 +2,11 @@ package edu.srh.bikehire.dto;
 
 import java.util.Calendar;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 public class WareHouse {
 	
 	/*
@@ -16,11 +21,19 @@ public class WareHouse {
 	);
 	 */
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "WareHouseID")
 	private String wareHouseID;
+	@Column(name = "Name")
 	private String name;
+	@Column(name = "Location")
 	private String location;
+	@Column(name = "StorageCapacity")
 	private int storageCapacity;
+	@Column(name = "CreationTimeStamp")
 	private Calendar creationTimeStamp;
+	@Column(name = "LastModifiedTimeStamp")
 	private Calendar lastModifiedTimeStamp;
 	public String getWareHouseID() {
 		return wareHouseID;

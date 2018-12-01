@@ -1,19 +1,19 @@
 package edu.srh.bikehire.dtointerface;
 
-import java.io.File;
+import java.util.Calendar;
 
 public interface UserDTO {
 
 	
-	public String getiD();
+	public String getId();
 	public String getFirstName();
 	public String getLastName();
 	public String getGender();
-	public int getAge();
+	public Calendar getDOB();
 	public String getAddress();
-	public File getPhoto();
+	public byte[] getPhoto();
 	public String getEmailId();
 	public String getPhoneNo();
-	public File getIdentityProof();
+	public byte[] getIdentityProof();
 
 }

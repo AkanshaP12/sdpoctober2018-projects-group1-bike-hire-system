@@ -1,21 +1,24 @@
 package edu.srh.bikehire.dto;
 
+import java.util.Calendar;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import edu.srh.bikehire.dtointerface.BikeRentMappingDTO;
 
 @Entity
-public class BikeRentMappingDTOImpl {
-
-/*
-	CREATE TABLE `BikeRentMapping` (
-	`BikeTypeId` bigint NOT NULL,     ---   Defined in bike.java
-	`RentPerHour` int(10) NOT NULL,
-	`RentPerDay` int(10) NOT NULL,
-	`LastModifiedTimeStamp` TIMESTAMP NOT NULL
-	); 	
- */
-	@Column(name = "BikeTypeId")
-	private String bikeTypeId;
+@Table(name="BikeRentMapping")
+public class BikeRentMappingDTOImpl implements BikeRentMappingDTO {
+	
+	@Id
+	@OneToOne
+	@JoinColumn(name = "BikeTypeId")
+	private BikeTypeDTOImpl bikeType;
 	
 	@Column(name = "RentPerHour")
 	private int rentPerHour;
@@ -24,13 +27,13 @@ public class BikeRentMappingDTOImpl {
 	private int rentPerDay;
 
 	@Column(name = "LastModifiedTimeStamp")
-	private String lastModifiedTimeStamp;
+	private Calendar lastModifiedTimeStamp;
 
-	public String getBikeTypeId() {
-		return bikeTypeId;
+	public BikeTypeDTOImpl getBikeType() {
+		return bikeType;
 	}
-	public void setBikeTypeId(String bikeTypeId) {
-		this.bikeTypeId = bikeTypeId;
+	public void setBikeType(BikeTypeDTOImpl bikeType) {
+		this.bikeType = bikeType;
 	}
 	public int getRentPerHour() {
 		return rentPerHour;
@@ -44,11 +47,14 @@ public class BikeRentMappingDTOImpl {
 	public void setRentPerDay(int rentPerDay) {
 		this.rentPerDay = rentPerDay;
 	}
-	public String getLastModifiedTimeStamp() {
+	public Calendar getLastModifiedTimeStamp() {
 		return lastModifiedTimeStamp;
 	}
-	public void setLastModifiedTimeStamp(String lastModifiedTimeStamp) {
+	public void setLastModifiedTimeStamp(Calendar lastModifiedTimeStamp) {
 		this.lastModifiedTimeStamp = lastModifiedTimeStamp;
+	}
+	public String getBikeTypeId() {
+		return getBikeType().getBikeTypeId();
 	}
 	
 		

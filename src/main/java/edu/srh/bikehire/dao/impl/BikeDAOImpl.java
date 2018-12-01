@@ -1,4 +1,4 @@
-package edu.srh.bikehire.daoimpl;
+package edu.srh.bikehire.dao.impl;
 
 import java.util.List;
 

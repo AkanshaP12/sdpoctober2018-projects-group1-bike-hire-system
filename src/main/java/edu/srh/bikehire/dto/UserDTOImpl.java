@@ -1,112 +1,117 @@
 package edu.srh.bikehire.dto;
 
-import java.io.File;
+import java.util.Calendar;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Table;
 
-public class UserDTOImpl {
+import edu.srh.bikehire.dtointerface.UserDTO;
 
-	/*
-	 CREATE TABLE `User` (
-	`ID` varchar(100) NOT NULL,
-	`FirstName` varchar(100) NOT NULL,
-	`LastName` varchar(100) NOT NULL,
-	`Gender` varchar(50) NOT NULL,
-	`Age` int(3) NOT NULL,
-	`Address` varchar(200),
-	`Photo` blob,
-	`EmailId` varchar(200) NOT NULL UNIQUE,
-	`PhoneNo` varchar(20) NOT NULL,
-	`IdentityProof` blob NOT NULL,
-	PRIMARY KEY (`ID`)
-	);
-	 */
-	
+@Entity
+@Table(name="User")
+public class UserDTOImpl implements UserDTO{
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	private String iD;
+	private String id;
+	
 	@Column(name = "FirstName")
 	private String firstName;
+	
 	@Column(name = "LastName")
 	private String lastName;
+	
 	@Column(name = "Gender")
 	private String gender;
-	@Column(name = "Age")
-	private int age;
+	
+	@Column(name = "DOB")
+	private Calendar dOB;
+	
 	@Column(name = "Address")
 	private String address;
+	
+	@Lob
+	@Basic(fetch=FetchType.LAZY)
 	@Column(name = "Photo")
-	private File photo;
+	private byte[] photo;
+	
 	@Column(name = "EmailId")
 	private String emailId;
+	
 	@Column(name = "PhoneNo")
 	private String phoneNo;
-	@Column(name = "IdentityProof")
-	private File identityProof;
 	
-	public String getiD() {
-		return iD;
-	}
-	public void setiD(String iD) {
-		this.iD = iD;
+	@Lob
+	@Basic(fetch=FetchType.LAZY)
+	@Column(name = "IdentityProof")
+	private byte[] identityProof;
+	
+	public String getId() {
+		return id;
 	}
 	public String getFirstName() {
 		return firstName;
 	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
 	public String getLastName() {
 		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
 	}
 	public String getGender() {
 		return gender;
 	}
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-	public int getAge() {
-		return age;
-	}
-	public void setAge(int age) {
-		this.age = age;
-	}
+	
 	public String getAddress() {
 		return address;
 	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	public File getPhoto() {
+	public byte[] getPhoto() {
 		return photo;
-	}
-	public void setPhoto(File photo) {
-		this.photo = photo;
 	}
 	public String getEmailId() {
 		return emailId;
 	}
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
-	}
 	public String getPhoneNo() {
 		return phoneNo;
 	}
-	public void setPhoneNo(String phoneNo) {
-		this.phoneNo = phoneNo;
-	}
-	public File getIdentityProof() {
+	public byte[] getIdentityProof() {
 		return identityProof;
 	}
-	public void setIdentityProof(File identityProof) {
+	protected void setId(String id) {
+		this.id = id;
+	}
+	protected void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	protected void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	protected void setGender(String gender) {
+		this.gender = gender;
+	}
+	
+	protected void setAddress(String address) {
+		this.address = address;
+	}
+	protected void setPhoto(byte[] photo) {
+		this.photo = photo;
+	}
+	protected void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
+	protected void setPhoneNo(String phoneNo) {
+		this.phoneNo = phoneNo;
+	}
+	protected void setIdentityProof(byte[] identityProof) {
 		this.identityProof = identityProof;
 	}
-
+	
+	public Calendar getDOB() {
+		return dOB;
+	}
+	protected void setDOB(Calendar dOB) {
+		this.dOB = dOB;
+	}
 }

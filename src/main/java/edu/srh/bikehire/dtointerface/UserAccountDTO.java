@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 public interface UserAccountDTO {
 
-	public String getiD();
+	public String getId();
 	public String getUserName();
 	public String getRole();
 	public String getAccountStatus();

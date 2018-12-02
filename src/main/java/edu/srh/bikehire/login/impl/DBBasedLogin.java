@@ -6,6 +6,10 @@ import edu.srh.bikehire.login.EntityLoginCredential;
 import edu.srh.bikehire.login.EntityRegistrationCredential;
 import edu.srh.bikehire.login.Login;
 import edu.srh.bikehire.login.ResetPasswordValidator;
+import edu.srh.bikehire.login.core.CustomerCredentialValidator;
+import edu.srh.bikehire.login.core.UserDetailsValidator;
+import edu.srh.bikehire.login.core.UserRegistrationCredentialValidator;
+import edu.srh.bikehire.login.util.PasswordHashGenerator;
 
 public class DBBasedLogin implements Login {
 
@@ -35,9 +39,10 @@ public class DBBasedLogin implements Login {
 
 	public ResetPasswordValidator registerUserAccount(Entity pEntity, EntityRegistrationCredential pEntityCredential) throws BikeHireSystemException {
 		//Validate entity details
-		AccountRegistrationValidator lValidator = new AccountRegistrationValidator(pEntity, pEntityCredential);
-		lValidator.validateEntityInformation();
-		lValidator.validateEntityCredentials();
+		UserDetailsValidator lUserDetailsValidator = new UserDetailsValidator(pEntity);
+		UserRegistrationCredentialValidator lCredentialValidator = new UserRegistrationCredentialValidator(pEntityCredential);
+		lUserDetailsValidator.validateUserInformationForRegistartion();
+		lCredentialValidator.validateEntityCredentials();
 		
 		//TODO: Validate whether username exist in system or not. USERNAME SHOULD NOT EXIST
 		
@@ -49,10 +54,17 @@ public class DBBasedLogin implements Login {
 		return lResetPasswordValidator;
 	}
 	
-	public void resetPassword(EntityRegistrationCredential pEntityCredential)
+	public void resetPassword(EntityRegistrationCredential pEntityCredential) throws BikeHireSystemException
 	{
 		//Check EntityRegistrationCredentials
-		//validate 
+		UserRegistrationCredentialValidator lCredentialValidator = new UserRegistrationCredentialValidator(pEntityCredential);
+		lCredentialValidator.validateEntityCredentials();
+		
+		String lSalt = PasswordHashGenerator.generateSalt();
+		String lPasswordHash = PasswordHashGenerator.getSHA512Hash(pEntityCredential.getNewPassword(), lSalt);
+		//TODO: Create hash of new password by call PasswordHashGenerator.getSHA512Hash()
+		
+		
 	}
 	
 	public boolean logout(Entity pEntity) {
@@ -60,8 +72,11 @@ public class DBBasedLogin implements Login {
 		return false;
 	}
 	
-	public void deactivateAccount(Entity pEntity) {
+	public void deactivateAccount(Entity pEntity) throws BikeHireSystemException {
+		UserDetailsValidator lUserDetailsValidator = new UserDetailsValidator(pEntity);
+		lUserDetailsValidator.validateUserInformationForDeactiviation();
 		
+		//TODO: Call DAO to change user status in USERACCOUNT table.
 	}
 
 }

@@ -10,8 +10,5 @@ public interface UserAccountDTO {
 	public String getAccountStatus();
 	public Calendar getCreationTimeStamp();
 	public Calendar getLastModifiedTimeStamp();
-	
-	
-	
-
+	public void setUserDTO(UserDTO pUserDTO);
 }

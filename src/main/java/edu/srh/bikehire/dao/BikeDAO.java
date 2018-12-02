@@ -8,7 +8,7 @@ import edu.srh.bikehire.dtointerface.BikeDTO;
 public interface BikeDAO {
 	public BikeDTO getBike(String pBikeId);
 	
-	public boolean addBike(BikeDTO pBike);
+	public String addBike(BikeDTO pBike);
 	
 	public boolean updateBike(BikeDTO pBike);
 	
@@ -16,5 +16,5 @@ public interface BikeDAO {
 	
 	public List<BikeDTO> getBikeForBikeType(String pBikeTypeId, boolean pSortPriceDescending);
 	
-	public List<BikeDTO> getAllBikes(boolean pSortPriceDescending);
+	public List<BikeDAO> getAllBikes(boolean pSortPriceDescending);
 }

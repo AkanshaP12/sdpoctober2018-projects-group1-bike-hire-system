@@ -9,6 +9,7 @@ import edu.srh.bikehire.dao.CurrentOrderDAO;
 import edu.srh.bikehire.daoimpl.util.PersistenceManager;
 import edu.srh.bikehire.dto.CurrentOrderDTOImpl;
 import edu.srh.bikehire.dtointerface.CurrentOrderDTO;
+import edu.srh.bikehire.util.Util;
 
 public class CurrentOrderDAOImpl implements CurrentOrderDAO {
 
@@ -36,12 +37,16 @@ public class CurrentOrderDAOImpl implements CurrentOrderDAO {
 		return results.get(0);
 	}
 
-	public boolean addCurrentOrder(CurrentOrderDTO pCurrentOrderDTO) {
+	public String addCurrentOrder(CurrentOrderDTO pCurrentOrderDTO) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
+		//Generate random order id.
+		String lstrOrderId = Util.getRandomAlphaNumericId();
 		em.getTransaction().begin();
-		em.persist(pCurrentOrderDTO);
+		CurrentOrderDTOImpl lCurrentOrderDTOImpl = (CurrentOrderDTOImpl) pCurrentOrderDTO;
+		lCurrentOrderDTOImpl.setOrderID(lstrOrderId);
+		em.persist(lCurrentOrderDTOImpl);
 		em.getTransaction().commit();
-		return true;
+		return lstrOrderId;
 	}
 
 	public boolean updateCurrentOrder(CurrentOrderDTO pCurrentOrderDTO) {

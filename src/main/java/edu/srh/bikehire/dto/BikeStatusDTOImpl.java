@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import edu.srh.bikehire.dtointerface.BikeDTO;
 import edu.srh.bikehire.dtointerface.BikeStatusDTO;
 
 @Entity
@@ -76,5 +77,10 @@ public class BikeStatusDTOImpl implements Serializable,BikeStatusDTO {
 
 	public String getBikeId() {
 		return getBike().getBikeId();
+	}
+	
+	public void setBikeDTO(BikeDTO pBikeDTO)
+	{
+		this.bike = (BikeDTOImpl) pBikeDTO;
 	}
 }

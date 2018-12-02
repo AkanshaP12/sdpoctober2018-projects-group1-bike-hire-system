@@ -1,13 +1,14 @@
 package edu.srh.bikehire.assetmangement.impl;
 
 import edu.srh.bikehire.dto.BikeRentMappingDTOImpl;
+import edu.srh.bikehire.dtointerface.BikeRentMappingDTO;
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.util.Util;
 
 public class BikeRentMappingValidator {
-	private BikeRentMappingDTOImpl mBikeRentDetails;
+	private BikeRentMappingDTO mBikeRentDetails;
 
-	public BikeRentMappingValidator(BikeRentMappingDTOImpl pBikeRentDetails) {
+	public BikeRentMappingValidator(BikeRentMappingDTO pBikeRentDetails) {
 		mBikeRentDetails = pBikeRentDetails;
 	}
 	

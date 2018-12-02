@@ -1,13 +1,14 @@
 package edu.srh.bikehire.assetmangement.impl;
 
 import edu.srh.bikehire.dto.BikeStockDTOImpl;
+import edu.srh.bikehire.dtointerface.BikeStockDTO;
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.util.Util;
 
 public class BikeStockValidator {
-	private BikeStockDTOImpl mBikeStock;
+	private BikeStockDTO mBikeStock;
 
-	public BikeStockValidator(BikeStockDTOImpl pBikeStock) {
+	public BikeStockValidator(BikeStockDTO pBikeStock) {
 		mBikeStock = pBikeStock;
 	}
 	

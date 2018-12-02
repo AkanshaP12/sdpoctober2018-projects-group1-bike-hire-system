@@ -1,13 +1,14 @@
 package edu.srh.bikehire.assetmangement.impl;
 
 import edu.srh.bikehire.dto.WareHouseDTOImpl;
+import edu.srh.bikehire.dtointerface.WareHouseDTO;
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.util.Util;
 
 public class WarehouseValidator {
-	private WareHouseDTOImpl mWarehouse;
+	private WareHouseDTO mWarehouse;
 
-	public WarehouseValidator(WareHouseDTOImpl pWarehouse) {
+	public WarehouseValidator(WareHouseDTO pWarehouse) {
 		mWarehouse = pWarehouse;
 	}
 	

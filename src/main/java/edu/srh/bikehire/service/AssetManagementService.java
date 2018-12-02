@@ -15,17 +15,17 @@ public interface AssetManagementService {
 	
 	public String addNewWarehouse(WareHouseDTO pNewWarehouse) throws BikeHireSystemException;
 	
-	public String deleteBikeDetails(BikeDTO pDeleteBike) throws BikeHireSystemException;
+	public boolean deleteBikeDetails(BikeDTO pDeleteBike) throws BikeHireSystemException;
 	
-	public String updateWarehouse(WareHouseDTO pUpdatedWarehouse) throws BikeHireSystemException;
+	public boolean updateWarehouse(WareHouseDTO pUpdatedWarehouse) throws BikeHireSystemException;
 	
-	public String updateBikeDetails(BikeDTO pUpdatedBike) throws BikeHireSystemException;
+	public boolean updateBikeDetails(BikeDTO pUpdatedBike) throws BikeHireSystemException;
 	
-	public String updateBikeRent(BikeRentMappingDTO pUpdatedBikeRent) throws BikeHireSystemException;
+	public boolean updateBikeRent(BikeRentMappingDTO pUpdatedBikeRent) throws BikeHireSystemException;
 	
-	public String updateBikeStock(BikeStockDTO pUpdatedBikeStock) throws BikeHireSystemException;
+	public boolean updateBikeStock(BikeStockDTO pUpdatedBikeStock, BikeTypeDTO pUpdatedBikeType) throws BikeHireSystemException;
 	
-	public String updateBikeStatus(BikeStatusDTO pUpdatedBikeStatus) throws BikeHireSystemException;
+	public boolean updateBikeStatus(BikeStatusDTO pUpdatedBikeStatus) throws BikeHireSystemException;
 
 	
 }

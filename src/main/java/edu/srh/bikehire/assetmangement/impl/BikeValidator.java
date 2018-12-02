@@ -3,13 +3,14 @@ package edu.srh.bikehire.assetmangement.impl;
 import java.util.Calendar;
 
 import edu.srh.bikehire.dto.BikeDTOImpl;
+import edu.srh.bikehire.dtointerface.BikeDTO;
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.util.Util;
 
 public class BikeValidator {
-	private BikeDTOImpl mBike;
+	private BikeDTO mBike;
 
-	public BikeValidator(BikeDTOImpl pBike) {
+	public BikeValidator(BikeDTO pBike) {
 		mBike = pBike;
 		
 	}

@@ -1,13 +1,14 @@
 package edu.srh.bikehire.assetmangement.impl;
 
 import edu.srh.bikehire.dto.BikeStatusDTOImpl;
+import edu.srh.bikehire.dtointerface.BikeStatusDTO;
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.util.Util;
 
 public class BikeStatusValidator {
-	private BikeStatusDTOImpl mBikeStatus;
+	private BikeStatusDTO mBikeStatus;
 
-	public BikeStatusValidator(BikeStatusDTOImpl pBikeStatus) {
+	public BikeStatusValidator(BikeStatusDTO pBikeStatus) {
 		mBikeStatus = pBikeStatus;
 		}
 	

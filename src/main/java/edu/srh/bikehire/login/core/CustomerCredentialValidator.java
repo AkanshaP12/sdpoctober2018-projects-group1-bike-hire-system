@@ -1,4 +1,4 @@
-package edu.srh.bikehire.login.impl;
+package edu.srh.bikehire.login.core;
 
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.login.EntityLoginCredential;
@@ -26,7 +26,13 @@ public class CustomerCredentialValidator {
 		String lstrOriginPasswordHash = "";
 		String lstrPasswordSalt = "";
 		
-		PasswordHashGenerator.verifyPasswordHash(lstrOriginPasswordHash, mEntityLoginCredential.getPassword(), lstrPasswordSalt);
+		boolean lbIsValidPassword = PasswordHashGenerator.verifyPasswordHash(lstrOriginPasswordHash, mEntityLoginCredential.getPassword(), lstrPasswordSalt);
+		
+		if(lbIsValidPassword)
+		{
+			//ERROR_MESSAGE : Invalid login credentials provided. Password hash matching failed.
+			throw new BikeHireSystemException(10023);
+		}
 		
 	}
 	

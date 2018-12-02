@@ -16,5 +16,5 @@ public interface BikeDAO {
 	
 	public List<BikeDTO> getBikeForBikeType(String pBikeTypeId, boolean pSortPriceDescending);
 	
-	public List<BikeDAO> getAllBikes(boolean pSortPriceDescending);
+	public List<BikeDTO> getAllBikes(boolean pSortPriceDescending);
 }

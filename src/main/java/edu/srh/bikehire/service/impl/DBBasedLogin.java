@@ -1,15 +1,16 @@
-package edu.srh.bikehire.login.impl;
+package edu.srh.bikehire.service.impl;
 
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.login.Entity;
 import edu.srh.bikehire.login.EntityLoginCredential;
 import edu.srh.bikehire.login.EntityRegistrationCredential;
-import edu.srh.bikehire.login.Login;
 import edu.srh.bikehire.login.ResetPasswordValidator;
 import edu.srh.bikehire.login.core.CustomerCredentialValidator;
 import edu.srh.bikehire.login.core.UserDetailsValidator;
 import edu.srh.bikehire.login.core.UserRegistrationCredentialValidator;
+import edu.srh.bikehire.login.impl.DBBasedResetPasswordValidator;
 import edu.srh.bikehire.login.util.PasswordHashGenerator;
+import edu.srh.bikehire.service.Login;
 
 public class DBBasedLogin implements Login {
 

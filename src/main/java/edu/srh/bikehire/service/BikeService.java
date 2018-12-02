@@ -3,16 +3,17 @@ package edu.srh.bikehire.service;
 import java.util.List;
 
 import edu.srh.bikehire.dao.BikeDAO;
+import edu.srh.bikehire.dtointerface.BikeDTO;
 
 public interface BikeService{
 
-	List<BikeDAO> getAllBikes();
+	List<BikeDTO> getAllBikes(boolean pSortPriceDescending);
 
-	BikeDAO getBikeByID(int ID);
+	BikeDTO getBikeByID(int ID);
 	
-	void addNewBikeType(BikeDAO bike);
+	void addNewBikeType(BikeDTO bike);
 
-	void addNewBike(BikeDAO bike);
+	void addNewBike(BikeDTO bike);
 
 	void deleteBikeByID(int ID);
 

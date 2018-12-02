@@ -1,5 +1,7 @@
 package edu.srh.bikehire.login.core;
 
+import java.util.Calendar;
+
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.login.Entity;
 import edu.srh.bikehire.util.Util;
@@ -72,6 +74,23 @@ public class UserDetailsValidator {
 		{
 			//Error_Message : Entity Date of birth is not provided.
 			throw new BikeHireSystemException(10015);
+		}
+		
+		int year = Calendar.getInstance().get(Calendar.YEAR);
+		int ageLimit = year - mEntity.getDOB().get(Calendar.YEAR);
+		if (ageLimit < 95 && ageLimit > 7) {
+			//TODO : Resolve later
+			throw new BikeHireSystemException(-1);
+		}
+		
+		if (mEntity.getPhoto() == null) {
+			// TODO: Resolve
+			throw new BikeHireSystemException(-1);
+		}
+		
+		if (mEntity.getIdentityProof() == null) {
+			// TODO: Resolve
+			throw new BikeHireSystemException(-1);
 		}
 	}
 	

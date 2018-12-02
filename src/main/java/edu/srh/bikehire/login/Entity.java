@@ -22,4 +22,8 @@ public interface Entity {
 	
 	public EntityAccount getEntityAccount();
 	
+	public byte[] getPhoto();
+	
+	public byte[] getIdentityProof();
+	
 }

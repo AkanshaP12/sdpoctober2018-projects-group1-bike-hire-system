@@ -79,32 +79,32 @@ public class UserDTOImpl implements UserDTO{
 	public byte[] getIdentityProof() {
 		return identityProof;
 	}
-	protected void setId(String id) {
+	public void setId(String id) {
 		this.id = id;
 	}
-	protected void setFirstName(String firstName) {
+	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	protected void setLastName(String lastName) {
+	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	protected void setGender(String gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 	
-	protected void setAddress(String address) {
+	public void setAddress(String address) {
 		this.address = address;
 	}
-	protected void setPhoto(byte[] photo) {
+	public void setPhoto(byte[] photo) {
 		this.photo = photo;
 	}
-	protected void setEmailId(String emailId) {
+	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
-	protected void setPhoneNo(String phoneNo) {
+	public void setPhoneNo(String phoneNo) {
 		this.phoneNo = phoneNo;
 	}
-	protected void setIdentityProof(byte[] identityProof) {
+	public void setIdentityProof(byte[] identityProof) {
 		this.identityProof = identityProof;
 	}
 	

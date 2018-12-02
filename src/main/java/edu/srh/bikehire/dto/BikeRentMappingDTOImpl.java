@@ -4,6 +4,7 @@ import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -16,7 +17,7 @@ import edu.srh.bikehire.dtointerface.BikeRentMappingDTO;
 public class BikeRentMappingDTOImpl implements BikeRentMappingDTO {
 	
 	@Id
-	@OneToOne
+	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "BikeTypeId")
 	private BikeTypeDTOImpl bikeType;
 	

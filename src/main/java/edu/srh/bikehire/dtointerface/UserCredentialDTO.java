@@ -2,7 +2,7 @@ package edu.srh.bikehire.dtointerface;
 
 import java.util.Calendar;
 
-public interface CredentialsDTO {
+public interface UserCredentialDTO {
 
 	public String getUserID();
 	public String getUserName();

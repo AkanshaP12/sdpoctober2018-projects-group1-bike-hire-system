@@ -3,35 +3,45 @@ package edu.srh.bikehire.dto;
 import java.util.Calendar;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-public class OrderHistoryDTOImpl {
+import edu.srh.bikehire.dtointerface.OrderHistoryDTO;
 
-	/*
-	 CREATE TABLE `OrderHistory` (
-	`OrderID` bigint NOT NULL,
-	`InvoiceID` bigint NOT NULL,
-	`UserID` varchar(100) NOT NULL,
-	`BikeID` bigint NOT NULL,
-	`BookingTimeStamp` TIMESTAMP NOT NULL,
-	`PickupTimeStamp` TIMESTAMP NOT NULL,
-	`ReturnedTimeStamp` TIMESTAMP NOT NULL
-	);
-	 */
-	
+@Entity
+@Table(name = "OrderHistory")
+public class OrderHistoryDTOImpl implements OrderHistoryDTO {
+
+	@Id
 	@Column(name = "OrderID")
 	private String orderID;
-	@Column(name = "InvoiceID")
-	private String invoiceID;
-	@Column(name = "UserID")
-	private String userID;
-	@Column(name = "BikeID")
-	private String bikeID;
+	
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name = "InvoiceID")
+	private InvoiceDTOImpl invoiceDTO;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name = "UserID")
+	private UserDTOImpl userDTO;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name = "BikeID")
+	private BikeDTOImpl bikeID;
+	
 	@Column(name = "BookingTimeStamp")
 	private Calendar bookingTimeStamp;
+	
 	@Column(name = "PickupTimeStamp")
 	private Calendar pickupTimeStamp;
+	
 	@Column(name = "ReturnedTimeStamp")
 	private Calendar returnedTimeStamp;
+	
 	public String getOrderID() {
 		return orderID;
 	}
@@ -39,23 +49,17 @@ public class OrderHistoryDTOImpl {
 		this.orderID = orderID;
 	}
 	public String getInvoiceID() {
-		return invoiceID;
+		return invoiceDTO.getInvoiceID();
 	}
-	public void setInvoiceID(String invoiceID) {
-		this.invoiceID = invoiceID;
-	}
+	
 	public String getUserID() {
-		return userID;
+		return userDTO.getId();
 	}
-	public void setUserID(String userID) {
-		this.userID = userID;
-	}
+	
 	public String getBikeID() {
-		return bikeID;
+		return bikeID.getBikeId();
 	}
-	public void setBikeID(String bikeID) {
-		this.bikeID = bikeID;
-	}
+	
 	public Calendar getBookingTimeStamp() {
 		return bookingTimeStamp;
 	}
@@ -74,8 +78,20 @@ public class OrderHistoryDTOImpl {
 	public void setReturnedTimeStamp(Calendar returnedTimeStamp) {
 		this.returnedTimeStamp = returnedTimeStamp;
 	}
-	
-	
-	
+	public InvoiceDTOImpl getInvoiceDTO() {
+		return invoiceDTO;
+	}
+	public void setInvoiceDTO(InvoiceDTOImpl invoiceDTO) {
+		this.invoiceDTO = invoiceDTO;
+	}
+	public UserDTOImpl getUserDTO() {
+		return userDTO;
+	}
+	public void setUserDTO(UserDTOImpl userDTO) {
+		this.userDTO = userDTO;
+	}
+	public void setBikeID(BikeDTOImpl bikeID) {
+		this.bikeID = bikeID;
+	}
 	
 }

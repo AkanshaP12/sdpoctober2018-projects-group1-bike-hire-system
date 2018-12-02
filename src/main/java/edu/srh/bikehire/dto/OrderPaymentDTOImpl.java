@@ -1,30 +1,34 @@
 package edu.srh.bikehire.dto;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-public class OrderPaymentDTOImpl {
-	
-/*  
- 	CREATE TABLE `OrderPayment` (
-	`PaymentReference` bigint NOT NULL,
-	`OrderID` bigint NOT NULL,
-	`DepositAmount` int(10) NOT NULL,
-	`RentPerHour` int(10) NOT NULL,
-	`RentPerDay` int(10) NOT NULL,
-	PRIMARY KEY (`PaymentReference`)
-	);
- */
+import edu.srh.bikehire.dtointerface.OrderPaymentDTO;
 
+@Entity
+@Table(name = "OrderPayment")
+public class OrderPaymentDTOImpl implements OrderPaymentDTO {
+
+	@Id
 	@Column(name = "PaymentReference")
 	private String paymentReference;
+	
 	@Column(name = "OrderID")
-	private String orderID;
+	private CurrentOrderDTOImpl currentOrder;
+	
 	@Column(name = "DepositAmount")
 	private int depositAmount;
+	
 	@Column(name = "RentPerHour")
 	private int rentPerHour;
+	
 	@Column(name = "RentPerDay")
 	private int rentPerDay;
+	
 	public String getPaymentReference() {
 		return paymentReference;
 	}
@@ -32,10 +36,7 @@ public class OrderPaymentDTOImpl {
 		this.paymentReference = paymentReference;
 	}
 	public String getOrderID() {
-		return orderID;
-	}
-	public void setOrderID(String orderID) {
-		this.orderID = orderID;
+		return currentOrder.getOrderID();
 	}
 	public int getDepositAmount() {
 		return depositAmount;
@@ -55,7 +56,10 @@ public class OrderPaymentDTOImpl {
 	public void setRentPerDay(int rentPerDay) {
 		this.rentPerDay = rentPerDay;
 	}
-	
-
-	
+	public CurrentOrderDTOImpl getCurrentOrder() {
+		return currentOrder;
+	}
+	public void setCurrentOrder(CurrentOrderDTOImpl currentOrder) {
+		this.currentOrder = currentOrder;
+	}
 }

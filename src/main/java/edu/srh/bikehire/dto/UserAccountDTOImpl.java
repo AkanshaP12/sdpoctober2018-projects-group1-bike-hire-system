@@ -3,22 +3,23 @@ package edu.srh.bikehire.dto;
 import java.util.Calendar;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-public class UserAccountDTOImpl {
-	
-	/*
-	 CREATE TABLE `UserAccount` (
-	`ID` varchar(100) NOT NULL,
-	`UserName` varchar(200) NOT NULL,
-	`Role` varchar(50) NOT NULL,
-	`AccountStatus` varchar(20) NOT NULL,
-	`CreationTimeStamp` TIMESTAMP NOT NULL,
-	`LastModifiedTimeStamp` TIMESTAMP NOT NULL
-	);
-	 */
+import edu.srh.bikehire.dtointerface.UserAccountDTO;
 
-	@Column(name = "ID")
-	private String iD;
+@Entity
+@Table(name = "UserAccount")
+public class UserAccountDTOImpl implements UserAccountDTO{
+
+	@Id
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name = "ID")
+	private UserDTOImpl userDTO;
 	@Column(name = "UserName")
 	private String userName;
 	@Column(name = "Role")
@@ -29,12 +30,11 @@ public class UserAccountDTOImpl {
 	private Calendar creationTimeStamp;
 	@Column(name = "LastModifiedTimeStamp")
 	private Calendar lastModifiedTimeStamp;
-	public String getiD() {
-		return iD;
+	
+	public String getId() {
+		return userDTO.getId();
 	}
-	public void setiD(String iD) {
-		this.iD = iD;
-	}
+	
 	public String getUserName() {
 		return userName;
 	}
@@ -65,7 +65,10 @@ public class UserAccountDTOImpl {
 	public void setLastModifiedTimeStamp(Calendar lastModifiedTimeStamp) {
 		this.lastModifiedTimeStamp = lastModifiedTimeStamp;
 	}
-	
-	
-	
+	public UserDTOImpl getUserDTO() {
+		return userDTO;
+	}
+	public void setUserDTO(UserDTOImpl userDTO) {
+		this.userDTO = userDTO;
+	}
 }

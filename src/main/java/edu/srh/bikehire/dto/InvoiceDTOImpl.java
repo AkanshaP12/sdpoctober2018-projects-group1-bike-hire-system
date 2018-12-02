@@ -3,84 +3,106 @@ package edu.srh.bikehire.dto;
 import java.util.Calendar;
 
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-public class InvoiceDTOImpl {
-	
-	/*
-	 CREATE TABLE `Invoice` (
-	`InvoiceID` bigint NOT NULL,
-	`OrderID` bigint NOT NULL,
-	`CreationTimeStamp` TIMESTAMP NOT NULL,
-	`FinalAmount` int(10) NOT NULL,
-	`ReturnDeposit` int(10) NOT NULL,
-	`DamageCharges` int(10) NOT NULL,
-	`WarehouseId` bigint NOT NULL,    <---- make ID
-	PRIMARY KEY (`InvoiceID`)
-	);
-	 */
+import edu.srh.bikehire.dtointerface.InvoiceDTO;
+
+@Entity
+@Table(name= "Invoice")
+public class InvoiceDTOImpl implements InvoiceDTO{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "InvoiceID")
 	private String invoiceID;
-	@Column(name = "OrderID")
-	private String orderID;
+	
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name = "OrderID")
+	private CurrentOrderDTOImpl currentOrderDTOImpl;
+	
 	@Column(name = "CreationTimeStamp")
 	private Calendar creationTimeStamp;
+	
 	@Column(name = "FinalAmount")
 	private int finalAmount;
+	
 	@Column(name = "ReturnDeposit")
 	private int returnDeposit;
+	
 	@Column(name = "DamageCharges")
 	private int	damageCharges;
-	@Column(name = "WarehouseID")
-	private String warehouseID;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name = "WarehouseId")
+	private WareHouseDTOImpl warehouseDTO;
+	
 	public String getInvoiceID() {
 		return invoiceID;
 	}
+	
 	public void setInvoiceID(String invoiceID) {
 		this.invoiceID = invoiceID;
 	}
+	
 	public String getOrderID() {
-		return orderID;
+		return currentOrderDTOImpl.getOrderID();
 	}
-	public void setOrderID(String orderID) {
-		this.orderID = orderID;
-	}
+	
 	public Calendar getCreationTimeStamp() {
 		return creationTimeStamp;
 	}
+	
 	public void setCreationTimeStamp(Calendar creationTimeStamp) {
 		this.creationTimeStamp = creationTimeStamp;
 	}
+	
 	public int getFinalAmount() {
 		return finalAmount;
 	}
+	
 	public void setFinalAmount(int finalAmount) {
 		this.finalAmount = finalAmount;
 	}
+	
 	public int getReturnDeposit() {
 		return returnDeposit;
 	}
+	
 	public void setReturnDeposit(int returnDeposit) {
 		this.returnDeposit = returnDeposit;
 	}
+	
 	public int getDamageCharges() {
 		return damageCharges;
 	}
+	
 	public void setDamageCharges(int damageCharges) {
 		this.damageCharges = damageCharges;
 	}
-	public String getWarehouseID() {
-		return warehouseID;
-	}
-	public void setWarehouseID(String warehouseID) {
-		this.warehouseID = warehouseID;
-	}
-		
 	
+	public String getWarehouseID() {
+		return warehouseDTO.getWarehouseId();
+	}
+	
+	public CurrentOrderDTOImpl getCurrentOrderDTOImpl() {
+		return currentOrderDTOImpl;
+	}
+	
+	public void setCurrentOrderDTOImpl(CurrentOrderDTOImpl currentOrderDTOImpl) {
+		this.currentOrderDTOImpl = currentOrderDTOImpl;
+	}
+
+	public WareHouseDTOImpl getWarehouseDTO() {
+		return warehouseDTO;
+	}
+
+	public void setWarehouseDTO(WareHouseDTOImpl warehouseDTO) {
+		this.warehouseDTO = warehouseDTO;
+	}
 	
 }

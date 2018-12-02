@@ -1,6 +1,6 @@
 package edu.srh.bikehire.dao;
 
-import edu.srh.bikehire.dtointerface.CurrentOrderDTO;
+import edu.srh.bikehire.dto.CurrentOrderDTO;
 
 public interface CurrentOrderDAO {
 	public CurrentOrderDTO getCurrentOrderByOrderId(String pOrderId);

@@ -1,8 +1,8 @@
 package edu.srh.bikehire.login.core;
 
 import edu.srh.bikehire.exception.BikeHireSystemException;
-import edu.srh.bikehire.login.EntityRegistrationCredential;
 import edu.srh.bikehire.login.util.LoginUtil;
+import edu.srh.bikehire.service.core.EntityRegistrationCredential;
 import edu.srh.bikehire.util.Util;
 
 public class UserRegistrationCredentialValidator {

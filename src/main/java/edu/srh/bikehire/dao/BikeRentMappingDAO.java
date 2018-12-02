@@ -1,6 +1,6 @@
 package edu.srh.bikehire.dao;
 
-import edu.srh.bikehire.dtointerface.BikeRentMappingDTO;
+import edu.srh.bikehire.dto.BikeRentMappingDTO;
 
 public interface BikeRentMappingDAO {
 	public BikeRentMappingDTO getBikeRentMapping(String pBikeTypeId);

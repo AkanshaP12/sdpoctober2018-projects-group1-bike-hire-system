@@ -1,6 +1,6 @@
 package edu.srh.bikehire.dao;
 
-import edu.srh.bikehire.dtointerface.UserCredentialDTO;
+import edu.srh.bikehire.dto.UserCredentialDTO;
 
 public interface UserCredentialDAO {
 	

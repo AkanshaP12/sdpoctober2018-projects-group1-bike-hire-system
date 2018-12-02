@@ -1,7 +1,7 @@
 package edu.srh.bikehire.assetmangement.impl;
 
-import edu.srh.bikehire.dto.WareHouseDTOImpl;
-import edu.srh.bikehire.dtointerface.WareHouseDTO;
+import edu.srh.bikehire.dto.WareHouseDTO;
+import edu.srh.bikehire.dto.impl.WareHouseDTOImpl;
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.util.Util;
 

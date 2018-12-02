@@ -1,6 +1,6 @@
 package edu.srh.bikehire.dao;
 
-import edu.srh.bikehire.dtointerface.InvoiceDTO;
+import edu.srh.bikehire.dto.InvoiceDTO;
 
 public interface InvoiceDAO {
 	public InvoiceDTO getInvoiceByInvoiceId(String pInvoiceId);

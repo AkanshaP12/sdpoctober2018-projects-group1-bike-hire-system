@@ -1,10 +1,10 @@
 package edu.srh.bikehire.service;
 
 import edu.srh.bikehire.exception.BikeHireSystemException;
-import edu.srh.bikehire.login.Entity;
-import edu.srh.bikehire.login.EntityLoginCredential;
-import edu.srh.bikehire.login.EntityRegistrationCredential;
 import edu.srh.bikehire.login.ResetPasswordValidator;
+import edu.srh.bikehire.service.core.Entity;
+import edu.srh.bikehire.service.core.EntityLoginCredential;
+import edu.srh.bikehire.service.core.EntityRegistrationCredential;
 
 public interface Login {
 	//Login
@@ -18,8 +18,6 @@ public interface Login {
 	public ResetPasswordValidator registerUserAccount(Entity pEntity, EntityRegistrationCredential pEntityCredential) throws BikeHireSystemException;
 	
 	public void resetPassword(EntityRegistrationCredential pEntityCredential) throws BikeHireSystemException;
-	
-	public boolean logout(Entity pEntity);
 	
 	public void deactivateAccount(Entity pEntity) throws BikeHireSystemException;
 	

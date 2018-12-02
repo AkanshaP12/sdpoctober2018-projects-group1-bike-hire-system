@@ -7,5 +7,5 @@ public interface InvoiceDAO {
 	
 	public InvoiceDTO getInvoiceByOrderId(String pOrderId);
 	
-	public boolean addInvoice(InvoiceDTO pInvoiceDTO);
+	public String addInvoice(InvoiceDTO pInvoiceDTO);
 }

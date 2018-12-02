@@ -11,6 +11,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import edu.srh.bikehire.dtointerface.UserCredentialDTO;
+import edu.srh.bikehire.dtointerface.UserDTO;
 
 @Entity
 @Table(name="Credentials")
@@ -66,20 +67,23 @@ public class UserCredentialDTOImpl implements UserCredentialDTO {
 		this.lastModifiedTimeStamp = lastModifiedTimeStamp;
 	}
 
-	protected UserDTOImpl getUserDTO() {
+	public UserDTOImpl getUserDTO() {
 		return userDTO;
 	}
 
-	protected void setUserDTO(UserDTOImpl userDTO) {
+	public void setUserDTO(UserDTOImpl userDTO) {
 		this.userDTO = userDTO;
 	}
 
-	protected UserAccountDTOImpl getUserAccount() {
+	public UserAccountDTOImpl getUserAccount() {
 		return userAccount;
 	}
 
-	protected void setUserAccount(UserAccountDTOImpl userAccount) {
+	public void setUserAccount(UserAccountDTOImpl userAccount) {
 		this.userAccount = userAccount;
 	}
 	
+	public void setUserDTO(UserDTO pUserDTO) {
+		this.userDTO = (UserDTOImpl) pUserDTO;
+	}
 }

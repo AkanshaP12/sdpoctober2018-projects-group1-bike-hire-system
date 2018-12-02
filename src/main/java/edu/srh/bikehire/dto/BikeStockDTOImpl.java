@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import edu.srh.bikehire.dtointerface.BikeStockDTO;
+import edu.srh.bikehire.dtointerface.BikeTypeDTO;
 
 @Entity
 @Table(name="BikeStock")
@@ -65,5 +66,10 @@ public class BikeStockDTOImpl implements Serializable, BikeStockDTO {
 
 	public String getBikeTypeId() {
 		return getBikeType().getBikeTypeId();
+	}
+	
+	public void setBikeTypeDTO(BikeTypeDTO pBikeTypeDTO)
+	{
+		this.bikeType = (BikeTypeDTOImpl) pBikeTypeDTO;
 	}
 }

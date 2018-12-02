@@ -11,7 +11,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import edu.srh.bikehire.dtointerface.CurrentOrderDTO;
 import edu.srh.bikehire.dtointerface.InvoiceDTO;
+import edu.srh.bikehire.dtointerface.WareHouseDTO;
 
 @Entity
 @Table(name= "Invoice")
@@ -103,6 +105,16 @@ public class InvoiceDTOImpl implements InvoiceDTO{
 
 	public void setWarehouseDTO(WareHouseDTOImpl warehouseDTO) {
 		this.warehouseDTO = warehouseDTO;
+	}
+	
+	public void setCurrentOrderDTO(CurrentOrderDTO pCurrentOrderDTO)
+	{
+		this.currentOrderDTOImpl = (CurrentOrderDTOImpl) pCurrentOrderDTO;
+	}
+	
+	public void setWarehouseDTO(WareHouseDTO pWareHouseDTO)
+	{
+		this.warehouseDTO = (WareHouseDTOImpl) pWareHouseDTO;
 	}
 	
 }

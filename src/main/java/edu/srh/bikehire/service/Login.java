@@ -1,6 +1,10 @@
-package edu.srh.bikehire.login;
+package edu.srh.bikehire.service;
 
 import edu.srh.bikehire.exception.BikeHireSystemException;
+import edu.srh.bikehire.login.Entity;
+import edu.srh.bikehire.login.EntityLoginCredential;
+import edu.srh.bikehire.login.EntityRegistrationCredential;
+import edu.srh.bikehire.login.ResetPasswordValidator;
 
 public interface Login {
 	//Login

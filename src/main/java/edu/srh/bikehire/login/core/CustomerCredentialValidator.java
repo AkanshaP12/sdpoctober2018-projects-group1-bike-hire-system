@@ -19,7 +19,9 @@ public class CustomerCredentialValidator {
 	{
 		//validate inputs
 		validateLoginCredentials();
+		
 		//TODO: Call DAO to check whether login username exists in the system
+		
 
 		//If user exists, create hash using salt and validate with input password
 		//TODO: Get user's password hash and password salt from database
@@ -50,5 +52,4 @@ public class CustomerCredentialValidator {
 			throw new BikeHireSystemException(10006);
 		}
 	}
-	
 }

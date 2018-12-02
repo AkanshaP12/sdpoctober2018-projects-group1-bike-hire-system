@@ -27,6 +27,10 @@ public class Customer implements Entity {
 	
 	private EntityAccount mEntityAccount;
 	
+	private byte[] mPhotoBytes;
+	
+	private byte[] mIdentityProofBytes;
+	
 	//GETTER
 	public String getUserId() {
 		return mstrUserId;
@@ -62,6 +66,14 @@ public class Customer implements Entity {
 
 	public EntityAccount getEntityAccount() {
 		return mEntityAccount;
+	}
+
+	public byte[] getPhoto() {
+		return mPhotoBytes;
+	}
+
+	public byte[] getIdentityProof() {
+		return mIdentityProofBytes;
 	}
 	
 	

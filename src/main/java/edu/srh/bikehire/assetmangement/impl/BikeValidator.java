@@ -2,14 +2,14 @@ package edu.srh.bikehire.assetmangement.impl;
 
 import java.util.Calendar;
 
-import edu.srh.bikehire.assetmangement.Bike;
+import edu.srh.bikehire.dto.BikeDTOImpl;
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.util.Util;
 
 public class BikeValidator {
-	private Bike mBike;
+	private BikeDTOImpl mBike;
 
-	public BikeValidator(Bike pBike) {
+	public BikeValidator(BikeDTOImpl pBike) {
 		mBike = pBike;
 		
 	}
@@ -22,7 +22,7 @@ public class BikeValidator {
 			throw new BikeHireSystemException(-1);
 		}
 		
-		if(Util.isEmptyOrNullString(mBike.getBikeTypeID()))
+		if(Util.isEmptyOrNullString(mBike.getBikeTypeId()))
 		{
 			//TODO:Resolve
 			throw new BikeHireSystemException(-1);
@@ -39,7 +39,7 @@ public class BikeValidator {
 		throw new BikeHireSystemException(-1);
 		}
 		
-		if(Util.isEmptyOrNullString(mBike.getBikeManufacturer()))
+		if(Util.isEmptyOrNullString(mBike.getManufacturer()))
 		{
 			//TODO: Resolve
 			throw new BikeHireSystemException(-1);
@@ -55,7 +55,7 @@ public class BikeValidator {
 		validateDepositAmount();
 		
 		//TODO: Resolve
-		if(Util.isEmptyOrNullString(mBike.getWareHouseId()))
+		if(Util.isEmptyOrNullString(mBike.getWareHouseID()))
 		{
 			//TODO: Resolve
 			throw new BikeHireSystemException(-1);
@@ -88,7 +88,7 @@ public class BikeValidator {
 	
 	public void validateBikeID() throws BikeHireSystemException
 	{
-		if(Util.isEmptyOrNullString(mBike.getBikeID()))
+		if(Util.isEmptyOrNullString(mBike.getBikeId()))
 		{
 			//TODO: Resolve
 			throw new BikeHireSystemException(-1);
@@ -98,7 +98,7 @@ public class BikeValidator {
 	
 	public void validateDepositAmount() throws BikeHireSystemException
 	{
-		if(mBike.getBikeDepositAmount() <= 0)
+		if(mBike.getDepositAmount() <= 0)
 		{
 			//TODO: Resolve
 			throw new BikeHireSystemException(-1);

@@ -1,13 +1,13 @@
 package edu.srh.bikehire.assetmangement.impl;
 
-import edu.srh.bikehire.assetmangement.BikeStock;
+import edu.srh.bikehire.dto.BikeStockDTOImpl;
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.util.Util;
 
 public class BikeStockValidator {
-	private BikeStock mBikeStock;
+	private BikeStockDTOImpl mBikeStock;
 
-	public BikeStockValidator(BikeStock pBikeStock) {
+	public BikeStockValidator(BikeStockDTOImpl pBikeStock) {
 		mBikeStock = pBikeStock;
 	}
 	
@@ -19,7 +19,7 @@ public class BikeStockValidator {
 			throw new BikeHireSystemException(-1);
 		}
 		
-		if(Util.isEmptyOrNullString(mBikeStock.getBikeTypeID()))
+		if(Util.isEmptyOrNullString(mBikeStock.getBikeTypeId()))
 		{
 			//TODO:Resolve
 			throw new BikeHireSystemException(-1);
@@ -42,7 +42,7 @@ public class BikeStockValidator {
 	
 	public void validateBikeQuantity() throws BikeHireSystemException
 	{
-		if(Util.isEmptyOrNullString(mBikeStock.getBikeQuantity()))
+		if(mBikeStock.getTotalQuantity()<=0)
 		{
 			//TODO: Resolve
 			throw new BikeHireSystemException(-1);

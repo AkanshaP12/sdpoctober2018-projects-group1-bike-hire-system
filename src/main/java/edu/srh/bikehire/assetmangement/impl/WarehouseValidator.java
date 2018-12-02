@@ -1,13 +1,13 @@
 package edu.srh.bikehire.assetmangement.impl;
 
-import edu.srh.bikehire.assetmangement.Warehouse;
+import edu.srh.bikehire.dto.WareHouseDTOImpl;
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.util.Util;
 
 public class WarehouseValidator {
-	private Warehouse mWarehouse;
+	private WareHouseDTOImpl mWarehouse;
 
-	public WarehouseValidator(Warehouse pWarehouse) {
+	public WarehouseValidator(WareHouseDTOImpl pWarehouse) {
 		mWarehouse = pWarehouse;
 	}
 	
@@ -21,19 +21,19 @@ public class WarehouseValidator {
 		
 		validateWareHouse();
 		
-		if(Util.isEmptyOrNullString(mWarehouse.getWareHouseID()))
+		if(Util.isEmptyOrNullString(mWarehouse.getWarehouseId()))
 		{
 			//TODO:
 			throw new BikeHireSystemException(-1);
 		}
 		
-		if(Util.isEmptyOrNullString(mWarehouse.getWareHouseName()))
+		if(Util.isEmptyOrNullString(mWarehouse.getName()))
 		{
 			//TODO:
 			throw new BikeHireSystemException(-1);
 		}
 		
-		if(Util.isEmptyOrNullString(mWarehouse.getWareHouseLocation()))
+		if(Util.isEmptyOrNullString(mWarehouse.getLocation()))
 		{
 			//TODO:
 			throw new BikeHireSystemException(-1);

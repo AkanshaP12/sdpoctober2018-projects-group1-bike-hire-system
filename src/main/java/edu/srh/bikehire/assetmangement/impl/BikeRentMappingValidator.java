@@ -1,13 +1,13 @@
 package edu.srh.bikehire.assetmangement.impl;
 
-import edu.srh.bikehire.assetmangement.BikeRentDetails;
+import edu.srh.bikehire.dto.BikeRentMappingDTOImpl;
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.util.Util;
 
 public class BikeRentMappingValidator {
-	private BikeRentDetails mBikeRentDetails;
+	private BikeRentMappingDTOImpl mBikeRentDetails;
 
-	public BikeRentMappingValidator(BikeRentDetails pBikeRentDetails) {
+	public BikeRentMappingValidator(BikeRentMappingDTOImpl pBikeRentDetails) {
 		mBikeRentDetails = pBikeRentDetails;
 	}
 	
@@ -20,7 +20,7 @@ public class BikeRentMappingValidator {
 		}
 		
 		
-		if(Util.isEmptyOrNullString(mBikeRentDetails.getBikeTypeID()))
+		if(Util.isEmptyOrNullString(mBikeRentDetails.getBikeTypeId()))
 		{
 			//TODO:
 			throw new BikeHireSystemException(-1);

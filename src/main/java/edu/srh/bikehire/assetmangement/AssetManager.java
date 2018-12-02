@@ -1,23 +1,30 @@
 package edu.srh.bikehire.assetmangement;
 
+import edu.srh.bikehire.dtointerface.BikeDTO;
+import edu.srh.bikehire.dtointerface.BikeRentMappingDTO;
+import edu.srh.bikehire.dtointerface.BikeStatusDTO;
+import edu.srh.bikehire.dtointerface.BikeStockDTO;
+import edu.srh.bikehire.dtointerface.BikeTypeDTO;
+import edu.srh.bikehire.dtointerface.WareHouseDTO;
+
 public interface AssetManager {
-	public String addNewBikeType(BikeType pNewBikeType, BikeStock pBikeStock, BikeRentDetails pRentMapping);
+	public String addNewBikeType(BikeTypeDTO pNewBikeType, BikeStockDTO pBikeStock, BikeRentMappingDTO pRentMapping);
 	
-	public String addNewBikeDetails(Bike pNewBike, BikeStatus pBikeStatus);
+	public String addNewBikeDetails(BikeDTO pNewBike, BikeStatusDTO pBikeStatus);
 	
-	public String addNewWarehouse(Warehouse pNewWarehouse);
+	public String addNewWarehouse(WareHouseDTO pNewWarehouse);
 	
-	public String deleteBikeDetails(Bike pDeleteBike);
+	public String deleteBikeDetails(BikeDTO pDeleteBike);
 	
-	public String updateWarehouse(Warehouse pUpdatedWarehouse);
+	public String updateWarehouse(WareHouseDTO pUpdatedWarehouse);
 	
-	public String updateBikeDetails(Bike pUpdatedBike);
+	public String updateBikeDetails(BikeDTO pUpdatedBike);
 	
-	public String updateBikeRent(BikeRentDetails pUpdatedBikeRent);
+	public String updateBikeRent(BikeRentMappingDTO pUpdatedBikeRent);
 	
-	public String updateBikeStock(BikeStock pUpdatedBikeStock);
+	public String updateBikeStock(BikeStockDTO pUpdatedBikeStock);
 	
-	public String updateBikeStatus(BikeStatus pUpdatedBikeStatus);
+	public String updateBikeStatus(BikeStatusDTO pUpdatedBikeStatus);
 
 	
 }

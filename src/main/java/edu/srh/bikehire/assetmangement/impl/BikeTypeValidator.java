@@ -1,13 +1,13 @@
 package edu.srh.bikehire.assetmangement.impl;
 
-import edu.srh.bikehire.assetmangement.BikeType;
+import edu.srh.bikehire.dto.BikeTypeDTOImpl;
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.util.Util;
 
 public class BikeTypeValidator {
-private BikeType mBikeType;
+private BikeTypeDTOImpl mBikeType;
 
-public BikeTypeValidator(BikeType pBikeType) {
+public BikeTypeValidator(BikeTypeDTOImpl pBikeType) {
 	mBikeType = pBikeType;
 }
 
@@ -19,19 +19,19 @@ public void validateAddBikeType() throws BikeHireSystemException
 		throw new BikeHireSystemException(-1);
 	}
 	
-	if(Util.isEmptyOrNullString(mBikeType.BikeTypeID()))
+	if(Util.isEmptyOrNullString(mBikeType.getBikeTypeId()))
 	{
 		//TODO:Resolve
 		throw new BikeHireSystemException(-1);
 	}
 	
-	if(Util.isEmptyOrNullString(mBikeType.Type()))
+	if(Util.isEmptyOrNullString(mBikeType.getBikeType()))
 	{
 		//TODO:
 		throw new BikeHireSystemException(-1);
 	}
 	
-	if(Util.isEmptyOrNullString(mBikeType.getBikeAgeCategory()))
+	if(Util.isEmptyOrNullString(mBikeType.getAgeCategory()))
 	{
 		//TODO:Resolve
 		throw new BikeHireSystemException(-1);

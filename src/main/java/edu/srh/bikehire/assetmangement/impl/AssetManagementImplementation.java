@@ -1,56 +1,56 @@
 package edu.srh.bikehire.assetmangement.impl;
 
 import edu.srh.bikehire.assetmangement.AssetManager;
-import edu.srh.bikehire.assetmangement.Bike;
-import edu.srh.bikehire.assetmangement.BikeRentMapping;
-import edu.srh.bikehire.assetmangement.BikeStatus;
-import edu.srh.bikehire.assetmangement.BikeStock;
-import edu.srh.bikehire.assetmangement.BikeType;
-import edu.srh.bikehire.assetmangement.WareHouse;
+import edu.srh.bikehire.dtointerface.BikeDTO;
+import edu.srh.bikehire.dtointerface.BikeRentMappingDTO;
+import edu.srh.bikehire.dtointerface.BikeStatusDTO;
+import edu.srh.bikehire.dtointerface.BikeStockDTO;
+import edu.srh.bikehire.dtointerface.BikeTypeDTO;
+import edu.srh.bikehire.dtointerface.WareHouseDTO;
 
 public class AssetManagementImplementation implements AssetManager {
 
-	public String addNewBikeType(BikeType pNewBikeType, BikeStock pBikeStock, BikeRentMapping pRentMapping) {
+	public String addNewBikeType(BikeTypeDTO pNewBikeType, BikeStockDTO pBikeStock, BikeRentMappingDTO pRentMapping) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public String addNewBikeDetails(Bike pNewBike, BikeStatus pBikeStatus) {
+	public String addNewBikeDetails(BikeDTO pNewBike, BikeStatusDTO pBikeStatus) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public String addNewWarehouse(WareHouse pNewWarehouse) {
+	public String addNewWarehouse(WareHouseDTO pNewWarehouse) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public String deleteBikeDetails(Bike pDeleteBike) {
+	public String deleteBikeDetails(BikeDTO pDeleteBike) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public String updateWarehouse(WareHouse pUpdatedWarehouse) {
+	public String updateWarehouse(WareHouseDTO pUpdatedWarehouse) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public String updateBikeDetails(Bike pUpdatedBike) {
+	public String updateBikeDetails(BikeDTO pUpdatedBike) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public String updateBikeRent(BikeRentMapping pUpdatedBikeRent) {
+	public String updateBikeRent(BikeRentMappingDTO pUpdatedBikeRent) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public String updateBikeStock(BikeStock pUpdatedBikeStock) {
+	public String updateBikeStock(BikeStockDTO pUpdatedBikeStock) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public String updateBikeStatus(BikeStatus pUpdatedBikeStatus) {
+	public String updateBikeStatus(BikeStatusDTO pUpdatedBikeStatus) {
 		// TODO Auto-generated method stub
 		return null;
 	}

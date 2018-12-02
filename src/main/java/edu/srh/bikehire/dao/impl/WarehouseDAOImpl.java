@@ -10,6 +10,7 @@ import edu.srh.bikehire.dao.WarehouseDAO;
 import edu.srh.bikehire.daoimpl.util.PersistenceManager;
 import edu.srh.bikehire.dto.WareHouseDTOImpl;
 import edu.srh.bikehire.dtointerface.WareHouseDTO;
+import edu.srh.bikehire.util.Util;
 
 public class WarehouseDAOImpl implements WarehouseDAO {
 
@@ -26,12 +27,16 @@ public class WarehouseDAOImpl implements WarehouseDAO {
 		return results.get(0);
 	}
 
-	public boolean addWarehouse(WareHouseDTO pWarehouse) {
+	public String addWarehouse(WareHouseDTO pWarehouse) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
+		//Generate warehouse id
+		String lstrWarehouseId = Util.getRandomAlphaNumericId();
+		WareHouseDTOImpl lWareHouseDTOImpl = new WareHouseDTOImpl();
+		lWareHouseDTOImpl.setWarehouseId(lstrWarehouseId);
 		em.getTransaction().begin();
-		em.persist(pWarehouse);
+		em.persist(lWareHouseDTOImpl);
 		em.getTransaction().commit();
-		return true;
+		return lstrWarehouseId;
 	}
 
 	public boolean updateWarehouse(WareHouseDTO pWarehouse) {

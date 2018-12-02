@@ -10,6 +10,7 @@ import edu.srh.bikehire.daoimpl.util.PersistenceManager;
 import edu.srh.bikehire.dto.BikeDTOImpl;
 import edu.srh.bikehire.dto.WareHouseDTOImpl;
 import edu.srh.bikehire.dtointerface.BikeDTO;
+import edu.srh.bikehire.util.Util;
 
 public class BikeDAOImpl implements BikeDAO {
 
@@ -27,12 +28,16 @@ public class BikeDAOImpl implements BikeDAO {
 		return lBikes.get(0);
 	}
 
-	public boolean addBike(BikeDTO pBike) {
+	public String addBike(BikeDTO pBike) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
+		//Generate random bike id.
+		String lstrBikeId = Util.getRandomAlphaNumericId();
+		BikeDTOImpl lBikeDTOImpl = (BikeDTOImpl) pBike;
+		lBikeDTOImpl.setBikeId(lstrBikeId);
 		em.getTransaction().begin();
-		em.persist(pBike);
+		em.persist(lBikeDTOImpl);
 		em.getTransaction().commit();
-		return true;
+		return lstrBikeId;
 	}
 
 	public boolean updateBike(BikeDTO pBike) {

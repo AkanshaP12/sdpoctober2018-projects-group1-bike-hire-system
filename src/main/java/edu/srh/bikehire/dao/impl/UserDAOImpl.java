@@ -9,6 +9,7 @@ import edu.srh.bikehire.dao.UserDAO;
 import edu.srh.bikehire.daoimpl.util.PersistenceManager;
 import edu.srh.bikehire.dto.UserDTOImpl;
 import edu.srh.bikehire.dtointerface.UserDTO;
+import edu.srh.bikehire.login.util.LoginUtil;
 
 public class UserDAOImpl implements UserDAO {
 
@@ -24,12 +25,16 @@ public class UserDAOImpl implements UserDAO {
 		return results.get(0);
 	}
 
-	public boolean addUser(UserDTO pNewUser) {
+	public String addUser(UserDTO pNewUser) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
+		//Generate user id
+		String lstrUserId = LoginUtil.getNewUserID();
+		UserDTOImpl lUserDTOImpl = new UserDTOImpl();
+		lUserDTOImpl.setId(lstrUserId);
 		em.getTransaction().begin();
-		em.persist(pNewUser);
+		em.persist(lUserDTOImpl);
 		em.getTransaction().commit();
-		return true;
+		return lstrUserId;
 	}
 
 	public boolean updateUser(UserDTO pUser) {

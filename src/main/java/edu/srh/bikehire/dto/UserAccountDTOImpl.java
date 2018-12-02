@@ -11,6 +11,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import edu.srh.bikehire.dtointerface.UserAccountDTO;
+import edu.srh.bikehire.dtointerface.UserDTO;
 
 @Entity
 @Table(name = "UserAccount")
@@ -70,5 +71,9 @@ public class UserAccountDTOImpl implements UserAccountDTO{
 	}
 	public void setUserDTO(UserDTOImpl userDTO) {
 		this.userDTO = userDTO;
+	}
+	
+	public void setUserDTO(UserDTO pUserDTO) {
+		this.userDTO = (UserDTOImpl) pUserDTO;
 	}
 }

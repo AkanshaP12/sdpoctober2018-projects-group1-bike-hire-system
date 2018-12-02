@@ -3,7 +3,7 @@ package edu.srh.bikehire.login.core;
 import java.util.Calendar;
 
 import edu.srh.bikehire.exception.BikeHireSystemException;
-import edu.srh.bikehire.login.Entity;
+import edu.srh.bikehire.service.core.Entity;
 import edu.srh.bikehire.util.Util;
 
 public class UserDetailsValidator {
@@ -90,6 +90,34 @@ public class UserDetailsValidator {
 		
 		if (mEntity.getIdentityProof() == null) {
 			// TODO: Resolve
+			throw new BikeHireSystemException(-1);
+		}
+		
+		if(mEntity.getEntityAccount() == null) {
+			//TODO: Resolve
+			throw new BikeHireSystemException(-1);
+		}
+		
+		validateUserAccountInformation();
+	}
+	
+	public void validateUserAccountInformation() throws BikeHireSystemException
+	{
+		if(Util.isEmptyOrNullString(mEntity.getEntityAccount().getUserName()))
+		{
+			//TODO: Resolve
+			throw new BikeHireSystemException(-1);
+		}
+		
+		if(Util.isEmptyOrNullString(mEntity.getEntityAccount().getUserRole()))
+		{
+			//TODO: Resolve
+			throw new BikeHireSystemException(-1);
+		}
+		
+		if(Util.isEmptyOrNullString(mEntity.getEntityAccount().getAccountStatus()))
+		{
+			//TODO: Resolve
 			throw new BikeHireSystemException(-1);
 		}
 	}

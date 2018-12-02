@@ -6,9 +6,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import edu.srh.bikehire.dao.InvoiceDAO;
-import edu.srh.bikehire.daoimpl.util.PersistenceManager;
-import edu.srh.bikehire.dto.InvoiceDTOImpl;
-import edu.srh.bikehire.dtointerface.InvoiceDTO;
+import edu.srh.bikehire.dao.impl.util.PersistenceManager;
+import edu.srh.bikehire.dto.InvoiceDTO;
+import edu.srh.bikehire.dto.impl.InvoiceDTOImpl;
 import edu.srh.bikehire.util.Util;
 
 public class InvoiceDAOImpl implements InvoiceDAO {

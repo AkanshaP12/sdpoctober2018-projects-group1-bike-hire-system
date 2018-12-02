@@ -7,4 +7,5 @@ public interface ResetPasswordValidator {
 	
 	public void sendNotfificationForSecurityCode();
 	
+	public boolean isEmailVerificationOnboarding();
 }

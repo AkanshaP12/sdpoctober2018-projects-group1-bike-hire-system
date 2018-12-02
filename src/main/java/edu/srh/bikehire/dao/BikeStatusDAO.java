@@ -2,7 +2,7 @@ package edu.srh.bikehire.dao;
 
 import java.util.List;
 
-import edu.srh.bikehire.dtointerface.BikeStatusDTO;
+import edu.srh.bikehire.dto.BikeStatusDTO;
 
 public interface BikeStatusDAO {
 	public BikeStatusDTO getBikeStatus(String pBikeId);

@@ -6,9 +6,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import edu.srh.bikehire.dao.BikeTypeDAO;
-import edu.srh.bikehire.daoimpl.util.PersistenceManager;
-import edu.srh.bikehire.dto.BikeTypeDTOImpl;
-import edu.srh.bikehire.dtointerface.BikeTypeDTO;
+import edu.srh.bikehire.dao.impl.util.PersistenceManager;
+import edu.srh.bikehire.dto.BikeTypeDTO;
+import edu.srh.bikehire.dto.impl.BikeTypeDTOImpl;
 import edu.srh.bikehire.util.Util;
 
 public class BikeTypeDAOImpl implements BikeTypeDAO {

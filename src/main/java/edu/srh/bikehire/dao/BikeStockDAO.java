@@ -1,7 +1,7 @@
 package edu.srh.bikehire.dao;
 
-import edu.srh.bikehire.dtointerface.BikeStockDTO;
-import edu.srh.bikehire.dtointerface.BikeTypeDTO;
+import edu.srh.bikehire.dto.BikeStockDTO;
+import edu.srh.bikehire.dto.BikeTypeDTO;
 
 public interface BikeStockDAO {
 	public BikeStockDTO getBikeStock(BikeTypeDTO bikeType);

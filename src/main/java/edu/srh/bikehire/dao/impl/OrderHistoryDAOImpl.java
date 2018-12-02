@@ -6,9 +6,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import edu.srh.bikehire.dao.OrderHistoryDAO;
-import edu.srh.bikehire.daoimpl.util.PersistenceManager;
-import edu.srh.bikehire.dto.OrderHistoryDTOImpl;
-import edu.srh.bikehire.dtointerface.OrderHistoryDTO;
+import edu.srh.bikehire.dao.impl.util.PersistenceManager;
+import edu.srh.bikehire.dto.OrderHistoryDTO;
+import edu.srh.bikehire.dto.impl.OrderHistoryDTOImpl;
 
 public class OrderHistoryDAOImpl implements OrderHistoryDAO {
 

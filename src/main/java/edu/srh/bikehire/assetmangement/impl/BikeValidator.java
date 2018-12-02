@@ -2,8 +2,8 @@ package edu.srh.bikehire.assetmangement.impl;
 
 import java.util.Calendar;
 
-import edu.srh.bikehire.dto.BikeDTOImpl;
-import edu.srh.bikehire.dtointerface.BikeDTO;
+import edu.srh.bikehire.dto.BikeDTO;
+import edu.srh.bikehire.dto.impl.BikeDTOImpl;
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.util.Util;
 

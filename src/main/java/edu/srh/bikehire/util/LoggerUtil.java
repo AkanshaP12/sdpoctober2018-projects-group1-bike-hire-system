@@ -4,19 +4,19 @@ import edu.srh.bikehire.startup.AppInitializer;
 
 public class LoggerUtil {
 	
-	public static void logInfo(String pMessage)
+	public static void logInfo(String pRequestId, String pMethodName, String pMessage)
 	{
-		AppInitializer.getLoggerInterface().logInfo(pMessage);
+		AppInitializer.getLoggerInterface().logInfo(pRequestId,pMethodName, pMessage);
 	}
 	
-	public static void logDebug(String pMessage)
+	public static void logDebug(String pRequestId, String pMethodName, String pMessage)
 	{
-		AppInitializer.getLoggerInterface().logDebug(pMessage);
+		AppInitializer.getLoggerInterface().logDebug(pRequestId,pMethodName,pMessage);
 	}
 	
-	public static void logException(String pMessage, Throwable pThrowable)
+	public static void logException(String pRequestId, String pMethodName, String pMessage, Throwable pThrowable)
 	{
-		AppInitializer.getLoggerInterface().logException(pMessage, pThrowable);
+		AppInitializer.getLoggerInterface().logException(pRequestId, pMethodName, pMessage, pThrowable);
 	}
 	
 }

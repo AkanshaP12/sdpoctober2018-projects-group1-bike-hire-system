@@ -23,9 +23,12 @@ public class DBBasedResetPasswordValidator implements ResetPasswordValidator {
 	
 	private String mstrUserEmailId;
 	
-	public DBBasedResetPasswordValidator(String pEmailAddress)
+	private boolean mbIsEmailVerificationOnboarding;
+	
+	public DBBasedResetPasswordValidator(String pEmailAddress, boolean pIsEmailVerification)
 	{
 		mstrUserEmailId = pEmailAddress;
+		mbIsEmailVerificationOnboarding = pIsEmailVerification;
 	}
 	
 	public void validateToken(String pToken) throws BikeHireSystemException {
@@ -85,6 +88,10 @@ public class DBBasedResetPasswordValidator implements ResetPasswordValidator {
 
 	public Calendar getLastAttemptTime() {
 		return mLastAttemptTime;
+	}
+
+	public boolean isEmailVerificationOnboarding() {
+		return mbIsEmailVerificationOnboarding;
 	}
 	
 }

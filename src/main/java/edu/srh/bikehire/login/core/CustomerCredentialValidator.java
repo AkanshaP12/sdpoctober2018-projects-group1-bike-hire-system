@@ -1,8 +1,10 @@
 package edu.srh.bikehire.login.core;
 
+import edu.srh.bikehire.dao.UserCredentialDAO;
+import edu.srh.bikehire.dto.UserCredentialDTO;
 import edu.srh.bikehire.exception.BikeHireSystemException;
-import edu.srh.bikehire.login.EntityLoginCredential;
 import edu.srh.bikehire.login.util.PasswordHashGenerator;
+import edu.srh.bikehire.service.core.EntityLoginCredential;
 import edu.srh.bikehire.util.Util;
 
 public class CustomerCredentialValidator {
@@ -15,18 +17,21 @@ public class CustomerCredentialValidator {
 		mEntityLoginCredential = pEntityLoginCredential;
 	}
 	
-	public void validateLoginCredentials() throws BikeHireSystemException
+	public String validateLoginCredentials(UserCredentialDAO pUserCredentialDAO) throws BikeHireSystemException
 	{
 		//validate inputs
-		validateLoginCredentials();
+		validateLoginInputs();
 		
-		//TODO: Call DAO to check whether login username exists in the system
-		
+		UserCredentialDTO lReturnedUserCredentials = pUserCredentialDAO.getUserCredentialByUserName(mEntityLoginCredential.getUserName());
 
+		if(lReturnedUserCredentials == null)
+		{
+			//ERROR_MESSAGE : Invalid login credentials provided. Username doesn't exists.
+			throw new BikeHireSystemException(10024);
+		}
 		//If user exists, create hash using salt and validate with input password
-		//TODO: Get user's password hash and password salt from database
-		String lstrOriginPasswordHash = "";
-		String lstrPasswordSalt = "";
+		String lstrOriginPasswordHash = lReturnedUserCredentials.getPasswordHash();
+		String lstrPasswordSalt = lReturnedUserCredentials.getPasswordSalt();
 		
 		boolean lbIsValidPassword = PasswordHashGenerator.verifyPasswordHash(lstrOriginPasswordHash, mEntityLoginCredential.getPassword(), lstrPasswordSalt);
 		
@@ -36,6 +41,7 @@ public class CustomerCredentialValidator {
 			throw new BikeHireSystemException(10023);
 		}
 		
+		return lReturnedUserCredentials.getUserID();
 	}
 	
 	private void validateLoginInputs() throws BikeHireSystemException

@@ -9,16 +9,16 @@ public class Log4JLogger implements LoggerInterface {
 
 	private static final Logger LOG = LogManager.getLogger(Log4JLogger.class);
 
-	public void logInfo(String pMessage) {
-		LOG.info(pMessage);
+	public void logInfo(String pRequestId, String pMethodName, String pMessage) {
+		LOG.info(pRequestId + " :: " + pMethodName + " :: " + pMessage);
+	} 
+
+	public void logDebug(String pRequestId, String pMethodName, String pMessage) {
+		LOG.debug(pRequestId + " :: " + pMethodName + " :: " + pMessage);
 	}
 
-	public void logDebug(String pMessage) {
-		LOG.debug(pMessage);
-	}
-
-	public void logException(String pMessage, Throwable pThrowable) {
-		LOG.error(pMessage, pThrowable);
+	public void logException(String pRequestId, String pMethodName, String pMessage, Throwable pThrowable) {
+		LOG.error(pRequestId + " :: " + pMethodName + " :: " + pMessage, pThrowable);
 	}
 
 }

@@ -7,9 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import edu.srh.bikehire.dao.UserCredentialDAO;
-import edu.srh.bikehire.daoimpl.util.PersistenceManager;
-import edu.srh.bikehire.dto.UserCredentialDTOImpl;
-import edu.srh.bikehire.dtointerface.UserCredentialDTO;
+import edu.srh.bikehire.dao.impl.util.PersistenceManager;
+import edu.srh.bikehire.dto.UserCredentialDTO;
+import edu.srh.bikehire.dto.impl.UserCredentialDTOImpl;
 
 public class UserCredentialDAOImpl implements UserCredentialDAO{
 

@@ -13,10 +13,10 @@ public interface Login {
 	
 	public ResetPasswordValidator registerUserAccount(Entity pEntity, EntityRegistrationCredential pEntityCredential) throws BikeHireSystemException;
 	
-	public void resetPassword(EntityRegistrationCredential pEntityCredential);
+	public void resetPassword(EntityRegistrationCredential pEntityCredential) throws BikeHireSystemException;
 	
 	public boolean logout(Entity pEntity);
 	
-	public void deactivateAccount(Entity pEntity);
+	public void deactivateAccount(Entity pEntity) throws BikeHireSystemException;
 	
 }

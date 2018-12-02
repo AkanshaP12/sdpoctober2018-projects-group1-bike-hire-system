@@ -36,6 +36,7 @@ public class ExceptionUtil {
 		smapErrorCodesToMessages.put(10020L, new ErrorMessage("Entity confirm password is not provided.", "Please provide confirm password for registration"));
 		smapErrorCodesToMessages.put(10021L, new ErrorMessage("Password mismatch.", "New password and confirm password do not match."));
 		smapErrorCodesToMessages.put(10022L, new ErrorMessage("Password does not match password criteria.", "Entered password does not match password criteria."));
+		smapErrorCodesToMessages.put(10023L, new ErrorMessage("Invalid login credentials provided. Password hash matching failed.", "Invalid login credentials provided."));
 		
 	}
 	

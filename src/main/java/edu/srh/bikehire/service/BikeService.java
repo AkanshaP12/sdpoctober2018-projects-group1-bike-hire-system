@@ -6,7 +6,7 @@ import edu.srh.bikehire.dao.BikeDAO;
 
 public interface BikeService{
 
-	List<BikeDAO> getAllBikes();
+	List<BikeDAO> getAllBikes(boolean pSortPriceDescending);
 
 	BikeDAO getBikeByID(int ID);
 	

@@ -5,6 +5,7 @@ import java.util.Calendar;
 public interface BikeStatusDTO {
 
 	public String getBikeId();
+	public void setBikeDTO(BikeDTO pBikeDTO);
 	public String getStatus();
 	public Calendar getLastServiceDate();
 	public Calendar getLastModifiedDate();

@@ -11,6 +11,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import edu.srh.bikehire.dtointerface.BikeRentMappingDTO;
+import edu.srh.bikehire.dtointerface.BikeTypeDTO;
 
 @Entity
 @Table(name="BikeRentMapping")
@@ -51,12 +52,17 @@ public class BikeRentMappingDTOImpl implements BikeRentMappingDTO {
 	public Calendar getLastModifiedTimeStamp() {
 		return lastModifiedTimeStamp;
 	}
+	
 	public void setLastModifiedTimeStamp(Calendar lastModifiedTimeStamp) {
 		this.lastModifiedTimeStamp = lastModifiedTimeStamp;
 	}
+	
 	public String getBikeTypeId() {
 		return getBikeType().getBikeTypeId();
 	}
 	
+	public void setBikeType(BikeTypeDTO pBikeTypeDTO) {
+		this.bikeType = (BikeTypeDTOImpl) pBikeTypeDTO;
+	}
 		
 }

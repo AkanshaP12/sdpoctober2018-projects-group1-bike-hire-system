@@ -13,7 +13,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import edu.srh.bikehire.dtointerface.BikeDTO;
 import edu.srh.bikehire.dtointerface.CurrentOrderDTO;
+import edu.srh.bikehire.dtointerface.UserDTO;
 
 @Entity
 @Table(name= "CurrentOrder")
@@ -88,16 +90,23 @@ public class CurrentOrderDTOImpl implements CurrentOrderDTO {
 	public void setOrderMode(String orderMode) {
 		this.orderMode = orderMode;
 	}
-	protected UserDTOImpl getUserDTO() {
+	public UserDTOImpl getUserDTO() {
 		return userDTO;
 	}
-	protected void setUserDTO(UserDTOImpl userDTO) {
+	public void setUserDTO(UserDTOImpl userDTO) {
 		this.userDTO = userDTO;
 	}
-	protected BikeDTOImpl getBikeDTO() {
+	public BikeDTOImpl getBikeDTO() {
 		return bikeDTO;
 	}
-	protected void setBikeDTO(BikeDTOImpl bikeDTO) {
+	public void setBikeDTO(BikeDTOImpl bikeDTO) {
 		this.bikeDTO = bikeDTO;
+	}
+	public void setUserDTO(UserDTO pUserDTO) {
+		this.userDTO = (UserDTOImpl) pUserDTO;
+	}
+	public void setBikeDTO(BikeDTO pBikeDTO)
+	{
+		this.bikeDTO = (BikeDTOImpl) pBikeDTO;
 	}
 }

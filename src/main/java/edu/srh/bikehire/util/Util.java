@@ -1,5 +1,6 @@
 package edu.srh.bikehire.util;
 
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,5 +27,10 @@ public class Util {
 		}
 		
 		return false;
+	}
+	
+	public static String getRandomAlphaNumericId()
+	{
+		return UUID.randomUUID().toString().replace("-","");
 	}
 }

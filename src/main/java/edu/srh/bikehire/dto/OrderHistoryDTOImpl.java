@@ -11,7 +11,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import edu.srh.bikehire.dtointerface.BikeDTO;
+import edu.srh.bikehire.dtointerface.InvoiceDTO;
 import edu.srh.bikehire.dtointerface.OrderHistoryDTO;
+import edu.srh.bikehire.dtointerface.UserDTO;
 
 @Entity
 @Table(name = "OrderHistory")
@@ -31,7 +34,7 @@ public class OrderHistoryDTOImpl implements OrderHistoryDTO {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "BikeID")
-	private BikeDTOImpl bikeID;
+	private BikeDTOImpl bikeDTO;
 	
 	@Column(name = "BookingTimeStamp")
 	private Calendar bookingTimeStamp;
@@ -57,7 +60,11 @@ public class OrderHistoryDTOImpl implements OrderHistoryDTO {
 	}
 	
 	public String getBikeID() {
-		return bikeID.getBikeId();
+		return bikeDTO.getBikeId();
+	}
+	
+	public BikeDTOImpl getBikeDTO(){
+		return bikeDTO;
 	}
 	
 	public Calendar getBookingTimeStamp() {
@@ -90,8 +97,16 @@ public class OrderHistoryDTOImpl implements OrderHistoryDTO {
 	public void setUserDTO(UserDTOImpl userDTO) {
 		this.userDTO = userDTO;
 	}
-	public void setBikeID(BikeDTOImpl bikeID) {
-		this.bikeID = bikeID;
+	public void setBikeDTO(BikeDTOImpl bikeID) {
+		this.bikeDTO = bikeID;
 	}
-	
+	public void setInvoiceDTO(InvoiceDTO pInvoiceDTO) {
+		this.invoiceDTO = (InvoiceDTOImpl) pInvoiceDTO;
+	}
+	public void setUserDTO(UserDTO pUserDTO) {
+		this.userDTO = (UserDTOImpl) pUserDTO;
+	}
+	public void setBikeDTO(BikeDTO pBikeDTO) {
+		this.bikeDTO = (BikeDTOImpl) pBikeDTO;
+	}
 }

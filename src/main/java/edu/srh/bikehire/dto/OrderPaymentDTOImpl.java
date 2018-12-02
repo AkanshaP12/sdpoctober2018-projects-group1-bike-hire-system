@@ -7,6 +7,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import edu.srh.bikehire.dtointerface.CurrentOrderDTO;
 import edu.srh.bikehire.dtointerface.OrderPaymentDTO;
 
 @Entity
@@ -61,5 +62,9 @@ public class OrderPaymentDTOImpl implements OrderPaymentDTO {
 	}
 	public void setCurrentOrder(CurrentOrderDTOImpl currentOrder) {
 		this.currentOrder = currentOrder;
+	}
+	
+	public void setCurrentOrderDTO(CurrentOrderDTO pCurrentOrderDTO) {
+		this.currentOrder = (CurrentOrderDTOImpl) pCurrentOrderDTO;
 	}
 }

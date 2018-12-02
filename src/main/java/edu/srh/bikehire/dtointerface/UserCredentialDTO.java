@@ -9,5 +9,5 @@ public interface UserCredentialDTO {
 	public String getPasswordSalt();
 	public String getPasswordHash();
 	public Calendar getLastModifiedTimeStamp();	
-
+	public void setUserDTO(UserDTO pUserDTO);
 }

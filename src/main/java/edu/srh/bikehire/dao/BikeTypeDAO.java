@@ -9,5 +9,5 @@ public interface BikeTypeDAO {
 	
 	public List<BikeTypeDTO> getBikeTypes();
 	
-	public boolean saveBikeType(BikeTypeDTO bikeType);
+	public String saveBikeType(BikeTypeDTO bikeType);
 }

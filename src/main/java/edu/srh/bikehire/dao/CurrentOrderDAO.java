@@ -7,7 +7,7 @@ public interface CurrentOrderDAO {
 	
 	public CurrentOrderDTO getCurrentOrderByBikeId(String pBikeId);
 	
-	public boolean addCurrentOrder(CurrentOrderDTO pCurrentOrderDTO);
+	public String addCurrentOrder(CurrentOrderDTO pCurrentOrderDTO);
 	
 	public boolean updateCurrentOrder(CurrentOrderDTO pCurrentOrderDTO);
 	

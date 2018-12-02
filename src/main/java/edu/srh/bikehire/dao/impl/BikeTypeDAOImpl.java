@@ -9,6 +9,7 @@ import edu.srh.bikehire.dao.BikeTypeDAO;
 import edu.srh.bikehire.daoimpl.util.PersistenceManager;
 import edu.srh.bikehire.dto.BikeTypeDTOImpl;
 import edu.srh.bikehire.dtointerface.BikeTypeDTO;
+import edu.srh.bikehire.util.Util;
 
 public class BikeTypeDAOImpl implements BikeTypeDAO {
 
@@ -34,12 +35,17 @@ public class BikeTypeDAOImpl implements BikeTypeDAO {
 		return results;
 	}
 
-	public boolean saveBikeType(BikeTypeDTO bikeType) {
+	public String saveBikeType(BikeTypeDTO bikeType) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
+		//Generate random bike type id.
+		String lstrBikeTypeId = Util.getRandomAlphaNumericId();
 		em.getTransaction().begin();
-		em.persist(bikeType);
+		
+		BikeTypeDTOImpl lBikeTypeDTOImpl = new BikeTypeDTOImpl();
+		lBikeTypeDTOImpl.setBikeTypeId(lstrBikeTypeId);
+		em.persist(lBikeTypeDTOImpl);
 		em.getTransaction().commit();
-		return true;
+		return lstrBikeTypeId;
 	}
 
 }

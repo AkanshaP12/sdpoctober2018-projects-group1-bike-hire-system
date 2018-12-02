@@ -7,5 +7,5 @@ public interface OrderPaymentDAO {
 	
 	public OrderPaymentDTO getOrderPaymentByOrderId(String pOrderId);
 	
-	public boolean addOrderPayment(OrderPaymentDTO pOrderPaymentDTO);
+	public String addOrderPayment(OrderPaymentDTO pOrderPaymentDTO);
 }

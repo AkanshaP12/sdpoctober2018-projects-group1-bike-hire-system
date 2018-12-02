@@ -111,7 +111,7 @@ public class UserDTOImpl implements UserDTO{
 	public Calendar getDOB() {
 		return dOB;
 	}
-	protected void setDOB(Calendar dOB) {
+	public void setDOB(Calendar dOB) {
 		this.dOB = dOB;
 	}
 }

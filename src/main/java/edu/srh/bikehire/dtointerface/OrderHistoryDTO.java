@@ -11,5 +11,7 @@ public interface OrderHistoryDTO {
 	public Calendar getBookingTimeStamp();
 	public Calendar getPickupTimeStamp();
 	public Calendar getReturnedTimeStamp();
-	
+	public void setInvoiceDTO(InvoiceDTO pInvoiceDTO);
+	public void setUserDTO(UserDTO pUserDTO);
+	public void setBikeDTO(BikeDTO pBikeDTO);
 }

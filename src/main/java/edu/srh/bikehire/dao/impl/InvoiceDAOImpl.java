@@ -9,6 +9,7 @@ import edu.srh.bikehire.dao.InvoiceDAO;
 import edu.srh.bikehire.daoimpl.util.PersistenceManager;
 import edu.srh.bikehire.dto.InvoiceDTOImpl;
 import edu.srh.bikehire.dtointerface.InvoiceDTO;
+import edu.srh.bikehire.util.Util;
 
 public class InvoiceDAOImpl implements InvoiceDAO {
 
@@ -36,12 +37,16 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 		return results.get(0);
 	}
 
-	public boolean addInvoice(InvoiceDTO pInvoiceDTO) {
+	public String addInvoice(InvoiceDTO pInvoiceDTO) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
+		//Generate random invoice id.
+		String lstrInvoiceId = Util.getRandomAlphaNumericId();
+		InvoiceDTOImpl lInvoiceDTOImpl = (InvoiceDTOImpl) pInvoiceDTO;
+		lInvoiceDTOImpl.setInvoiceID(lstrInvoiceId);
 		em.getTransaction().begin();
-		em.persist(pInvoiceDTO);
+		em.persist(lInvoiceDTOImpl);
 		em.getTransaction().commit();
-		return true;
+		return lstrInvoiceId;
 	}
 
 }

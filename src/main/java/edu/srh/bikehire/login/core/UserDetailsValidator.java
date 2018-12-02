@@ -38,7 +38,7 @@ public class UserDetailsValidator {
 			throw new BikeHireSystemException(10010);
 		}
 		
-		if(Util.isValidEmailAddress(mEntity.getEmailId()))
+		if(!Util.isValidEmailAddress(mEntity.getEmailId()))
 		{
 			//Error_Message : Entity email id {0} is not valid.
 			throw new BikeHireSystemException(10011, new Object[] {mEntity.getEmailId()});

@@ -2,37 +2,67 @@ package edu.srh.bikehire.login.impl;
 
 import java.util.Calendar;
 
-import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.login.Entity;
+import edu.srh.bikehire.login.EntityAccount;
 
 public class Customer implements Entity {
 	
-	public long getUserId() {
-		
-		return 0;
+	//MEMBERS
+	
+	private String mstrUserId;
+	
+	private String mstrFirstName;
+	
+	private String mstrLastName;
+	
+	private String mstrGender;
+	
+	private String mstrAddress;
+	
+	private Calendar mDOB;
+	
+	private String mstrEmailID;
+	
+	private String mstrPhoneNumber;
+	
+	private EntityAccount mEntityAccount;
+	
+	//GETTER
+	public String getUserId() {
+		return mstrUserId;
 	}
 
 	public String getFirstName() {
-		return null;
+		return mstrFirstName;
 	}
 
 	public String getLastName() {
-		// TODO Auto-generated method stub
-		return null;
+		return mstrLastName;
 	}
 
 	public String getGender() {
-		// TODO Auto-generated method stub
-		return null;
+		return mstrGender;
 	}
 
 	public String getAddress() {
-		// TODO Auto-generated method stub
-		return null;
+		return mstrAddress;
 	}
 
 	public Calendar getDOB() {
-		// TODO Auto-generated method stub
-		return null;
+		return mDOB;
 	}
+
+	public String getEmailId() {
+		return mstrEmailID;
+	}
+
+	public String getPhoneNumber() {
+		return mstrPhoneNumber;
+	}
+
+	public EntityAccount getEntityAccount() {
+		return mEntityAccount;
+	}
+	
+	
 }

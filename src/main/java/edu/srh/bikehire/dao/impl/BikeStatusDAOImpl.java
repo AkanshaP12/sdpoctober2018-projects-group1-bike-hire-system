@@ -54,4 +54,13 @@ public class BikeStatusDAOImpl implements BikeStatusDAO {
 		List<BikeStatusDTO> lBikeStatues = lQuery.getResultList();
 		return lBikeStatues;
 	}
+	
+	public long getBikeCount(String pStatus, String pBikeTypeId)
+	{
+		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
+		Query lQuery = em.createQuery("select count(bs) from BikeStatus bs, Bike b, BikeType bt where b.bikeId = bs.bike and bs.status = :bikestatus and b.bikeType = bt.bikeTypeId and bt.bikeTypeId = :biketyp");
+        lQuery.setParameter("bikestatus", pStatus);
+        lQuery.setParameter("biketyp", pBikeTypeId);
+        return (Long) lQuery.getSingleResult();
+	}
 }

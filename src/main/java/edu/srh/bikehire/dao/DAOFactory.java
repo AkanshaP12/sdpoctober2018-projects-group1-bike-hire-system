@@ -5,10 +5,16 @@ import edu.srh.bikehire.dao.impl.BikeRentMappingDAOImpl;
 import edu.srh.bikehire.dao.impl.BikeStatusDAOImpl;
 import edu.srh.bikehire.dao.impl.BikeStockDAOImpl;
 import edu.srh.bikehire.dao.impl.BikeTypeDAOImpl;
+import edu.srh.bikehire.dao.impl.CurrentOrderDAOImpl;
+import edu.srh.bikehire.dao.impl.InvoiceDAOImpl;
+import edu.srh.bikehire.dao.impl.OrderHistoryDAOImpl;
 import edu.srh.bikehire.dao.impl.UserAccountDAOImpl;
 import edu.srh.bikehire.dao.impl.UserCredentialDAOImpl;
 import edu.srh.bikehire.dao.impl.UserDAOImpl;
 import edu.srh.bikehire.dao.impl.WarehouseDAOImpl;
+import edu.srh.bikehire.service.core.Invoice;
+import edu.srh.bikehire.service.core.Order;
+import edu.srh.bikehire.service.impl.OrderServiceImpl;
 
 public class DAOFactory {
 	
@@ -27,7 +33,7 @@ public class DAOFactory {
 		return new BikeStockDAOImpl();
 	}
 	
-	public static BikeTypeDAO getDefualtBikeTypeDAOImpl()
+	public static BikeTypeDAO getDefaultBikeTypeDAOImpl()
 	{
 		return new BikeTypeDAOImpl();
 	}
@@ -52,9 +58,23 @@ public class DAOFactory {
 		return new UserAccountDAOImpl();
 	}
 	
-	public static UserCredentialDAO getDefualtUserCredentialDAOImpl()
+	public static UserCredentialDAO getDefaultUserCredentialDAOImpl()
 	{
 		return new UserCredentialDAOImpl();
 	}
 	
+	public static CurrentOrderDAO getDefaultOrderDAOImpl()
+	{
+		return new CurrentOrderDAOImpl();
+	}
+	
+	public static InvoiceDAO getDefaultInvoiceDAOImpl()
+	{
+		return new InvoiceDAOImpl();
+	}
+	
+	public static OrderHistoryDAO getDefaultOrderHistoryImpl() 
+	{
+		return new OrderHistoryDAOImpl();
+	}
 }

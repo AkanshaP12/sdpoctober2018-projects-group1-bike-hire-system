@@ -1,21 +1,21 @@
 package edu.srh.bikehire.service.core;
-
-import java.math.BigInteger;
-import java.sql.Timestamp;
+import java.util.Calendar;
 
 public interface Order {
 	
-	public BigInteger OrderID();
+	public String getOderId();
 	
-	public BigInteger InvoiceID();
+	public String getUserId();
 	
-	public BigInteger UserID();
+	public String getBikeId();
 	
-	public BigInteger BikeID();
+	public Calendar getBookingTimestamp();
 	
-	public Timestamp BookingTimeStamp();
+	public Calendar getPickupTimestamp();
 	
-	public Timestamp PickupTimeStamp();
+	public Calendar getDropoffTimestamp();
 	
-	public Timestamp ReturnedTimeStamp();
+	public Calendar getActualdropoffTimestamp();
+	
+	 public String getOrderMode();
 }

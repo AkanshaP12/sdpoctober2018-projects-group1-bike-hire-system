@@ -35,7 +35,7 @@ public class DashboardServiceImpl implements DashboardService {
 	public void initializeservice() {
 		bikeDAO = DAOFactory.getDefualtBikeDAOImpl();
 		bikeStatusDAO = DAOFactory.getDefaultBikeStatusDAOImpl();
-		currentorderDAO = DAOFactory.getDefaultCurrentOrderDAOImpl();
+		currentorderDAO = DAOFactory.getDefaultOrderDAOImpl();
 		userDAO = DAOFactory.getDefaultUserDAOImpl();
 	}
 

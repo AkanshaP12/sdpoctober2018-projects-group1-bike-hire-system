@@ -41,7 +41,7 @@ public class DBBasedLoginService implements Login {
 	{
 		mUserDAO = DAOFactory.getDefaultUserDAOImpl();
 		mUserAccountDAO = DAOFactory.getDefaultUserAccountDAOImpl();
-		mUserCredentialDAO = DAOFactory.getDefualtUserCredentialDAOImpl();
+		mUserCredentialDAO = DAOFactory.getDefaultUserCredentialDAOImpl();
 	}
 	
 	

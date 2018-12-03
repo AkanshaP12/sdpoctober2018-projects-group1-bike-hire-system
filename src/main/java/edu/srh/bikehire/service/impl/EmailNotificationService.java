@@ -1,17 +1,17 @@
-package edu.srh.bikehire.dashboard.impl;
+package edu.srh.bikehire.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.srh.bikehire.dashboard.EmailNotificationType;
-import edu.srh.bikehire.dashboard.Invoice;
-import edu.srh.bikehire.dashboard.Notification;
-import edu.srh.bikehire.dashboard.Order;
+import edu.srh.bikehire.service.core.Invoice;
 import edu.srh.bikehire.dashboard.util.MailSender;
 import edu.srh.bikehire.exception.BikeHireSystemException;
-import edu.srh.bikehire.login.Entity;
+import edu.srh.bikehire.service.NotificationService;
+import edu.srh.bikehire.service.core.Entity;
+import edu.srh.bikehire.service.core.Order;
 
-public class EmailNotification implements Notification {
+public class EmailNotificationService implements NotificationService {
 
 	public void emailVerification(Entity pEntity, String pSecurityCode, int pType) throws BikeHireSystemException {
 		MailSender lNewEmail = MailSender.getInstance();
@@ -61,8 +61,7 @@ public class EmailNotification implements Notification {
 		lInvoice.sendEmail(pToEmailAddresses, EmailNotificationType.BOOKING_INVOICE.getSubjectLine(),
 				EmailNotificationType.BOOKING_CONFIRMATION.getBodyText());
 	}
-
 	
-	}
+}
 
 

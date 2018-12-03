@@ -1,4 +1,4 @@
-package edu.srh.bikehire.dashboard;
+package edu.srh.bikehire.service.core;
 import java.util.Calendar;
 
 public interface Order {

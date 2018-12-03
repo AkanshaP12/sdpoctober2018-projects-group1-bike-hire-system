@@ -55,11 +55,6 @@ public class UserValidator {
 
 		}
 
-		if (mUser.getPhoto() == null) {
-			// TODO: Resolve
-			throw new BikeHireSystemException(-1);
-		}
-		
 		if (Util.isValidEmailAddress(mUser.getEmailId())) {
 			// TODO: Resolve
 			throw new BikeHireSystemException(-1);
@@ -71,10 +66,7 @@ public class UserValidator {
 			throw new BikeHireSystemException(-1);
 		}
 
-		if (mUser.getIdentityProof() == null) {
-			// TODO: Resolve
-			throw new BikeHireSystemException(-1);
-		}
+		
 	}
 	
 	

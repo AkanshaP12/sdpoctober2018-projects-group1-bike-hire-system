@@ -12,4 +12,6 @@ public interface BikeStatusDAO {
 	public boolean updateBikeStatus(BikeStatusDTO pBikeStatus);
 	
 	public List<BikeStatusDTO> getAllBikesBasedOnStatus(String pStatus);
+	
+	public long getBikeCount(String pStatus, String pBikeTypeId);
 }

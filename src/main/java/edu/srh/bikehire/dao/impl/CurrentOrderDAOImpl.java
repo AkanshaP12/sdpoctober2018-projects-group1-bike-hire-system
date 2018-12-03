@@ -1,9 +1,11 @@
 package edu.srh.bikehire.dao.impl;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 
 import edu.srh.bikehire.dao.CurrentOrderDAO;
 import edu.srh.bikehire.dao.impl.util.PersistenceManager;
@@ -71,5 +73,26 @@ public class CurrentOrderDAOImpl implements CurrentOrderDAO {
 		}
 		return false;
 	}
-
+	
+	public List<CurrentOrderDTO> getOrdersBasedOnPickUpDate(Calendar pFromCalendar, Calendar pToCalendar)
+	{
+		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
+		Query lQuery = em.createQuery("from CurrentOrder where PickupTimeStamp >= :fromTime and PickupTimeStamp <= :toTime ");
+		lQuery.setParameter("fromTime", pFromCalendar, TemporalType.TIMESTAMP);
+		lQuery.setParameter("toTime", pToCalendar, TemporalType.TIMESTAMP);
+		
+		List<CurrentOrderDTO> results = lQuery.getResultList();
+		return results;
+	}
+	
+	public List<CurrentOrderDTO> getOrdersBasedOnDropOffDate(Calendar pFromCalendar, Calendar pToCalendar)
+	{
+		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
+		Query lQuery = em.createQuery("from CurrentOrder where DropOffTimeStamp >= :fromTime and DropOffTimeStamp <= :toTime ");
+		lQuery.setParameter("fromTime", pFromCalendar, TemporalType.TIMESTAMP);
+		lQuery.setParameter("toTime", pToCalendar, TemporalType.TIMESTAMP);
+		
+		List<CurrentOrderDTO> results = lQuery.getResultList();
+		return results;
+	}
 }

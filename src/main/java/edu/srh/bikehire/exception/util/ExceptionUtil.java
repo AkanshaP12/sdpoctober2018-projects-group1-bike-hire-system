@@ -36,7 +36,13 @@ public class ExceptionUtil {
 		smapErrorCodesToMessages.put(10020L, new ErrorMessage("Entity confirm password is not provided.", "Please provide confirm password for registration"));
 		smapErrorCodesToMessages.put(10021L, new ErrorMessage("Password mismatch.", "New password and confirm password do not match."));
 		smapErrorCodesToMessages.put(10022L, new ErrorMessage("Password does not match password criteria.", "Entered password does not match password criteria."));
-		
+		smapErrorCodesToMessages.put(10023L, new ErrorMessage("Invalid login credentials provided. Password hash matching failed.", "Invalid login credentials provided."));
+		smapErrorCodesToMessages.put(10024L, new ErrorMessage("Invalid login credentials provided. Username doesn't exists. ", "Invalid login credentials provided."));
+		smapErrorCodesToMessages.put(10025L, new ErrorMessage("Invalid email address provided for reset password. ", "Invalid email address provided for reset password."));
+		smapErrorCodesToMessages.put(10026L, new ErrorMessage("Invalid email address {0} provided for reset password. ", "Account doesn't exist for email address {0}"));
+		smapErrorCodesToMessages.put(10027L, new ErrorMessage("User with email address {0} already exists. ", "User account already exists with emaill address {0}") );
+		smapErrorCodesToMessages.put(10028L, new ErrorMessage("User with username {0} already exists. ", "User account already exists with username {0}") );
+		 
 	}
 	
 	public static String getErrorMessage(long pErrorCode, Object[] pPlaceHolderValues)

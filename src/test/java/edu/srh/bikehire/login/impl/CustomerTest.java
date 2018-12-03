@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import edu.srh.bikehire.exception.BikeHireSystemException;
+import edu.srh.bikehire.service.core.impl.Customer;
 
 public class CustomerTest {
 

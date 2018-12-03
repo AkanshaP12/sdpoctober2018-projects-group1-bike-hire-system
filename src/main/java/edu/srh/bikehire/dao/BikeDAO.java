@@ -3,7 +3,7 @@ package edu.srh.bikehire.dao;
 
 import java.util.List;
 
-import edu.srh.bikehire.dtointerface.BikeDTO;
+import edu.srh.bikehire.dto.BikeDTO;
 
 public interface BikeDAO {
 	public BikeDTO getBike(String pBikeId);

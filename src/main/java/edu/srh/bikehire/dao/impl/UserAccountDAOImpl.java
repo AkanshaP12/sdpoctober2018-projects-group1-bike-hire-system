@@ -7,9 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import edu.srh.bikehire.dao.UserAccountDAO;
-import edu.srh.bikehire.daoimpl.util.PersistenceManager;
-import edu.srh.bikehire.dto.UserAccountDTOImpl;
-import edu.srh.bikehire.dtointerface.UserAccountDTO;
+import edu.srh.bikehire.dao.impl.util.PersistenceManager;
+import edu.srh.bikehire.dto.UserAccountDTO;
+import edu.srh.bikehire.dto.impl.UserAccountDTOImpl;
 
 public class UserAccountDAOImpl implements UserAccountDAO{
 
@@ -25,6 +25,19 @@ public class UserAccountDAOImpl implements UserAccountDAO{
 		return results.get(0);
 	}
 
+	public UserAccountDTOImpl getUserAccountUsingUserName(String pUserName)
+	{
+		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
+		Query lQuery = em.createQuery("from UserAccount where UserName = :typeId ");
+		lQuery.setParameter("typeId", pUserName);
+		List<UserAccountDTOImpl> results = lQuery.getResultList();
+		if(results == null || results.size() == 0)
+		{
+			return null;
+		}
+		return results.get(0);
+	}
+	
 	public boolean addUserAccount(UserAccountDTO pUserAccountDTO) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		em.getTransaction().begin();

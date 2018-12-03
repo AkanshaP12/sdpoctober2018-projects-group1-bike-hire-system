@@ -2,7 +2,7 @@ package edu.srh.bikehire.dao;
 
 import java.util.List;
 
-import edu.srh.bikehire.dtointerface.BikeTypeDTO;
+import edu.srh.bikehire.dto.BikeTypeDTO;
 
 public interface BikeTypeDAO {
 	public BikeTypeDTO getBikeType(String pBikeType);

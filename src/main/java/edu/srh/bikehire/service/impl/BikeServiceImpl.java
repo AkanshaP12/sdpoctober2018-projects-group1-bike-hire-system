@@ -3,7 +3,7 @@ package edu.srh.bikehire.service.impl;
 import java.util.List;
 
 import edu.srh.bikehire.dao.BikeDAO;
-import edu.srh.bikehire.dtointerface.BikeDTO;
+import edu.srh.bikehire.dto.BikeDTO;
 import edu.srh.bikehire.service.BikeService;
 
 public class BikeServiceImpl implements BikeService {

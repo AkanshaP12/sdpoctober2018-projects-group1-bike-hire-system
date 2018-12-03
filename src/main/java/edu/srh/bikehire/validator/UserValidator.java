@@ -2,7 +2,7 @@ package edu.srh.bikehire.validator;
 
 import java.util.Calendar;
 
-import edu.srh.bikehire.dtointerface.UserDTO;
+import edu.srh.bikehire.dto.UserDTO;
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.util.Util;
 

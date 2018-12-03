@@ -6,9 +6,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import edu.srh.bikehire.dao.CurrentOrderDAO;
-import edu.srh.bikehire.daoimpl.util.PersistenceManager;
-import edu.srh.bikehire.dto.CurrentOrderDTOImpl;
-import edu.srh.bikehire.dtointerface.CurrentOrderDTO;
+import edu.srh.bikehire.dao.impl.util.PersistenceManager;
+import edu.srh.bikehire.dto.CurrentOrderDTO;
+import edu.srh.bikehire.dto.impl.CurrentOrderDTOImpl;
 import edu.srh.bikehire.util.Util;
 
 public class CurrentOrderDAOImpl implements CurrentOrderDAO {

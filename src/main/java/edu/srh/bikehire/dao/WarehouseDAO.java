@@ -1,6 +1,6 @@
 package edu.srh.bikehire.dao;
 
-import edu.srh.bikehire.dtointerface.WareHouseDTO;
+import edu.srh.bikehire.dto.WareHouseDTO;
 
 public interface WarehouseDAO {
 	public WareHouseDTO getWarehouse(String pWarehouseId);

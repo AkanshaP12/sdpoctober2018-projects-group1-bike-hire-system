@@ -1,9 +1,9 @@
-package edu.srh.bikehire.booking;
+package edu.srh.bikehire.service.core;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
 
-public interface OrderHistoryEntity {
+public interface Order {
 	
 	public BigInteger OrderID();
 	

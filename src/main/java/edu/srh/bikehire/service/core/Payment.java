@@ -1,10 +1,8 @@
-package edu.srh.bikehire.booking;
+package edu.srh.bikehire.service.core;
 
-import java.math.BigInteger;
-
-public interface PaymentEntity {
+public interface Payment {
 	
-	public BigInteger PaymentReference();
+	public String PaymentReference();
 	
 	public Integer DepositAmount();
 	

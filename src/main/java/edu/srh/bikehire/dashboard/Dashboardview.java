@@ -1,7 +1,17 @@
 package edu.srh.bikehire.dashboard;
 
-public interface Dashboardview{
-	public void getCount(BikeStatusType pStatusType);
-}
-	
+import java.util.Calendar;
+import java.util.List;
 
+public interface Dashboardview{
+	
+	
+	
+	
+	public long countview(BikeStatusType pStatusType,  String Biketype );
+
+
+    public List<OrderAppointment> upcomingappointment(Calendar pQueryDate);
+
+
+}

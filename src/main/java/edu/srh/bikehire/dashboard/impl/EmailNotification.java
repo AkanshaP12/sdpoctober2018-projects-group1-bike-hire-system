@@ -7,103 +7,62 @@ import edu.srh.bikehire.dashboard.EmailNotificationType;
 import edu.srh.bikehire.dashboard.Invoice;
 import edu.srh.bikehire.dashboard.Notification;
 import edu.srh.bikehire.dashboard.Order;
-import edu.srh.bikehire.dashboard.util.Sendemail;
+import edu.srh.bikehire.dashboard.util.MailSender;
+import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.login.Entity;
 
 public class EmailNotification implements Notification {
 
-	public void emailVerification(Entity pEntity, String pSecurityCode, int pType) {
-		// TODO Auto-generated method stub
-		Sendemail lNewEmail = new Sendemail();
-		
-		
+	public void emailVerification(Entity pEntity, String pSecurityCode, int pType) throws BikeHireSystemException {
+		MailSender lNewEmail = MailSender.getInstance();
+
 		List<String> pToEmailAddresses = new ArrayList<String>();
 		pToEmailAddresses.add(pEntity.getEmailId());
-		
-		//Create Subject for this email
-		String lstrSubjectLine = "Confirm Emaid ID";
-		//Create Email body text - Use pSecurityCode
-		
-		String lstrBodyLine = "Here is your SECURITY CODE";
-		
-		lNewEmail.sendEmail(pToEmailAddresses, lstrSubjectLine, lstrBodyLine);
-		
 
+		lNewEmail.sendEmail(pToEmailAddresses, EmailNotificationType.REGISTRATION_CONFIRMATION.getSubjectLine(),
+				EmailNotificationType.REGISTRATION_CONFIRMATION.getBodyText());
 	}
 
-	public void passwordResetSuccess(Entity pEntity) {
-		// TODO Auto-generated method stub
-		Sendemail lpasswordreset = new Sendemail();
-		
+	public void passwordResetSuccess(Entity pEntity) throws BikeHireSystemException {
+		MailSender lpasswordreset = MailSender.getInstance();
+
 		List<String> pToEmailAddresses = new ArrayList<String>();
 		pToEmailAddresses.add(pEntity.getEmailId());
-		
-		//Create Subject for this email
-				String lstrSubjectLine = "Verify Password";
-				//Create Email body text - Use pSecurityCode
-				
-				String lstrBodyLine = "Click Reset Password";
-				
-		lpasswordreset.sendEmail(pToEmailAddresses, lstrSubjectLine, lstrBodyLine);
+		lpasswordreset.sendEmail(pToEmailAddresses, EmailNotificationType.RESET_PASSWORD.getSubjectLine(),
+				EmailNotificationType.RESET_PASSWORD.getBodyText());
 
 	}
 
-	public void bookingConfirmation(Order pOrder, Entity pEntity) {
-		// TODO Auto-generated method stub
-		
-         Sendemail lbookingconfirmed = new Sendemail();
-		
+	public void bookingConfirmation(Order pOrder, Entity pEntity) throws BikeHireSystemException {
+
+		MailSender lbookingconfirmed = MailSender.getInstance();
+
 		List<String> pToEmailAddresses = new ArrayList<String>();
 		pToEmailAddresses.add(pEntity.getEmailId());
-		
-		//Create Subject for this email
-				String lstrSubjectLine = "Booking Confirmed";
-				//Create Email body text - Use pSecurityCode
-				
-				String lstrBodyLine = "YAY! your booking is confirmed";
-				
-			lbookingconfirmed.sendEmail(pToEmailAddresses, lstrSubjectLine, lstrBodyLine);
-		
-		
+
+		lbookingconfirmed.sendEmail(pToEmailAddresses, EmailNotificationType.BOOKING_CONFIRMATION.getSubjectLine(),
+				EmailNotificationType.BOOKING_CONFIRMATION.getBodyText());
 	}
 
-	public void cancelBooking(Order pOrder, Entity pEntity) {
-		// TODO Auto-generated method stub
-		
-		  Sendemail lcancellation = new Sendemail();
-			
-			List<String> pToEmailAddresses = new ArrayList<String>();
-			pToEmailAddresses.add(pEntity.getEmailId());
-			
-			//Create Subject for this email
-					String lstrSubjectLine = "Cancellation Request";
-					//Create Email body text - Use pSecurityCode
-					
-					String lstrBodyLine = "SORRY! your booking has been cancelled";
-					
-			lcancellation.sendEmail(pToEmailAddresses, lstrSubjectLine, lstrBodyLine);
-		
+	public void cancelBooking(Order pOrder, Entity pEntity) throws BikeHireSystemException {
+
+		MailSender lcancellation = MailSender.getInstance();
+		List<String> pToEmailAddresses = new ArrayList<String>();
+		pToEmailAddresses.add(pEntity.getEmailId());
+		lcancellation.sendEmail(pToEmailAddresses, EmailNotificationType.BOOKING_CANCEL.getSubjectLine(),
+				EmailNotificationType.BOOKING_CANCEL.getBodyText());
+
 	}
 
-	public void orderInvoice(Order pOrder, Invoice pInvoice) {
-		// TODO Auto-generated method stub
-		
-		 Sendemail lInvoice = new Sendemail();
-			
-			List<String> pToEmailAddresses = new ArrayList<String>();
-			pToEmailAddresses.add(pEntity.getEmailId());
-			
-			//Create Subject for this email
-					String lstrSubjectLine = "INVOICE";
-					//Create Email body text - Use pSecurityCode
-					
-					String lstrBodyLine = "Here's your invoice";
-					
-		lInvoice.sendEmail(pToEmailAddresses, lstrSubjectLine, lstrBodyLine);
-			
+	public void orderInvoice(Order pOrder, Invoice pInvoice, Entity pEntity) throws BikeHireSystemException {
+		MailSender lInvoice = MailSender.getInstance();
+		List<String> pToEmailAddresses = new ArrayList<String>();
+		pToEmailAddresses.add(pEntity.getEmailId());
+		lInvoice.sendEmail(pToEmailAddresses, EmailNotificationType.BOOKING_INVOICE.getSubjectLine(),
+				EmailNotificationType.BOOKING_CONFIRMATION.getBodyText());
+	}
+
 	
-		
-		
 	}
 
-}
+

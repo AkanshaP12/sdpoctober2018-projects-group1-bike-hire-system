@@ -1,21 +1,25 @@
 package edu.srh.bikehire.dashboard.impl;
 
+import java.util.Calendar;
+import java.util.List;
+
 import edu.srh.bikehire.dashboard.BikeStatusType;
 import edu.srh.bikehire.dashboard.Dashboardview;
-import edu.srh.bikehire.dashboard.Order;
-import edu.srh.bikehire.login.Entity;
-import java.util.Calendar;
+import edu.srh.bikehire.dashboard.OrderAppointment;
 
-public abstract class Countview implements Dashboardview {
 
-	public void getCount(BikeStatusType pStatusType) {
-		// TODO Auto-generated method stub
-		
+//import bike interface here(if created)
+
+public class Countview implements Dashboardview {
+
+	public long countview(BikeStatusType pStatusType, String Biketype) {
+		// TODO Fetch data from database.
+		return 0;
 	}
 
-	public void upcomingappointment(Entity pEntity, Order pOrder) {
-		// TODO Auto-generated method stub
-		
+	public List<OrderAppointment> upcomingappointment(Calendar pQueryDate) {
+		// TODO Fetch data from database
+		return null;
 	}
-
 }
+

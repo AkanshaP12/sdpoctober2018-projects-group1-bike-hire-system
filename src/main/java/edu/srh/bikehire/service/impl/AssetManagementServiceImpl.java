@@ -51,7 +51,7 @@ public class AssetManagementServiceImpl implements AssetManagementService {
 	
 	public void initializeService()
 	{
-		bikeTypeDAO = DAOFactory.getDefualtBikeTypeDAOImpl();
+		bikeTypeDAO = DAOFactory.getDefaultBikeTypeDAOImpl();
 		bikeStockDAO = DAOFactory.getDefaultBikeStockDAOImpl();
 		bikeRentMappingDAO = DAOFactory.getDefaultBikeRentMappingDAOImpl();
 		bikeDAO = DAOFactory.getDefualtBikeDAOImpl();

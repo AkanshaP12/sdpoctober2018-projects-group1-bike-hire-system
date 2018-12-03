@@ -6,7 +6,7 @@ import java.util.List;
 
 public class getCatalogue implements DisplayCatalogue {
 	
-	public List<?> getAvailability(String PickupTimeStamp, String ReturnedTimeStamp, Integer RentPerDay) {
+	public List<Bike> getAvailability(String PickupTimeStamp, String ReturnedTimeStamp, Integer RentPerDay) {
 		return null;
 		// TODO Add PickupTimeStamp, ReturnedTimeStamp or RentPerday to api as params and query DB for 
 		//availability. If none of the fields are added return all the available bikes.

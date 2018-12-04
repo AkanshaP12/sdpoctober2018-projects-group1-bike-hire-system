@@ -25,7 +25,7 @@ public class OrderPaymentDAOImpl implements OrderPaymentDAO {
 		return results.get(0);
 	}
 
-	public OrderPaymentDTO getOrderPaymentByOrderId(String pOrderId) {
+	public OrderPaymentDTO getOrderPaymentByOrderId(int pOrderId) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from OrderPayment where OrderID = :typeId ");
 		lQuery.setParameter("typeId", pOrderId);

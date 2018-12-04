@@ -13,7 +13,7 @@ import edu.srh.bikehire.dto.impl.BikeStatusDTOImpl;
 
 public class BikeStatusDAOImpl implements BikeStatusDAO {
 
-	public BikeStatusDTOImpl getBikeStatus(String pBikeId) {
+	public BikeStatusDTOImpl getBikeStatus(int pBikeId) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		
 		Query lQuery = em.createQuery("from BikeStatus where BikeId = :typeId ");
@@ -55,7 +55,7 @@ public class BikeStatusDAOImpl implements BikeStatusDAO {
 		return lBikeStatues;
 	}
 	
-	public long getBikeCount(String pStatus, String pBikeTypeId)
+	public long getBikeCount(String pStatus, int pBikeTypeId)
 	{
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("select count(bs) from BikeStatus bs, Bike b, BikeType bt where b.bikeId = bs.bike and bs.status = :bikestatus and b.bikeType = bt.bikeTypeId and bt.bikeTypeId = :biketyp");

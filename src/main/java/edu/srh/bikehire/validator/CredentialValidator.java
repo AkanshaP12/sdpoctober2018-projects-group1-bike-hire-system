@@ -19,7 +19,7 @@ public class CredentialValidator {
 			throw new BikeHireSystemException(-1);
 		}
 
-		if (Util.isEmptyOrNullString(mUserCredentail.getUserID())) {
+		if (mUserCredentail.getUserID() <= 0) {
 			// TODO: Resolve
 			throw new BikeHireSystemException(-1);
 		}

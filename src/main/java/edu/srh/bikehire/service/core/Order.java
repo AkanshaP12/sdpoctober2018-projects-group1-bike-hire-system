@@ -3,11 +3,11 @@ import java.util.Calendar;
 
 public interface Order {
 	
-	public String getOderId();
+	public int getOderId();
 	
-	public String getUserId();
+	public int getUserId();
 	
-	public String getBikeId();
+	public int getBikeId();
 	
 	public Calendar getBookingTimestamp();
 	

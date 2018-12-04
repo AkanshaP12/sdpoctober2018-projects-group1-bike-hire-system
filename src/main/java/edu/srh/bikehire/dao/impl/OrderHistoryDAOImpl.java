@@ -12,7 +12,7 @@ import edu.srh.bikehire.dto.impl.OrderHistoryDTOImpl;
 
 public class OrderHistoryDAOImpl implements OrderHistoryDAO {
 
-	public OrderHistoryDTOImpl getOrderHistoryByOrderId(String pOrderId) {
+	public OrderHistoryDTOImpl getOrderHistoryByOrderId(int pOrderId) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from OrderHistory where OrderID = :typeId ");
 		lQuery.setParameter("typeId", pOrderId);
@@ -36,7 +36,7 @@ public class OrderHistoryDAOImpl implements OrderHistoryDAO {
 		return results.get(0);
 	}
 
-	public List<OrderHistoryDTO> getOrderHistoryByBikeId(String pBikeId) {
+	public List<OrderHistoryDTO> getOrderHistoryByBikeId(int pBikeId) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from OrderHistory where BikeID = :typeId ");
 		lQuery.setParameter("typeId", pBikeId);
@@ -44,7 +44,7 @@ public class OrderHistoryDAOImpl implements OrderHistoryDAO {
 		return results;
 	}
 
-	public List<OrderHistoryDTO> getOrderHistoryByUserId(String pUserId) {
+	public List<OrderHistoryDTO> getOrderHistoryByUserId(int pUserId) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from OrderHistory where UserID = :typeId ");
 		lQuery.setParameter("typeId", pUserId);

@@ -3,11 +3,11 @@ package edu.srh.bikehire.service.core.impl;
 import edu.srh.bikehire.service.core.BikeType;
 
 public class BikeTypeInfo implements BikeType {
-	private String bikeTypeId;
+	private int bikeTypeId;
 	private String bikeType;
 	private String ageCategory;
 	
-	public String getBikeTypeId() {
+	public int getBikeTypeId() {
 		return bikeTypeId;
 	}
 

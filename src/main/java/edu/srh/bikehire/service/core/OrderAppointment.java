@@ -3,11 +3,11 @@ package edu.srh.bikehire.service.core;
 import java.util.Calendar;
 
 public interface OrderAppointment {
-	public String getOrderId();
+	public int getOrderId();
 	
 	public String getName();
 	
-	public String getBikeId();
+	public int getBikeId();
 	
 	public String getBikeName();
 	

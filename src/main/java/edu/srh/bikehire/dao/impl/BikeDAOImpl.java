@@ -14,7 +14,7 @@ import edu.srh.bikehire.util.Util;
 
 public class BikeDAOImpl implements BikeDAO {
 
-	public BikeDTOImpl getBike(String pBikeId) {
+	public BikeDTOImpl getBike(int pBikeId) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		
 		Query lQuery = em.createQuery("from Bike where BikeId = :typeId ");
@@ -28,16 +28,13 @@ public class BikeDAOImpl implements BikeDAO {
 		return lBikes.get(0);
 	}
 
-	public String addBike(BikeDTO pBike) {
+	public int addBike(BikeDTO pBike) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		//Generate random bike id.
-		String lstrBikeId = Util.getRandomAlphaNumericId();
 		BikeDTOImpl lBikeDTOImpl = (BikeDTOImpl) pBike;
-		lBikeDTOImpl.setBikeId(lstrBikeId);
 		em.getTransaction().begin();
 		em.persist(lBikeDTOImpl);
 		em.getTransaction().commit();
-		return lstrBikeId;
+		return lBikeDTOImpl.getBikeId();
 	}
 
 	public boolean updateBike(BikeDTO pBike) {
@@ -52,7 +49,7 @@ public class BikeDAOImpl implements BikeDAO {
 		{
 			lBike.setDepositAmount(pBike.getDepositAmount());
 		}
-		if(pBike.getWareHouseID() != null) 
+		if(pBike.getWareHouseID() > 0) 
 		{
 			WareHouseDTOImpl lWareHouse = new WareHouseDTOImpl();
 			lWareHouse.setWarehouseId(pBike.getWareHouseID());
@@ -63,7 +60,7 @@ public class BikeDAOImpl implements BikeDAO {
 		return true;
 	}
 
-	public List<BikeDTO> getBikeForWarehouseId(String pWarehouseId, boolean pSortPriceDescending) {
+	public List<BikeDTO> getBikeForWarehouseId(int pWarehouseId, boolean pSortPriceDescending) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = null;
 		if(pSortPriceDescending)
@@ -81,7 +78,7 @@ public class BikeDAOImpl implements BikeDAO {
 		return (List<BikeDTO>)lBikes;
 	}
 
-	public List<BikeDTO> getBikeForBikeType(String pBikeTypeId, boolean pSortPriceDescending) {
+	public List<BikeDTO> getBikeForBikeType(int pBikeTypeId, boolean pSortPriceDescending) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = null;
 		if(pSortPriceDescending)

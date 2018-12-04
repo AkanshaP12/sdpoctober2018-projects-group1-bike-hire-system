@@ -17,7 +17,7 @@ public class CustomerCredentialValidator {
 		mEntityLoginCredential = pEntityLoginCredential;
 	}
 	
-	public String validateLoginCredentials(UserCredentialDAO pUserCredentialDAO) throws BikeHireSystemException
+	public int validateLoginCredentials(UserCredentialDAO pUserCredentialDAO) throws BikeHireSystemException
 	{
 		//validate inputs
 		validateLoginInputs();

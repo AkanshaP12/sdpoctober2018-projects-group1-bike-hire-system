@@ -9,11 +9,11 @@ import edu.srh.bikehire.service.core.BikeType;
 import edu.srh.bikehire.service.core.Warehouse;
 
 public interface AssetManagementService {
-	public String addNewBikeType(BikeType pNewBikeType, BikeStock pBikeStock, BikeRent pRentMapping) throws BikeHireSystemException;
+	public int addNewBikeType(BikeType pNewBikeType, BikeStock pBikeStock, BikeRent pRentMapping) throws BikeHireSystemException;
 	
-	public String addNewBikeDetails(Bike pNewBike, BikeStatus pBikeStatus) throws BikeHireSystemException;
+	public int addNewBikeDetails(Bike pNewBike, BikeStatus pBikeStatus) throws BikeHireSystemException;
 	
-	public String addNewWarehouse(Warehouse pNewWarehouse) throws BikeHireSystemException;
+	public int addNewWarehouse(Warehouse pNewWarehouse) throws BikeHireSystemException;
 	
 	public boolean deleteBikeDetails(Bike pDeleteBike) throws BikeHireSystemException;
 	

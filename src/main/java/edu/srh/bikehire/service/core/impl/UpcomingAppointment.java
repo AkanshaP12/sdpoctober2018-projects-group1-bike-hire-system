@@ -6,11 +6,11 @@ import edu.srh.bikehire.service.core.OrderAppointment;
 
 public class UpcomingAppointment implements OrderAppointment {
 
-	private String orderId;
+	private int orderId;
 	
 	private String name;
 	
-	private String bikeId;
+	private int bikeId;
 	
 	private String bikeName;
 	
@@ -18,7 +18,7 @@ public class UpcomingAppointment implements OrderAppointment {
 	
 	private Calendar dropoffTimestamp;
 	
-	public String getOrderId() {
+	public int getOrderId() {
 		return orderId;
 	}
 
@@ -26,7 +26,7 @@ public class UpcomingAppointment implements OrderAppointment {
 		return name;
 	}
 
-	public String getBikeId() {
+	public int getBikeId() {
 		return bikeId;
 	}
 
@@ -42,7 +42,7 @@ public class UpcomingAppointment implements OrderAppointment {
 		return dropoffTimestamp;
 	}
 
-	public void setOrderId(String orderId) {
+	public void setOrderId(int orderId) {
 		this.orderId = orderId;
 	}
 
@@ -50,7 +50,7 @@ public class UpcomingAppointment implements OrderAppointment {
 		this.name = pName;
 	}
 
-	public void setBikeId(String bikeId) {
+	public void setBikeId(int bikeId) {
 		this.bikeId = bikeId;
 	}
 

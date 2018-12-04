@@ -25,7 +25,7 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 		return results.get(0);
 	}
 
-	public InvoiceDTO getInvoiceByOrderId(String pOrderId) {
+	public InvoiceDTO getInvoiceByOrderId(int pOrderId) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from Invoice where OrderID = :typeId ");
 		lQuery.setParameter("typeId", pOrderId);

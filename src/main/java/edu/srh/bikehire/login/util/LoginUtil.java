@@ -19,11 +19,6 @@ public class LoginUtil {
 	 */
 	private static final String PASSWORD_REGEX_STRING = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
 	
-	public static String getNewUserID()
-	{
-		return UUID.randomUUID().toString().replace("-","");
-	}
-	
 	public static String getResetPasswordToken()
 	{
 		int leftLimitCharacter = 65; // letter 'A'

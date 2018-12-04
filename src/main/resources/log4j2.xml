@@ -10,9 +10,8 @@
         </File>
     </Appenders>
     <Loggers>
-        <Logger name="com.jcg" level="debug" />
-        <Root level="info">
-            <AppenderRef ref="FILE" />
-        </Root>
+        <Logger name="edu.srh.bikehire.dao.impl" level="DEBUG">
+        	<Appender-ref ref="FILE" level="DEBUG"/>
+        </Logger>
     </Loggers>
 </Configuration>

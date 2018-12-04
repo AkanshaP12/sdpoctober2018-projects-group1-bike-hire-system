@@ -2,9 +2,11 @@ package edu.srh.bikehire.console;
 
 import java.util.Scanner;
 
+import edu.srh.bikehire.exception.BikeHireSystemException;
+
 public class LandingUI {
 	
-	public void showMenu()
+	public void showMenu() throws BikeHireSystemException
 	{
 		System.out.println("1) Show bike catalog \n2) Your Account \n 3) Your Orders \n");
 		System.out.println("Select option: ");
@@ -25,7 +27,7 @@ public class LandingUI {
 				callOrdersUI();
 				break;
 			default:
-				//TODO: throw new exception
+				throw new BikeHireSystemException(-1);
 			}
 		}
 		finally

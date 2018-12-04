@@ -2,6 +2,8 @@ package edu.srh.bikehire.console;
 
 import java.util.Scanner;
 
+import edu.srh.bikehire.exception.BikeHireSystemException;
+
 public class HomePage {
 	
 	public void display_menu() {
@@ -23,13 +25,18 @@ public class HomePage {
 				homepage.callRegistrationUI();
 				break;
 			case 2:
-				homepage.callLoginUI();
+				boolean isSuccess = homepage.callLoginUI();
+				if(isSuccess)
+				{
+			     LandingUI llandingui = new LandingUI();
+				}
 				break;
 			case 3:
 				homepage.callForgotPasswordUI();
 				break;
 			default:
-				//TODO: Throw new exception as it is invalid input
+				//DONE: Throw new exception as it is invalid input
+				throw new BikeHireSystemException(-1);
 			}
 		}
 		catch(Exception exception)
@@ -51,13 +58,13 @@ public class HomePage {
 		registrationUI.register();
 	}
 	
-	private void callLoginUI()
+	private boolean callLoginUI()
 	{
 		LoginUI loginUI = new LoginUI();
-		loginUI.login();
+		return loginUI.login();
 	}
 	
-	private void callForgotPasswordUI()
+	private void callForgotPasswordUI() throws BikeHireSystemException
 	{
 		ForgotPasswordUI forgotPasswordUI = new ForgotPasswordUI();
 		forgotPasswordUI.startFPProcess();

@@ -3,12 +3,12 @@ package edu.srh.bikehire.service.core.impl;
 import edu.srh.bikehire.service.core.Warehouse;
 
 public class WarehouseInfo implements Warehouse {
-	private String warehouseId;
+	private int warehouseId;
 	private String name;
 	private String location;
 	private int storageCapacity;
 	
-	public String getWarehouseId() {
+	public int getWarehouseId() {
 		return warehouseId;
 	}
 

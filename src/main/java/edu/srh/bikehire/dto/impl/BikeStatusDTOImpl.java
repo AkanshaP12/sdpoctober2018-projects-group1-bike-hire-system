@@ -75,7 +75,7 @@ public class BikeStatusDTOImpl implements Serializable,BikeStatusDTO {
 		Manufacturer = manufacturer;
 	}
 
-	public String getBikeId() {
+	public int getBikeId() {
 		return getBike().getBikeId();
 	}
 	

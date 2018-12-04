@@ -35,7 +35,7 @@ public class UserCredentialDTOImpl implements UserCredentialDTO {
 	@Column(name = "LastModifiedTimeStamp")
 	private Calendar lastModifiedTimeStamp;
 	
-	public String getUserID() {
+	public int getUserID() {
 		return userDTO.getId();
 	}
 	

@@ -64,7 +64,7 @@ public class BikeStockDTOImpl implements Serializable, BikeStockDTO {
 		this.lastModifiedTimeStamp = lastModifiedTimeStamp;
 	}
 
-	public String getBikeTypeId() {
+	public int getBikeTypeId() {
 		return getBikeType().getBikeTypeId();
 	}
 	

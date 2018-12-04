@@ -17,7 +17,7 @@ public class BikeTypeDTOImpl implements BikeTypeDTO {
 	
 	@Id
 	@Column(name="BikeTypeId")
-	private String bikeTypeId;
+	private int bikeTypeId;
 	
 	@Column(name="Type")
 	private String bikeType;
@@ -28,11 +28,11 @@ public class BikeTypeDTOImpl implements BikeTypeDTO {
 	@Column(name="CreationTimeStamp")
 	private Calendar creationTimeStamp;
 
-	public String getBikeTypeId() {
+	public int getBikeTypeId() {
 		return bikeTypeId;
 	}
 
-	public void setBikeTypeId(String bikeTypeId) {
+	public void setBikeTypeId(int bikeTypeId) {
 		this.bikeTypeId = bikeTypeId;
 	}
 

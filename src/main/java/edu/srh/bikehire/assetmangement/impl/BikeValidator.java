@@ -23,13 +23,6 @@ public class BikeValidator {
 			throw new BikeHireSystemException(-1);
 		}
 		
-		if(Util.isEmptyOrNullString(mBike.getBikeTypeId()))
-		{
-			//TODO:Resolve
-			throw new BikeHireSystemException(-1);
-		
-		}
-		
 		validateBikeID();
 		
 		
@@ -56,7 +49,7 @@ public class BikeValidator {
 		validateDepositAmount();
 		
 		//TODO: Resolve
-		if(Util.isEmptyOrNullString(mBike.getWareHouseID()))
+		if(mBike.getWareHouseID() <= 0)
 		{
 			//TODO: Resolve
 			throw new BikeHireSystemException(-1);
@@ -89,7 +82,7 @@ public class BikeValidator {
 	
 	public void validateBikeID() throws BikeHireSystemException
 	{
-		if(Util.isEmptyOrNullString(mBike.getBikeId()))
+		if(mBike.getBikeId() < 0)
 		{
 			//TODO: Resolve
 			throw new BikeHireSystemException(-1);

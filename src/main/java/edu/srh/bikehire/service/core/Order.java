@@ -5,9 +5,9 @@ public interface Order {
 	
 	public String getOrderId();
 	
-	public String getUserId();
+	public int getUserId();
 	
-	public String getBikeId();
+	public int getBikeId();
 	
 	public Calendar getBookingTimestamp();
 	

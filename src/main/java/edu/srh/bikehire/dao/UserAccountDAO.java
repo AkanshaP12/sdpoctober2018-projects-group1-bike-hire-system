@@ -3,7 +3,7 @@ package edu.srh.bikehire.dao;
 import edu.srh.bikehire.dto.UserAccountDTO;
 
 public interface UserAccountDAO {
-	public UserAccountDTO getUserAccount(String pUserId);
+	public UserAccountDTO getUserAccount(int pUserId);
 	
 	public UserAccountDTO getUserAccountUsingUserName(String pUserName);
 	

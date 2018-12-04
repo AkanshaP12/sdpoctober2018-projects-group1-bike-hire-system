@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 public interface BikeStockDTO {
 
-	public String getBikeTypeId();
+	public int getBikeTypeId();
 	public void setBikeTypeDTO(BikeTypeDTO pBikeTypeDTO);
 	public long getTotalQuantity();
 	public Calendar getCreationTimeStamp();

@@ -9,6 +9,7 @@ import edu.srh.bikehire.dao.InvoiceDAO;
 import edu.srh.bikehire.dao.OrderHistoryDAO;
 import edu.srh.bikehire.dao.UserAccountDAO;
 import edu.srh.bikehire.dao.impl.OrderHistoryDAOImpl;
+import edu.srh.bikehire.dto.OrderHistoryDTO;
 import edu.srh.bikehire.dto.UserAccountDTO;
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.login.LoginConstants;
@@ -51,6 +52,7 @@ public class OrderServiceImpl implements OrderService {
 			throw new BikeHireSystemException(-1);
 		}
 		
+		Order lOrder = new getOrderHistoryByUserId(userID);
 		return null;
 		
 	}
@@ -60,11 +62,22 @@ public class OrderServiceImpl implements OrderService {
 		return null;
 	}
 
-	public void cancelOrder(String orderID) {
-		// TODO Auto-generated method stub
+	public void cancelOrder(String orderID) throws BikeHireSystemException {
+		OrderHistoryDTO lOrderHistoryDTO = orderHistory.getOrderHistoryByOrderId(orderID);
+		
+		if (lOrderHistoryDTO == null) {
+			// TODO: Resolve
+			throw new BikeHireSystemException(-1);
+		}
 	}
 
-	public Order getOrder(String orderID) {
+	public Order getOrder(String orderID) throws BikeHireSystemException {
+		OrderHistoryDTO lOrderHistoryDTO = orderHistory.getOrderHistoryByOrderId(orderID);
+		
+		if (lOrderHistoryDTO == null) {
+			// TODO: Resolve
+			throw new BikeHireSystemException(-1);
+		}
 		
 		return null;
 	}
@@ -75,7 +88,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	public Invoice getInvoice(String invoiceID) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 	

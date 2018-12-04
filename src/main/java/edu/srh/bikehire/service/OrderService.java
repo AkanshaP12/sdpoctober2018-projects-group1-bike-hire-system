@@ -12,9 +12,9 @@ public interface OrderService {
 	
 	public String placeOrder(String userID, String bikeID);
 	
-	public void cancelOrder(String orderID);
+	public void cancelOrder(String orderID) throws BikeHireSystemException;
 	
-	public Order getOrder(String orderID);
+	public Order getOrder(String orderID) throws BikeHireSystemException ;
 	
 	public String generateInvoice(String orderID);
 	

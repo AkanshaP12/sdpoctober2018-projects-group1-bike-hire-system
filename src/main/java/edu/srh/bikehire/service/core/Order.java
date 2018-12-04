@@ -3,7 +3,7 @@ import java.util.Calendar;
 
 public interface Order {
 	
-	public String getOderId();
+	public String getOrderId();
 	
 	public String getUserId();
 	

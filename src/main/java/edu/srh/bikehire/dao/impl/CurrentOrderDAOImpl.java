@@ -15,7 +15,7 @@ import edu.srh.bikehire.util.Util;
 
 public class CurrentOrderDAOImpl implements CurrentOrderDAO {
 
-	public CurrentOrderDTOImpl getCurrentOrderByOrderId(String pOrderId) {
+	public CurrentOrderDTOImpl getCurrentOrderByOrderId(int pOrderId) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from CurrentOrder where OrderID = :typeId ");
 		lQuery.setParameter("typeId", pOrderId);
@@ -27,7 +27,7 @@ public class CurrentOrderDAOImpl implements CurrentOrderDAO {
 		return results.get(0);
 	}
 
-	public CurrentOrderDTOImpl getCurrentOrderByBikeId(String pBikeId) {
+	public CurrentOrderDTOImpl getCurrentOrderByBikeId(int pBikeId) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from CurrentOrder where BikeID = :typeId ");
 		lQuery.setParameter("typeId", pBikeId);
@@ -39,16 +39,13 @@ public class CurrentOrderDAOImpl implements CurrentOrderDAO {
 		return results.get(0);
 	}
 
-	public String addCurrentOrder(CurrentOrderDTO pCurrentOrderDTO) {
+	public int addCurrentOrder(CurrentOrderDTO pCurrentOrderDTO) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		//Generate random order id.
-		String lstrOrderId = Util.getRandomAlphaNumericId();
 		em.getTransaction().begin();
 		CurrentOrderDTOImpl lCurrentOrderDTOImpl = (CurrentOrderDTOImpl) pCurrentOrderDTO;
-		lCurrentOrderDTOImpl.setOrderID(lstrOrderId);
 		em.persist(lCurrentOrderDTOImpl);
 		em.getTransaction().commit();
-		return lstrOrderId;
+		return lCurrentOrderDTOImpl.getOrderID();
 	}
 
 	public boolean updateCurrentOrder(CurrentOrderDTO pCurrentOrderDTO) {

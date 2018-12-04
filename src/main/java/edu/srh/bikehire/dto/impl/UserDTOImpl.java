@@ -6,6 +6,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
@@ -17,8 +19,9 @@ import edu.srh.bikehire.dto.UserDTO;
 public class UserDTOImpl implements UserDTO{
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	private String id;
+	private int id;
 	
 	@Column(name = "FirstName")
 	private String firstName;
@@ -51,7 +54,7 @@ public class UserDTOImpl implements UserDTO{
 	@Column(name = "IdentityProof")
 	private byte[] identityProof;
 	
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 	public String getFirstName() {
@@ -79,7 +82,7 @@ public class UserDTOImpl implements UserDTO{
 	public byte[] getIdentityProof() {
 		return identityProof;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public void setFirstName(String firstName) {

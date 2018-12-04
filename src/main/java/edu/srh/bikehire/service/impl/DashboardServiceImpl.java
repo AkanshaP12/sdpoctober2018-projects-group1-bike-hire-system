@@ -39,7 +39,7 @@ public class DashboardServiceImpl implements DashboardService {
 		userDAO = DAOFactory.getDefaultUserDAOImpl();
 	}
 
-	public long getBikeCount(BikeStatusType statusType, String bikeTypeId) {
+	public long getBikeCount(BikeStatusType statusType, int bikeTypeId) {
 		return bikeStatusDAO.getBikeCount(statusType.getBikeStatus(), bikeTypeId);
 	}
 

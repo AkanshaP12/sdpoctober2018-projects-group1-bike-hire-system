@@ -22,7 +22,7 @@ public class OrderHistoryDTOImpl implements OrderHistoryDTO {
 
 	@Id
 	@Column(name = "OrderID")
-	private String orderID;
+	private int orderID;
 	
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "InvoiceID")
@@ -45,21 +45,21 @@ public class OrderHistoryDTOImpl implements OrderHistoryDTO {
 	@Column(name = "ReturnedTimeStamp")
 	private Calendar returnedTimeStamp;
 	
-	public String getOrderID() {
+	public int getOrderID() {
 		return orderID;
 	}
-	public void setOrderID(String orderID) {
+	public void setOrderID(int orderID) {
 		this.orderID = orderID;
 	}
 	public String getInvoiceID() {
 		return invoiceDTO.getInvoiceID();
 	}
 	
-	public String getUserID() {
+	public int getUserID() {
 		return userDTO.getId();
 	}
 	
-	public String getBikeID() {
+	public int getBikeID() {
 		return bikeDTO.getBikeId();
 	}
 	

@@ -4,19 +4,19 @@ import edu.srh.bikehire.service.core.Bike;
 
 public class BikeInfo implements Bike {
 
-	private String bikeId;
-	private String bikeTypeId;
+	private int bikeId;
+	private int bikeTypeId;
 	private String manufacturer;
 	private int yearOfManufacturer;
 	private String bikeTitle;
-	private String wareHouseID;
+	private int wareHouseID;
 	private int depositAmount;
 	
-	public String getBikeId() {
+	public int getBikeId() {
 		return bikeId;
 	}
 
-	public String getBikeTypeId() {
+	public int getBikeTypeId() {
 		return bikeTypeId;
 	}
 
@@ -32,7 +32,7 @@ public class BikeInfo implements Bike {
 		return bikeTitle;
 	}
 
-	public String getWareHouseID() {
+	public int getWareHouseID() {
 		return wareHouseID;
 	}
 

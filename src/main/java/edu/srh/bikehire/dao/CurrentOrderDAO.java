@@ -6,11 +6,11 @@ import java.util.List;
 import edu.srh.bikehire.dto.CurrentOrderDTO;
 
 public interface CurrentOrderDAO {
-	public CurrentOrderDTO getCurrentOrderByOrderId(String pOrderId);
+	public CurrentOrderDTO getCurrentOrderByOrderId(int pOrderId);
 	
-	public CurrentOrderDTO getCurrentOrderByBikeId(String pBikeId);
+	public CurrentOrderDTO getCurrentOrderByBikeId(int pBikeId);
 	
-	public String addCurrentOrder(CurrentOrderDTO pCurrentOrderDTO);
+	public int addCurrentOrder(CurrentOrderDTO pCurrentOrderDTO);
 	
 	public boolean updateCurrentOrder(CurrentOrderDTO pCurrentOrderDTO);
 	

@@ -22,7 +22,7 @@ public class WarehouseValidator {
 		
 		validateWareHouse();
 		
-		if(Util.isEmptyOrNullString(mWarehouse.getWarehouseId()))
+		if(mWarehouse.getWarehouseId() <= 0)
 		{
 			//TODO:
 			throw new BikeHireSystemException(-1);

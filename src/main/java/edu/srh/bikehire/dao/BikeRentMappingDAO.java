@@ -3,7 +3,7 @@ package edu.srh.bikehire.dao;
 import edu.srh.bikehire.dto.BikeRentMappingDTO;
 
 public interface BikeRentMappingDAO {
-	public BikeRentMappingDTO getBikeRentMapping(String pBikeTypeId);
+	public BikeRentMappingDTO getBikeRentMapping(int pBikeTypeId);
 	
 	public boolean addBikeRentMapping(BikeRentMappingDTO pBikeRentMappingDTO);
 	

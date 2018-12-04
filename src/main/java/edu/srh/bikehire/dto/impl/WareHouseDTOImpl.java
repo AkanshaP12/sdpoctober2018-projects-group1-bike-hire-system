@@ -16,8 +16,9 @@ import edu.srh.bikehire.dto.WareHouseDTO;
 public class WareHouseDTOImpl implements WareHouseDTO{
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "WareHouseId")
-	private String warehouseId;
+	private int warehouseId;
 	
 	@Column(name = "Name")
 	private String name;
@@ -34,11 +35,11 @@ public class WareHouseDTOImpl implements WareHouseDTO{
 	@Column(name = "LastModifiedTimeStamp")
 	private Calendar lastmodifiedTimeStamp;
 
-	public String getWarehouseId() {
+	public int getWarehouseId() {
 		return warehouseId;
 	}
 
-	public void setWarehouseId(String warehouseId) {
+	public void setWarehouseId(int warehouseId) {
 		this.warehouseId = warehouseId;
 	}
 

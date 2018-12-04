@@ -6,7 +6,7 @@ public interface Invoice {
 
     public String InvoiceId();
     
-    public String OrderId();
+    public int OrderId();
     
     public Calendar CreationTimestamp();
     

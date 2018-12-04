@@ -71,7 +71,7 @@ public class UserValidator {
 	
 	
 	public void validateUserID() throws BikeHireSystemException{
-		if(Util.isEmptyOrNullString(mUser.getId()))
+		if(mUser.getId() <= 0)
 		{
 			//TODO: Resolve
 			throw new BikeHireSystemException(-1);

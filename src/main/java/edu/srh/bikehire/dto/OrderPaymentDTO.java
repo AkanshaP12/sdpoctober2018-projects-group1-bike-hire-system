@@ -4,7 +4,7 @@ package edu.srh.bikehire.dto;
 public interface OrderPaymentDTO {
 
 	public String getPaymentReference();
-	public String getOrderID();
+	public int getOrderID();
 	public int getDepositAmount();
 	public int getRentPerHour();
 	public int getRentPerDay();

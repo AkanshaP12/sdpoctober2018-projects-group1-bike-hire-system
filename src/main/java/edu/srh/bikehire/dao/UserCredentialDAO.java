@@ -4,7 +4,7 @@ import edu.srh.bikehire.dto.UserCredentialDTO;
 
 public interface UserCredentialDAO {
 	
-	public UserCredentialDTO getUserCredentialByUserId(String pUserId);
+	public UserCredentialDTO getUserCredentialByUserId(int pUserId);
 	
 	public UserCredentialDTO getUserCredentialByUserName(String pUserName);
 	

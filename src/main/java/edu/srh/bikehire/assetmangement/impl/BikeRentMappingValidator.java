@@ -1,7 +1,6 @@
 package edu.srh.bikehire.assetmangement.impl;
 
 import edu.srh.bikehire.dto.BikeRentMappingDTO;
-import edu.srh.bikehire.dto.impl.BikeRentMappingDTOImpl;
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.util.Util;
 

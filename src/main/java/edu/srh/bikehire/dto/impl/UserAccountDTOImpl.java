@@ -32,7 +32,7 @@ public class UserAccountDTOImpl implements UserAccountDTO{
 	@Column(name = "LastModifiedTimeStamp")
 	private Calendar lastModifiedTimeStamp;
 	
-	public String getId() {
+	public int getId() {
 		return userDTO.getId();
 	}
 	

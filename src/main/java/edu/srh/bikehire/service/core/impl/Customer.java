@@ -9,7 +9,7 @@ public class Customer implements Entity {
 	
 	//MEMBERS
 	
-	private String mstrUserId;
+	private int miUserId;
 	
 	private String mstrFirstName;
 	
@@ -32,8 +32,8 @@ public class Customer implements Entity {
 	private byte[] mIdentityProofBytes;
 	
 	//GETTER
-	public String getUserId() {
-		return mstrUserId;
+	public int getUserId() {
+		return miUserId;
 	}
 
 	public String getFirstName() {
@@ -76,8 +76,8 @@ public class Customer implements Entity {
 		return mIdentityProofBytes;
 	}
 
-	public void setUserId(String userId) {
-		mstrUserId = userId;
+	public void setUserId(int userId) {
+		miUserId = userId;
 	}
 
 	public void setFirstName(String firstName) {

@@ -4,10 +4,10 @@ import java.util.Calendar;
 
 public interface OrderHistoryDTO {
 	
-	public String getOrderID();
+	public int getOrderID();
 	public String getInvoiceID();
-	public String getUserID();
-	public String getBikeID();
+	public int getUserID();
+	public int getBikeID();
 	public Calendar getBookingTimeStamp();
 	public Calendar getPickupTimeStamp();
 	public Calendar getReturnedTimeStamp();

@@ -5,9 +5,9 @@ import java.util.List;
 import edu.srh.bikehire.dto.BikeTypeDTO;
 
 public interface BikeTypeDAO {
-	public BikeTypeDTO getBikeType(String pBikeType);
+	public BikeTypeDTO getBikeType(int pBikeType);
 	
 	public List<BikeTypeDTO> getBikeTypes();
 	
-	public String saveBikeType(BikeTypeDTO bikeType);
+	public int saveBikeType(BikeTypeDTO bikeType);
 }

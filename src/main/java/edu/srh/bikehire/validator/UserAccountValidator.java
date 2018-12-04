@@ -19,7 +19,7 @@ public class UserAccountValidator {
 						throw new BikeHireSystemException(-1);
 		}
 		
-		if(Util.isEmptyOrNullString(mUserAccount.getId())) {
+		if(mUserAccount.getId() <= 0) {
 			// TODO:Resolve
 						throw new BikeHireSystemException(-1);
 		}

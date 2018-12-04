@@ -23,7 +23,8 @@ public class CurrentOrderDTOImpl implements CurrentOrderDTO {
 
 	@Id
 	@Column(name = "OrderID")
-	private String orderID;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int orderID;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "UserID")
@@ -48,16 +49,16 @@ public class CurrentOrderDTOImpl implements CurrentOrderDTO {
 	@Column(name = "OrderMode")
 	private String orderMode;
 	
-	public String getOrderID() {
+	public int getOrderID() {
 		return orderID;
 	}
-	public void setOrderID(String orderID) {
+	public void setOrderID(int orderID) {
 		this.orderID = orderID;
 	}
-	public String getUserID() {
+	public int getUserID() {
 		return userDTO.getId();
 	}
-	public String getBikeID() {
+	public int getBikeID() {
 		return bikeDTO.getBikeId();
 	}
 	public Calendar getBookingTimeStamp() {

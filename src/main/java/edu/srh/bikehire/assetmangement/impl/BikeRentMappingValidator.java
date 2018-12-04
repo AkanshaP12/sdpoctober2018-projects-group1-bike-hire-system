@@ -20,7 +20,7 @@ public class BikeRentMappingValidator {
 		}
 		
 		
-		if(Util.isEmptyOrNullString(mBikeRentDetails.getBikeTypeId()))
+		if(mBikeRentDetails.getBikeTypeId() <= 0)
 		{
 			//TODO:
 			throw new BikeHireSystemException(-1);

@@ -51,7 +51,7 @@ public class AssetManagementServiceImpl implements AssetManagementService {
 	
 	public void initializeService()
 	{
-		bikeTypeDAO = DAOFactory.getDefualtBikeTypeDAOImpl();
+		bikeTypeDAO = DAOFactory.getDefaultBikeTypeDAOImpl();
 		bikeStockDAO = DAOFactory.getDefaultBikeStockDAOImpl();
 		bikeRentMappingDAO = DAOFactory.getDefaultBikeRentMappingDAOImpl();
 		bikeDAO = DAOFactory.getDefualtBikeDAOImpl();
@@ -59,7 +59,7 @@ public class AssetManagementServiceImpl implements AssetManagementService {
 		warehouseDAO = DAOFactory.getDefaultWarehouseDAOImpl();
 	}
 	
-	public String addNewBikeType(BikeType pNewBikeType, BikeStock pBikeStock, BikeRent pRentMapping) throws BikeHireSystemException {
+	public int addNewBikeType(BikeType pNewBikeType, BikeStock pBikeStock, BikeRent pRentMapping) throws BikeHireSystemException {
 		
 		BikeTypeDTO lBikeTypeDTO = getBikeTypeDTOFromInputs(pNewBikeType);
 		BikeStockDTO lBikeStockDTO = getBikeStockDTOFromInputs(pBikeStock, false);
@@ -68,7 +68,7 @@ public class AssetManagementServiceImpl implements AssetManagementService {
 		BikeTypeValidator lBikeTypeValidator = new BikeTypeValidator(lBikeTypeDTO);
 		lBikeTypeValidator.validateAddBikeType();
 		
-		String bikeTypeId = bikeTypeDAO.saveBikeType(lBikeTypeDTO);
+		int bikeTypeId = bikeTypeDAO.saveBikeType(lBikeTypeDTO);
 		
 		lBikeStockDTO.setBikeTypeDTO(lBikeTypeDTO);
 		BikeStockValidator lBikeStockValidator = new BikeStockValidator(lBikeStockDTO);
@@ -85,7 +85,7 @@ public class AssetManagementServiceImpl implements AssetManagementService {
 		return bikeTypeId;
 	}
 
-	public String addNewBikeDetails(Bike pNewBike, BikeStatus pBikeStatus) throws BikeHireSystemException {
+	public int addNewBikeDetails(Bike pNewBike, BikeStatus pBikeStatus) throws BikeHireSystemException {
 		
 		BikeDTO lBikeDTO = getBikeDTOFromInputs(pNewBike, false);
 		BikeStatusDTO lBikeStatusDTO = getBikeStatusDTOFromInputs(pBikeStatus);
@@ -93,7 +93,7 @@ public class AssetManagementServiceImpl implements AssetManagementService {
 		BikeValidator lBikeValidator = new BikeValidator(lBikeDTO);
 		lBikeValidator.validateAddBike();
 		
-		String lstrBikeId = bikeDAO.addBike(lBikeDTO);
+		int bikeId = bikeDAO.addBike(lBikeDTO);
 		
 		lBikeStatusDTO.setBikeDTO(lBikeDTO);
 		BikeStatusValidator lBikeStatusValidator = new BikeStatusValidator(lBikeStatusDTO);
@@ -101,18 +101,18 @@ public class AssetManagementServiceImpl implements AssetManagementService {
 		
 		bikeStatusDAO.addBikeStatus(lBikeStatusDTO);
 		
-		return lstrBikeId;
+		return bikeId;
 	}
 
-	public String addNewWarehouse(Warehouse pNewWarehouse) throws BikeHireSystemException {
+	public int addNewWarehouse(Warehouse pNewWarehouse) throws BikeHireSystemException {
 		WareHouseDTO lWareHouseDTO = getWarehouseDTOFromInputs(pNewWarehouse, false);
 		
 		WarehouseValidator lWarehouseValidator = new WarehouseValidator(lWareHouseDTO);
 		lWarehouseValidator.validateAddWarehouse();
 		
-		String lstrWarehouseId = warehouseDAO.addWarehouse(lWareHouseDTO);
+		int warehouseId = warehouseDAO.addWarehouse(lWareHouseDTO);
 		
-		return lstrWarehouseId;
+		return warehouseId;
 	}
 
 	public boolean deleteBikeDetails(Bike pDeleteBike) throws BikeHireSystemException {

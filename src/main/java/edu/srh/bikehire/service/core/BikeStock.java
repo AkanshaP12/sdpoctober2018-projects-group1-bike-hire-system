@@ -1,6 +1,6 @@
 package edu.srh.bikehire.service.core;
 
 public interface BikeStock {
-	public String getBikeTypeId();
+	public int getBikeTypeId();
 	public long getTotalQuantity();
 }

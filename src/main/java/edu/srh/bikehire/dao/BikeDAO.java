@@ -6,15 +6,15 @@ import java.util.List;
 import edu.srh.bikehire.dto.BikeDTO;
 
 public interface BikeDAO {
-	public BikeDTO getBike(String pBikeId);
+	public BikeDTO getBike(int pBikeId);
 	
-	public String addBike(BikeDTO pBike);
+	public int addBike(BikeDTO pBike);
 	
 	public boolean updateBike(BikeDTO pBike);
 	
-	public List<BikeDTO> getBikeForWarehouseId(String pWarehouseId, boolean pSortPriceDescending);
+	public List<BikeDTO> getBikeForWarehouseId(int pWarehouseId, boolean pSortPriceDescending);
 	
-	public List<BikeDTO> getBikeForBikeType(String pBikeTypeId, boolean pSortPriceDescending);
+	public List<BikeDTO> getBikeForBikeType(int pBikeTypeId, boolean pSortPriceDescending);
 	
 	public List<BikeDTO> getAllBikes(boolean pSortPriceDescending);
 }

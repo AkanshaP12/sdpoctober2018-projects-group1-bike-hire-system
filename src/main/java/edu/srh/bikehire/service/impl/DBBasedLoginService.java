@@ -41,17 +41,17 @@ public class DBBasedLoginService implements Login {
 	{
 		mUserDAO = DAOFactory.getDefaultUserDAOImpl();
 		mUserAccountDAO = DAOFactory.getDefaultUserAccountDAOImpl();
-		mUserCredentialDAO = DAOFactory.getDefualtUserCredentialDAOImpl();
+		mUserCredentialDAO = DAOFactory.getDefaultUserCredentialDAOImpl();
 	}
 	
 	
 	public Entity authenticate(EntityLoginCredential pInputEntityCredentials) throws BikeHireSystemException {
 		
 		CustomerCredentialValidator lLoginCredentialValidator = new CustomerCredentialValidator(pInputEntityCredentials);
-		String lstrUserId = lLoginCredentialValidator.validateLoginCredentials(mUserCredentialDAO);
+		int userId = lLoginCredentialValidator.validateLoginCredentials(mUserCredentialDAO);
 		
 		//If correct password, fetch entity object and return it
-		UserDTO lLoggedInUser = mUserDAO.getUser(lstrUserId);
+		UserDTO lLoggedInUser = mUserDAO.getUser(userId);
 		
 		if(lLoggedInUser == null)
 		{
@@ -59,7 +59,7 @@ public class DBBasedLoginService implements Login {
 			throw new BikeHireSystemException(10024);
 		}
 		
-		UserAccountDTO lLoggedInUserAccountDTO = mUserAccountDAO.getUserAccount(lstrUserId);
+		UserAccountDTO lLoggedInUserAccountDTO = mUserAccountDAO.getUserAccount(userId);
 		
 		if(lLoggedInUserAccountDTO == null)
 		{
@@ -126,7 +126,7 @@ public class DBBasedLoginService implements Login {
 		
 		//Insert information using mUserDAO
 		UserDTO lNewUserDTO = getUserDTOFromInputs(pEntity);
-		String lstrUserId = mUserDAO.addUser(lNewUserDTO);
+		int userId = mUserDAO.addUser(lNewUserDTO);
 		
 		//Insert information using mUserAccounrDAO
 		UserAccountDTO lNewUserAccountDTO = getUserAccountDTOFromInputs(pEntity.getEntityAccount(), lNewUserDTO);

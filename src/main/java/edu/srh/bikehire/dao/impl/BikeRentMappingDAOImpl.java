@@ -13,7 +13,7 @@ import edu.srh.bikehire.dto.impl.BikeRentMappingDTOImpl;
 
 public class BikeRentMappingDAOImpl implements BikeRentMappingDAO {
 
-	public BikeRentMappingDTOImpl getBikeRentMapping(String pBikeTypeId) {
+	public BikeRentMappingDTOImpl getBikeRentMapping(int pBikeTypeId) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		
 		Query lQuery = em.createQuery("from BikeRentMapping where BikeTypeId = :typeId ");

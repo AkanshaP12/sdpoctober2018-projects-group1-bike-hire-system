@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 public interface WareHouseDTO {
 	
-	public String getWarehouseId();
+	public int getWarehouseId();
 	public String getName();
 	public String getLocation();
 	public int getStorageCapacity();

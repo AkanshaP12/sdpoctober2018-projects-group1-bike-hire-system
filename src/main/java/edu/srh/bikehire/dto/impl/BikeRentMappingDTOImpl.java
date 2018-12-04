@@ -57,7 +57,7 @@ public class BikeRentMappingDTOImpl implements BikeRentMappingDTO {
 		this.lastModifiedTimeStamp = lastModifiedTimeStamp;
 	}
 	
-	public String getBikeTypeId() {
+	public int getBikeTypeId() {
 		return getBikeType().getBikeTypeId();
 	}
 	

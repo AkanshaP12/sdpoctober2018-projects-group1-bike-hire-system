@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 public interface UserCredentialDTO {
 
-	public String getUserID();
+	public int getUserID();
 	public String getUserName();
 	public String getPasswordSalt();
 	public String getPasswordHash();

@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import edu.srh.bikehire.dao.BikeDAO;
+import edu.srh.bikehire.dao.BikeRentMappingDAO;
 import edu.srh.bikehire.dao.BikeStatusDAO;
 import edu.srh.bikehire.dao.CurrentOrderDAO;
 import edu.srh.bikehire.dao.DAOFactory;
@@ -14,6 +15,8 @@ import edu.srh.bikehire.dao.OrderPaymentDAO;
 import edu.srh.bikehire.dao.UserAccountDAO;
 import edu.srh.bikehire.dao.WarehouseDAO;
 import edu.srh.bikehire.dashboard.BikeStatusType;
+import edu.srh.bikehire.dto.BikeDTO;
+import edu.srh.bikehire.dto.BikeRentMappingDTO;
 import edu.srh.bikehire.dto.BikeStatusDTO;
 import edu.srh.bikehire.dto.CurrentOrderDTO;
 import edu.srh.bikehire.dto.InvoiceDTO;
@@ -22,8 +25,11 @@ import edu.srh.bikehire.dto.OrderPaymentDTO;
 import edu.srh.bikehire.dto.UserAccountDTO;
 import edu.srh.bikehire.dto.WareHouseDTO;
 import edu.srh.bikehire.dto.impl.BikeDTOImpl;
+import edu.srh.bikehire.dto.impl.BikeStatusDTOImpl;
 import edu.srh.bikehire.dto.impl.CurrentOrderDTOImpl;
 import edu.srh.bikehire.dto.impl.InvoiceDTOImpl;
+import edu.srh.bikehire.dto.impl.OrderHistoryDTOImpl;
+import edu.srh.bikehire.dto.impl.OrderPaymentDTOImpl;
 import edu.srh.bikehire.dto.impl.UserDTOImpl;
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.login.LoginConstants;
@@ -34,6 +40,7 @@ import edu.srh.bikehire.service.core.OrderHistory;
 import edu.srh.bikehire.service.core.impl.InvoiceInfo;
 import edu.srh.bikehire.service.core.impl.OrderHistoryInfo;
 import edu.srh.bikehire.service.core.impl.OrderInfo;
+import edu.srh.bikehire.util.Constants;
 import edu.srh.bikehire.validator.OrderValidator;
 
 public class OrderServiceImpl implements OrderService {
@@ -46,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
 	
 	private InvoiceDAO invoiceDAO;
 	
-	private OrderHistoryDAO orderHistory;
+	private OrderHistoryDAO orderHistoryDAO;
 	
 	private BikeStatusDAO bikeStatusDAO;
 	
@@ -54,23 +61,26 @@ public class OrderServiceImpl implements OrderService {
 	
 	private OrderPaymentDAO orderPaymentDAO;
 	
+	private BikeRentMappingDAO bikeRentMappingDAO;
+	
 	public void initializeService()
 	{
 		bikeDAO = DAOFactory.getDefualtBikeDAOImpl();
 		userAccountDAO = DAOFactory.getDefaultUserAccountDAOImpl();
 		currentOrderDAO = DAOFactory.getDefaultOrderDAOImpl();
 		invoiceDAO = DAOFactory.getDefaultInvoiceDAOImpl();
-		orderHistory = DAOFactory.getDefaultOrderHistoryImpl();
+		orderHistoryDAO = DAOFactory.getDefaultOrderHistoryImpl();
 		bikeStatusDAO = DAOFactory.getDefaultBikeStatusDAOImpl();
 		warehouseDAO = DAOFactory.getDefaultWarehouseDAOImpl();
 		orderPaymentDAO = DAOFactory.getDefaultOrderPaymentImpl();
+		bikeRentMappingDAO = DAOFactory.getDefaultBikeRentMappingDAOImpl();
 	}
 
 	public List<OrderHistory> getOrderHistory(int userID) throws BikeHireSystemException {
 		UserAccountDTO userAccountDTO = getUserAccount(userID);
 		validateUserStatus(userAccountDTO);
 		
-		List<OrderHistoryDTO> lOrderHistoryDTO = orderHistory.getOrderHistoryByUserId(userID);
+		List<OrderHistoryDTO> lOrderHistoryDTO = orderHistoryDAO.getOrderHistoryByUserId(userID);
 		List<OrderHistory> lReturnList = new ArrayList<OrderHistory>();
 		for(OrderHistoryDTO lOrderDTO : lOrderHistoryDTO)
 		{
@@ -94,11 +104,44 @@ public class OrderServiceImpl implements OrderService {
 		
 		CurrentOrderDTO currentOrderDTO = getDTOFromInputs(order);
 		int orderId = currentOrderDAO.addCurrentOrder(currentOrderDTO);
+		
+		//update bike status
+		bikeStatusDAO.updateBikeStatus(getHiredBikeStatusDTO(bikeStatusDTO));
+		
+		updateOrderPaymentForDepositPayment(currentOrderDTO);
+		
 		return orderId;
 	}
 
 	public void cancelOrder(int orderID) throws BikeHireSystemException {
-		//TODO: add cancel method
+		//delete order from current order
+		CurrentOrderDTO currentOrderDTO = currentOrderDAO.getCurrentOrderByOrderId(orderID);
+		if(currentOrderDTO == null)
+		{
+			//TODO: Resolve
+			throw new BikeHireSystemException(-1);
+		}
+		currentOrderDAO.deleteCurrentOrder(currentOrderDTO);
+		
+		//make bike status available
+		BikeStatusDTOImpl bikeStatusDTOImpl = new BikeStatusDTOImpl();
+		BikeDTOImpl bikeDTOImpl = new BikeDTOImpl();
+		bikeDTOImpl.setBikeId(currentOrderDTO.getBikeID());
+		bikeStatusDTOImpl.setBikeDTO(bikeDTOImpl);
+		bikeStatusDTOImpl.setStatus(BikeStatusType.AVALIABLE_BIKE.getBikeStatus());
+		bikeStatusDAO.updateBikeStatus(bikeStatusDTOImpl);
+		
+		//move order to order history
+		OrderHistoryDTOImpl orderHistoryDTOImpl = new OrderHistoryDTOImpl();
+		orderHistoryDTOImpl.setBikeDTO(bikeDTOImpl);
+		UserDTOImpl userDTOImpl = new UserDTOImpl();
+		userDTOImpl.setId(currentOrderDTO.getUserID());
+		orderHistoryDTOImpl.setUserDTO(userDTOImpl);
+		orderHistoryDTOImpl.setBookingTimeStamp(currentOrderDTO.getBookingTimeStamp());
+		orderHistoryDTOImpl.setPickupTimeStamp(currentOrderDTO.getPickupTimeStamp());
+		orderHistoryDTOImpl.setReturnedTimeStamp(currentOrderDTO.getPickupTimeStamp());
+		orderHistoryDTOImpl.setOrderStatus(Constants.ORDER_STATUS_CANCELLED);
+		orderHistoryDAO.addOrderHistory(orderHistoryDTOImpl);
 	}
 
 	public Order getOrder(int orderID) throws BikeHireSystemException {		
@@ -139,6 +182,27 @@ public class OrderServiceImpl implements OrderService {
 		invoiceDTO.setFinalAmount(getFinalAmountPaid(currentOrderDTO, orderPaymentDTO));
 		
 		String invoiceId = invoiceDAO.addInvoice(invoiceDTO);
+		
+		BikeStatusDTOImpl bikeStatusDTOImpl = new BikeStatusDTOImpl();
+		BikeDTOImpl bikeDTOImpl = new BikeDTOImpl();
+		bikeDTOImpl.setBikeId(currentOrderDTO.getBikeID());
+		bikeStatusDTOImpl.setBikeDTO(bikeDTOImpl);
+		bikeStatusDTOImpl.setStatus(BikeStatusType.AVALIABLE_BIKE.getBikeStatus());
+		bikeStatusDAO.updateBikeStatus(bikeStatusDTOImpl);
+		
+		currentOrderDAO.deleteCurrentOrder(currentOrderDTO);
+		
+		OrderHistoryDTOImpl orderHistoryDTOImpl = new OrderHistoryDTOImpl();
+		orderHistoryDTOImpl.setInvoiceId(invoiceId);
+		orderHistoryDTOImpl.setBikeDTO(bikeDTOImpl);
+		UserDTOImpl userDTOImpl = new UserDTOImpl();
+		userDTOImpl.setId(currentOrderDTO.getUserID());
+		orderHistoryDTOImpl.setUserDTO(userDTOImpl);
+		orderHistoryDTOImpl.setBookingTimeStamp(currentOrderDTO.getBookingTimeStamp());
+		orderHistoryDTOImpl.setPickupTimeStamp(currentOrderDTO.getPickupTimeStamp());
+		orderHistoryDTOImpl.setReturnedTimeStamp(currentOrderDTO.getPickupTimeStamp());
+		orderHistoryDTOImpl.setOrderStatus(Constants.ORDER_STATUS_COMPLETED);
+		orderHistoryDAO.addOrderHistory(orderHistoryDTOImpl);
 		
 		return invoiceId;
 	}
@@ -191,11 +255,12 @@ public class OrderServiceImpl implements OrderService {
 		OrderHistoryInfo lOrderInfo = new OrderHistoryInfo();
 		lOrderInfo.setBikeId(previousOrders.getBikeID());
 		lOrderInfo.setBookingTimeStamp(previousOrders.getBookingTimeStamp());
-		lOrderInfo.setInvoiceId(previousOrders.getInvoiceID());
+		lOrderInfo.setInvoiceId(previousOrders.getInvoiceId());
 		lOrderInfo.setOrderId(previousOrders.getOrderID());
 		lOrderInfo.setPickupTimeStamp(previousOrders.getPickupTimeStamp());
 		lOrderInfo.setReturnedTimeStamp(previousOrders.getReturnedTimeStamp());
 		lOrderInfo.setUserId(previousOrders.getUserID());
+		lOrderInfo.setOrderStatus(previousOrders.getOrderStatus());
 		return lOrderInfo;
 	}
 
@@ -263,5 +328,34 @@ public class OrderServiceImpl implements OrderService {
 		
 		return invoiceInfo;
 		
+	}
+	
+	private void updateOrderPaymentForDepositPayment(CurrentOrderDTO currentOrderDTO)
+	{
+		//get bike for deposit amount
+		BikeDTO bikeDTO = bikeDAO.getBike(currentOrderDTO.getBikeID());
+		
+		//get bike rent mapping for setting bike rent at that time
+		BikeRentMappingDTO bikeRentMappingDTO = bikeRentMappingDAO.getBikeRentMapping(bikeDTO.getBikeTypeId());
+		
+		//add in order payment table
+		OrderPaymentDTOImpl lOrderPaymentDTO = new OrderPaymentDTOImpl();
+		lOrderPaymentDTO.setCurrentOrderDTO(currentOrderDTO);
+		lOrderPaymentDTO.setDepositAmount(bikeDTO.getDepositAmount());
+		lOrderPaymentDTO.setRentPerDay(bikeRentMappingDTO.getRentPerDay());
+		lOrderPaymentDTO.setRentPerHour(bikeRentMappingDTO.getRentPerHour());
+		String paymentReference = orderPaymentDAO.addOrderPayment(lOrderPaymentDTO);
+	}
+	
+	private BikeStatusDTO getHiredBikeStatusDTO(BikeStatusDTO bikeStatusDTO)
+	{
+		BikeStatusDTOImpl lBikeStatusDTOImpl = new BikeStatusDTOImpl();
+		BikeDTOImpl lBikeDTOImpl = new BikeDTOImpl();
+		lBikeDTOImpl.setBikeId(bikeStatusDTO.getBikeId());
+		lBikeStatusDTOImpl.setBikeDTO(lBikeDTOImpl);
+		lBikeStatusDTOImpl.setLastServiceDate(bikeStatusDTO.getLastServiceDate());
+		lBikeStatusDTOImpl.setStatus(BikeStatusType.RENTED_BIKE.getBikeStatus());
+		
+		return lBikeStatusDTOImpl;
 	}
 }

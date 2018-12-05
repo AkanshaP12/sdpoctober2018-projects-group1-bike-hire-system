@@ -20,6 +20,8 @@ public class OrderHistoryInfo implements OrderHistory {
 	
 	private Calendar returnedTimeStamp;
 	
+	private String orderStatus;
+	
 	public int getOrderId() {
 		return orderId;
 	}
@@ -48,6 +50,10 @@ public class OrderHistoryInfo implements OrderHistory {
 		return returnedTimeStamp;
 	}
 
+	public String getOrderStatus(){
+		return orderStatus;
+	}
+	
 	public void setOrderId(int orderId) {
 		this.orderId = orderId;
 	}
@@ -74,5 +80,9 @@ public class OrderHistoryInfo implements OrderHistory {
 
 	public void setReturnedTimeStamp(Calendar returnedTimeStamp) {
 		this.returnedTimeStamp = returnedTimeStamp;
+	}
+
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus;
 	}
 }

@@ -11,6 +11,8 @@ public interface OrderHistory {
 	
 	public int getUserID();
 	
+	public String getOrderStatus();
+	
 	public Calendar getBookingTimeStamp();
 	
 	public Calendar getPickupTimeStamp();

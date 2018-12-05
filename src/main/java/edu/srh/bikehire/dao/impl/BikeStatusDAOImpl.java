@@ -8,6 +8,7 @@ import javax.persistence.Query;
 
 import edu.srh.bikehire.dao.BikeStatusDAO;
 import edu.srh.bikehire.dao.impl.util.PersistenceManager;
+import edu.srh.bikehire.dto.BikeDTO;
 import edu.srh.bikehire.dto.BikeStatusDTO;
 import edu.srh.bikehire.dto.impl.BikeStatusDTOImpl;
 
@@ -40,19 +41,31 @@ public class BikeStatusDAOImpl implements BikeStatusDAO {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		em.getTransaction().begin();
 		lOrgBikeStatus.setStatus(pBikeStatus.getStatus());
-		lOrgBikeStatus.setLastServiceDate(pBikeStatus.getLastServiceDate());
+		if(pBikeStatus.getLastServiceDate() != null)
+		{			
+			lOrgBikeStatus.setLastServiceDate(pBikeStatus.getLastServiceDate());
+		}
 		lOrgBikeStatus.setLastModifiedDate(Calendar.getInstance());
 		em.getTransaction().commit();
 		return true;
 	}
-
-	public List<BikeStatusDTO> getAllBikesBasedOnStatus(String pStatus) {
+	
+	public List<BikeDTO> getAllBikesBasedOnStatus(String pStatus, boolean sortPriceDescending) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		Query lQuery = em.createQuery("from BikeStatus where Status = :statusType ");
+		Query lQuery = null;
+		
+		if(sortPriceDescending)
+		{
+			lQuery = em.createQuery("select b from Bike b, BikeStatus bs where b.bikeId = bs.bike and bs.status = :statusType Order by b.depositAmount DESC");
+		}
+		else
+		{	
+			lQuery = em.createQuery("select b from Bike b, BikeStatus bs where b.bikeId = bs.bike and bs.status = :statusType Order by b.depositAmount ASC");
+		}
+		
 		lQuery.setParameter("statusType", pStatus);
-		//If fails, use BikeStatusDTOImpl
-		List<BikeStatusDTO> lBikeStatues = lQuery.getResultList();
-		return lBikeStatues;
+		List<BikeDTO> lBikes = lQuery.getResultList();
+		return lBikes;
 	}
 	
 	public long getBikeCount(String pStatus, int pBikeTypeId)

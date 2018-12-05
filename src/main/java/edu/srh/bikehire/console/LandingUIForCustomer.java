@@ -4,11 +4,11 @@ import java.util.Scanner;
 
 import edu.srh.bikehire.exception.BikeHireSystemException;
 
-public class LandingUI {
+public class LandingUIForCustomer {
 	
 	public void showMenu() throws BikeHireSystemException
 	{
-		System.out.println("1) Show bike catalog \n2) Your Account \n 3) Your Orders \n");
+		System.out.println("1) View bike catalog \n2) Your Account \n 3) Your Orders \n4) Logout");
 		System.out.println("Select option: ");
 		Scanner sc = null;
 		try
@@ -26,6 +26,10 @@ public class LandingUI {
 			case 3:
 				callOrdersUI();
 				break;
+			case 4:
+				HomePage homepage = new HomePage();
+				homepage.display_menu();
+				break;
 			default:
 				throw new BikeHireSystemException(-1);
 			}
@@ -40,19 +44,19 @@ public class LandingUI {
 		
 	}
 	
-	public void callCatalogUI()
+	private void callCatalogUI()
 	{
 		CatalogUI lCatalogUI = new CatalogUI();
 		lCatalogUI.showCatalog();
 	}
 	
-	public void callAccountUI()
+	private void callAccountUI()
 	{
 		AccountUI lAccountUI = new AccountUI();
 		lAccountUI.showAccountInfo();
 	}
 	
-	public void callOrdersUI()
+	private void callOrdersUI()
 	{
 		OrdersUI lOrders = new OrdersUI();
 		lOrders.showOrderHistory();

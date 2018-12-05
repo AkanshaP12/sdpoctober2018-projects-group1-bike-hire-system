@@ -13,7 +13,7 @@ public class LoginUI {
 	
 	private String password;
 	
-	public boolean login()
+	public Entity login()
 	{
 		System.out.println("login");
 		
@@ -35,13 +35,12 @@ public class LoginUI {
 				//TODO: resolve
 				throw new BikeHireSystemException(-1);
 			}
-			
-			return true;
+			return loggedInEntity;
 		}
 		catch(Exception exception)
 		{
 			//TODO: Handle exception and show message
-			return false;
+			return null;
 		}
 		finally
 		{

@@ -5,6 +5,11 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.srh.dao.SomeDAO;
+
 import edu.srh.bikehire.dao.BikeDAO;
 import edu.srh.bikehire.dao.impl.util.PersistenceManager;
 import edu.srh.bikehire.dto.BikeDTO;
@@ -13,8 +18,10 @@ import edu.srh.bikehire.dto.impl.WareHouseDTOImpl;
 import edu.srh.bikehire.util.Util;
 
 public class BikeDAOImpl implements BikeDAO {
-
+	private static final Logger LOG = LogManager.getLogger(BikeDAOImpl.class);
+	
 	public BikeDTOImpl getBike(int pBikeId) {
+		LOG.debug("getBike : Start");
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		
 		Query lQuery = em.createQuery("from Bike where BikeId = :typeId ");
@@ -23,8 +30,10 @@ public class BikeDAOImpl implements BikeDAO {
 		List<BikeDTOImpl> lBikes = lQuery.getResultList();
 		if(lBikes.size() == 0)
 		{
+			LOG.debug("getBike : End");
 			return null;
 		}
+		LOG.debug("getBike : End");
 		return lBikes.get(0);
 	}
 

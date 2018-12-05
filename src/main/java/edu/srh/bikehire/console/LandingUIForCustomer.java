@@ -3,8 +3,16 @@ package edu.srh.bikehire.console;
 import java.util.Scanner;
 
 import edu.srh.bikehire.exception.BikeHireSystemException;
+import edu.srh.bikehire.service.core.Entity;
 
 public class LandingUIForCustomer {
+	
+	private Entity loggedInEntity;
+	
+	public LandingUIForCustomer(Entity loggedInEntity)
+	{
+		this.loggedInEntity = loggedInEntity;
+	}
 	
 	public void showMenu() throws BikeHireSystemException
 	{
@@ -19,12 +27,15 @@ public class LandingUIForCustomer {
 			{
 			case 1:
 				callCatalogUI();
+				showMenu();
 				break;
 			case 2:
 				callAccountUI();
+				showMenu();
 				break;
 			case 3:
 				callOrdersUI();
+				showMenu();
 				break;
 			case 4:
 				HomePage homepage = new HomePage();
@@ -44,22 +55,22 @@ public class LandingUIForCustomer {
 		
 	}
 	
-	private void callCatalogUI()
+	private void callCatalogUI() throws BikeHireSystemException
 	{
-		CatalogUI lCatalogUI = new CatalogUI();
+		CatalogUI lCatalogUI = new CatalogUI(loggedInEntity);
 		lCatalogUI.showCatalog();
 	}
 	
-	private void callAccountUI()
+	private void callAccountUI() throws BikeHireSystemException
 	{
-		AccountUI lAccountUI = new AccountUI();
+		AccountUI lAccountUI = new AccountUI(loggedInEntity);
 		lAccountUI.showAccountInfo();
 	}
 	
-	private void callOrdersUI()
+	private void callOrdersUI() throws BikeHireSystemException
 	{
-		OrdersUI lOrders = new OrdersUI();
-		lOrders.showOrderHistory();
+		OrdersUI lOrders = new OrdersUI(loggedInEntity);
+		lOrders.showOrders();
 		
 	}
 	

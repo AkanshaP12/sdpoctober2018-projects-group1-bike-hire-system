@@ -156,6 +156,19 @@ public class OrderServiceImpl implements OrderService {
 		return lReturnOrder;
 	}
 
+	public Order getCurrentOrderForUser(int userId) throws BikeHireSystemException
+	{
+		CurrentOrderDTO currentOrderDTO = currentOrderDAO.getCurrentOrderByUserId(userId);
+		if(currentOrderDTO == null)
+		{
+			//TODO: Resolve
+			throw new BikeHireSystemException(-1);
+		}
+		
+		Order lReturnOrder = getOrderFromDTO(currentOrderDTO);
+		return lReturnOrder;
+	}
+	
 	public String generateInvoice( int damageCharges, int warehouseId, String paymentReference) throws BikeHireSystemException {
 		OrderPaymentDTO orderPaymentDTO = orderPaymentDAO.getOrderPaymentByPaymentReference(paymentReference);
 		if(orderPaymentDTO == null)

@@ -20,4 +20,6 @@ public interface OrderService {
 	public String generateInvoice(int damageCharges, int warehouseId, String paymentReference) throws BikeHireSystemException ;
 	
 	public Invoice getInvoice(String invoiceID) throws BikeHireSystemException ;
+	
+	public Order getCurrentOrderForUser(int userId) throws BikeHireSystemException;
 }

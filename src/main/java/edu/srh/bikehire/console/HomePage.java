@@ -100,12 +100,12 @@ public class HomePage {
 		
 		if(LoginConstants.LOGIN_ACCOUNT_ROLE_CUSTOMER.equals(userAccount.getUserRole()))
 		{
-			LandingUIForCustomer landingUIForCustomer = new LandingUIForCustomer();
+			LandingUIForCustomer landingUIForCustomer = new LandingUIForCustomer(entity);
 			landingUIForCustomer.showMenu();
 		}
 		else
 		{
-			LandingUIForStaff landingUIForStaff = new LandingUIForStaff();
+			LandingUIForStaff landingUIForStaff = new LandingUIForStaff(entity);
 			landingUIForStaff.showMenu();
 		}
 	}

@@ -10,11 +10,19 @@ import edu.srh.bikehire.dto.BikeTypeDTO;
 import edu.srh.bikehire.dto.WareHouseDTO;
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.service.BikeService;
+import edu.srh.bikehire.service.core.Entity;
 import edu.srh.bikehire.service.impl.BikeServiceImpl;
 
 public class CatalogUI {
 
-	public void showCatalog()
+	private Entity loggedInEntity;
+	
+	public CatalogUI(Entity loggedInEntity)
+	{
+		this.loggedInEntity = loggedInEntity;
+	}
+	
+	public void showCatalog() throws BikeHireSystemException
 	{
 		//STEP 1 : Get bike information from database
 		
@@ -24,7 +32,7 @@ public class CatalogUI {
 		if(listOfBikes == null || listOfBikes.isEmpty())
 		{
 			System.out.println("Sorry no bikes available for now. Please try after some time.");
-			LandingUIForCustomer landingUI = new LandingUIForCustomer();
+			LandingUIForCustomer landingUI = new LandingUIForCustomer(loggedInEntity);
 			landingUI.showMenu();
 			return;
 		}
@@ -67,8 +75,16 @@ public class CatalogUI {
 			switch(input)
 			{
 			case 1:
-				selectBikeUI(sc);
-				break;
+				boolean orderStatus = placeBikeOrderUI(sc);
+				if(!orderStatus)
+				{
+					this.showCatalog();
+					return;
+				}
+				
+				LandingUIForCustomer landingUI = new LandingUIForCustomer(loggedInEntity);
+				landingUI.showMenu();
+				return;
 			case 2:
 				sortByDeposit(bikeService);
 				break;
@@ -95,22 +111,23 @@ public class CatalogUI {
 		}
 	}
 	
-	private void selectBikeUI(Scanner sc)
+	private boolean placeBikeOrderUI(Scanner sc) throws BikeHireSystemException
 	{
 		System.out.println("Please enter bike id to select bike for booking : ");
 		int bikeId = sc.nextInt();
 		
-		
+		PlaceOrderUI placeOrder = new PlaceOrderUI(loggedInEntity, bikeId);
+		return placeOrder.processOrder(true, loggedInEntity.getUserId());
 	}
 	
-	private void sortByDeposit(BikeService bikeService)
+	private void sortByDeposit(BikeService bikeService) throws BikeHireSystemException
 	{
 		List<BikeDTO> listOfBikes = bikeService.getAllBikesBasedOnStatus(BikeStatusType.AVALIABLE_BIKE, true);
 		
 		if(listOfBikes == null || listOfBikes.isEmpty())
 		{
 			System.out.println("Sorry no bikes available for now. Please try after some time.");
-			LandingUIForCustomer landingUI = new LandingUIForCustomer();
+			LandingUIForCustomer landingUI = new LandingUIForCustomer(loggedInEntity);
 			landingUI.showMenu();
 			return;
 		}

@@ -4,18 +4,18 @@ import java.util.Calendar;
 
 public interface Invoice {
 
-    public String InvoiceId();
+    public String getInvoiceId();
     
-    public int OrderId();
+    public int getOrderId();
     
-    public Calendar CreationTimestamp();
+    public Calendar getCreationTimestamp();
     
-    public int FinalAmount();
+    public int getFinalAmount();
     
-    public int ReturnAmount();
+    public int getReturnAmount();
     
-    public int DamagedCharges();
+    public int getDamagedCharges();
     
-    public int WarehouseId();
+    public int getWarehouseId();
     
 }

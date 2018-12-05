@@ -48,4 +48,14 @@ public class WarehouseDAOImpl implements WarehouseDAO {
 		em.getTransaction().commit();
 		return true;
 	}
+	
+	public List<WareHouseDTO> getAllWarehouses()
+	{
+		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
+		Query lQuery = em.createQuery("from WareHouse");
+		
+		List<WareHouseDTO> results = lQuery.getResultList();
+		return results;
+		
+	}
 }

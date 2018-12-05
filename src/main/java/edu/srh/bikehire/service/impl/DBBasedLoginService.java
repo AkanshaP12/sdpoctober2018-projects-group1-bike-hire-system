@@ -167,6 +167,11 @@ public class DBBasedLoginService implements Login {
 		boolean lbResult = mUserAccountDAO.updateUserAccount(lUserAccountDTO);
 		//TODO: Call DAO to change user status in USERACCOUNT table.
 	}
+	
+	public EntityAccount getAccountInfo(int pUserId){
+		UserAccountDTO lUserAccountDTO = mUserAccountDAO.getUserAccount(pUserId);
+		return getEntityAccountFromDTO(lUserAccountDTO);
+	}
 
 	private Entity getEntityFromUserDTO(UserDTO pUserDTO, UserAccountDTO pUserAccountDTO)
 	{
@@ -220,6 +225,16 @@ public class DBBasedLoginService implements Login {
 		lUserAccountDTOImpl.setUserDTO(pUserDTO);
 		
 		return lUserAccountDTOImpl;
+	}
+	
+	private EntityAccount getEntityAccountFromDTO(UserAccountDTO userAccountDTO)
+	{
+		CustomerAccount lCustomerAccount = new CustomerAccount();
+		lCustomerAccount.setAccountStatus(userAccountDTO.getAccountStatus());
+		lCustomerAccount.setUserId(userAccountDTO.getId());
+		lCustomerAccount.setUserName(userAccountDTO.getUserName());
+		lCustomerAccount.setUserRole(userAccountDTO.getRole());
+		return lCustomerAccount;
 	}
 	
 	private UserCredentialDTO getUserCredentialDTOFromInputs(EntityRegistrationCredential pCredentials, UserAccountDTO pUserAccountDTO, UserDTO pUserDTO) throws BikeHireSystemException

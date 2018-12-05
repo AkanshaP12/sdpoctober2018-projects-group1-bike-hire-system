@@ -14,4 +14,11 @@ public class BikeStockInfo implements BikeStock {
 		return totalQuantity;
 	}
 
+	public void setBikeTypeId(int bikeTypeId) {
+		this.bikeTypeId = bikeTypeId;
+	}
+
+	public void setTotalQuantity(long totalQuantity) {
+		this.totalQuantity = totalQuantity;
+	}
 }

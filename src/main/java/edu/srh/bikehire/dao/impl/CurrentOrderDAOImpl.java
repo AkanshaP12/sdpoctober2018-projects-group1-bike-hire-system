@@ -39,6 +39,19 @@ public class CurrentOrderDAOImpl implements CurrentOrderDAO {
 		return results.get(0);
 	}
 
+	public CurrentOrderDTO getCurrentOrderByUserId(int pUserId)
+	{
+		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
+		Query lQuery = em.createQuery("from CurrentOrder where UserID = :typeId ");
+		lQuery.setParameter("typeId", pUserId);
+		List<CurrentOrderDTOImpl> results = lQuery.getResultList();
+		if(results == null || results.size() == 0)
+		{
+			return null;
+		}
+		return results.get(0);
+	}
+	
 	public int addCurrentOrder(CurrentOrderDTO pCurrentOrderDTO) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		em.getTransaction().begin();

@@ -19,4 +19,16 @@ public class BikeRentInfo implements BikeRent {
 		return rentPerDay;
 	}
 
+	public void setBikeTypeId(int bikeTypeId) {
+		this.bikeTypeId = bikeTypeId;
+	}
+
+	public void setRentPerHour(int rentPerHour) {
+		this.rentPerHour = rentPerHour;
+	}
+
+	public void setRentPerDay(int rentPerDay) {
+		this.rentPerDay = rentPerDay;
+	}
+
 }

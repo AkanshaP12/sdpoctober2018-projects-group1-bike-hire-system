@@ -1,6 +1,6 @@
 package edu.srh.bikehire.validator;
 
-import edu.srh.bikehire.dtointerface.OrderHistoryDTO;
+import edu.srh.bikehire.dto.OrderHistoryDTO;
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.util.Util;
 

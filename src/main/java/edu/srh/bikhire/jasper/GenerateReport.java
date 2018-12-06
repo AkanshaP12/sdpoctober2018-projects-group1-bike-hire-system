@@ -76,7 +76,7 @@ public class GenerateReport {
 				.addColumn("Creation TimeStamp", "CreationTimeStamp", String.class.getName(), 3)
 				.setTitle("List Of Bike Type").setSubtitle("This report was generated at " + new Date())
 				.setPrintBackgroundOnOddRows(true).setUseFullPageWidth(true);
-		String path = storeConstants.file_directory_daily;
+		String path = StoreConstants.FILE_DIRECTORY_DAILY;
 		JasperPrint jp = generateDJreport(rs, reportBuilder);
 		exportPDF(jp, path);
 	}
@@ -93,7 +93,7 @@ public class GenerateReport {
 				.addColumn("Creation TimeStamp", "CreationTimeStamp", String.class.getName(), 3)
 				.setTitle("List Of Bike Type").setSubtitle("This report was generated at " + new Date())
 				.setPrintBackgroundOnOddRows(true).setUseFullPageWidth(true);
-		String path = storeConstants.file_directory_monthly;
+		String path = StoreConstants.FILE_DIRECTORY_MONTHLY;
 		JasperPrint jp = generateDJreport(rs, reportBuilder);
 		exportPDF(jp, path);
 	}
@@ -110,7 +110,7 @@ public class GenerateReport {
 				.addColumn("Creation TimeStamp", "CreationTimeStamp", String.class.getName(), 3)
 				.setTitle("List Of Bike Type").setSubtitle("This report was generated at " + new Date())
 				.setPrintBackgroundOnOddRows(true).setUseFullPageWidth(true);
-		String path = storeConstants.file_directory_custom;
+		String path = StoreConstants.FILE_DIRECTORY_CUSTOM;
 		JasperPrint jp = generateDJreport(rs, reportBuilder);
 		exportPDF(jp, path);
 
@@ -131,8 +131,8 @@ public class GenerateReport {
 
 	private ResultSet connectToMySQL(String query) throws ClassNotFoundException, SQLException {
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		Connection connection = DriverManager.getConnection(storeConstants.sqlConnection, "root",
-				storeConstants.sqlDB_password);
+		Connection connection = DriverManager.getConnection(StoreConstants.sqlConnection, "root",
+				StoreConstants.sqlDB_password);
 
 		Statement querystatement = connection.createStatement();
 

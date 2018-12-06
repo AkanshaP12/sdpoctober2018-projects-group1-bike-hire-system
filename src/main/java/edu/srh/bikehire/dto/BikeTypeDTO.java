@@ -10,3 +10,4 @@ public interface BikeTypeDTO {
 	public Calendar getCreationTimeStamp();	
 
 }
+

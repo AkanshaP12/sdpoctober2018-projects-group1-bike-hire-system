@@ -10,7 +10,7 @@ public interface CurrentOrderDAO {
 	
 	public CurrentOrderDTO getCurrentOrderByBikeId(int pBikeId);
 	
-	public CurrentOrderDTO getCurrentOrderByUserId(int pUserId);
+	public List<CurrentOrderDTO> getCurrentOrderByUserId(int pUserId);
 	
 	public int addCurrentOrder(CurrentOrderDTO pCurrentOrderDTO);
 	

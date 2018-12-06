@@ -44,7 +44,7 @@ public class UserValidator {
 		
 		// TODO: Resolve
 		int year = Calendar.getInstance().get(Calendar.YEAR);
-		int ageLimit = year - mUser.getDOB().YEAR;
+		int ageLimit = year - mUser.getDob().YEAR;
 		if (ageLimit < 95 && ageLimit > 7) {
 			throw new BikeHireSystemException(-1);
 		}

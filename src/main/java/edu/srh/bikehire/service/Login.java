@@ -23,4 +23,6 @@ public interface Login {
 	public void deactivateAccount(Entity pEntity) throws BikeHireSystemException;
 	
 	public EntityAccount getAccountInfo(int pUserId);
+	
+	public boolean markUserAccountAsActive(int pUserId);
 }

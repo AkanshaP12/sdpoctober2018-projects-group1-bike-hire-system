@@ -1,5 +1,6 @@
 package edu.srh.bikehire.dto.impl;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.persistence.Column;
@@ -7,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -15,14 +17,14 @@ import edu.srh.bikehire.dto.UserDTO;
 
 @Entity
 @Table(name="Credentials")
-public class UserCredentialDTOImpl implements UserCredentialDTO {
+public class UserCredentialDTOImpl implements UserCredentialDTO, Serializable {
 
 	@Id
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name = "UserID")
 	private UserDTOImpl userDTO;
 	
-	@OneToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "UserName")
 	private UserAccountDTOImpl userAccount;
 	

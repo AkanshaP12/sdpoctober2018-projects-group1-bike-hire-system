@@ -2,8 +2,10 @@ package edu.srh.bikehire.dto.impl;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -19,7 +21,7 @@ public class OrderPaymentDTOImpl implements OrderPaymentDTO {
 	private String paymentReference;
 	
 	@Column(name = "OrderID")
-	private CurrentOrderDTOImpl currentOrder;
+	private int orderID;
 	
 	@Column(name = "DepositAmount")
 	private int depositAmount;
@@ -37,7 +39,7 @@ public class OrderPaymentDTOImpl implements OrderPaymentDTO {
 		this.paymentReference = paymentReference;
 	}
 	public int getOrderID() {
-		return currentOrder.getOrderID();
+		return orderID;
 	}
 	public int getDepositAmount() {
 		return depositAmount;
@@ -57,14 +59,8 @@ public class OrderPaymentDTOImpl implements OrderPaymentDTO {
 	public void setRentPerDay(int rentPerDay) {
 		this.rentPerDay = rentPerDay;
 	}
-	public CurrentOrderDTOImpl getCurrentOrder() {
-		return currentOrder;
-	}
-	public void setCurrentOrder(CurrentOrderDTOImpl currentOrder) {
-		this.currentOrder = currentOrder;
+	public void setOrderID(int orderID) {
+		this.orderID = orderID;
 	}
 	
-	public void setCurrentOrderDTO(CurrentOrderDTO pCurrentOrderDTO) {
-		this.currentOrder = (CurrentOrderDTOImpl) pCurrentOrderDTO;
-	}
 }

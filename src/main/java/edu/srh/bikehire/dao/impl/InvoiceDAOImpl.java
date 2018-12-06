@@ -15,7 +15,7 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 
 	public InvoiceDTOImpl getInvoiceByInvoiceId(String pInvoiceId) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		Query lQuery = em.createQuery("from Invoice where InvoiceID = :typeId ");
+		Query lQuery = em.createQuery("from InvoiceDAOImpl where InvoiceID = :typeId ");
 		lQuery.setParameter("typeId", pInvoiceId);
 		List<InvoiceDTOImpl> results = lQuery.getResultList();
 		if(results == null || results.size() == 0)
@@ -27,7 +27,7 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 
 	public InvoiceDTO getInvoiceByOrderId(int pOrderId) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		Query lQuery = em.createQuery("from Invoice where OrderID = :typeId ");
+		Query lQuery = em.createQuery("from InvoiceDAOImpl where OrderID = :typeId ");
 		lQuery.setParameter("typeId", pOrderId);
 		List<InvoiceDTOImpl> results = lQuery.getResultList();
 		if(results == null || results.size() == 0)

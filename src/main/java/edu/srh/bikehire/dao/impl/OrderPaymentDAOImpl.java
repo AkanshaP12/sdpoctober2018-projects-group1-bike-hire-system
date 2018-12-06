@@ -15,7 +15,7 @@ public class OrderPaymentDAOImpl implements OrderPaymentDAO {
 
 	public OrderPaymentDTOImpl getOrderPaymentByPaymentReference(String pPaymentReference) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		Query lQuery = em.createQuery("from OrderPayment where PaymentReference = :typeId ");
+		Query lQuery = em.createQuery("from OrderPaymentDTOImpl where PaymentReference = :typeId ");
 		lQuery.setParameter("typeId", pPaymentReference);
 		List<OrderPaymentDTOImpl> results = lQuery.getResultList();
 		if(results == null || results.size() == 0)
@@ -27,7 +27,7 @@ public class OrderPaymentDAOImpl implements OrderPaymentDAO {
 
 	public OrderPaymentDTO getOrderPaymentByOrderId(int pOrderId) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		Query lQuery = em.createQuery("from OrderPayment where OrderID = :typeId ");
+		Query lQuery = em.createQuery("from OrderPaymentDTOImpl where OrderID = :typeId ");
 		lQuery.setParameter("typeId", pOrderId);
 		List<OrderPaymentDTOImpl> results = lQuery.getResultList();
 		if(results == null || results.size() == 0)
@@ -42,7 +42,7 @@ public class OrderPaymentDAOImpl implements OrderPaymentDAO {
 		//Generate random payment reference.
 		String lstrPaymentReference = Util.getRandomAlphaNumericId();
 		em.getTransaction().begin();
-		OrderPaymentDTOImpl lOrderPaymentDTOImpl = new OrderPaymentDTOImpl();
+		OrderPaymentDTOImpl lOrderPaymentDTOImpl = (OrderPaymentDTOImpl) pOrderPaymentDTO;
 		lOrderPaymentDTOImpl.setPaymentReference(lstrPaymentReference);
 		em.persist(lOrderPaymentDTOImpl);
 		em.getTransaction().commit();

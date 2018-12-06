@@ -16,7 +16,7 @@ public class BikeTypeDAOImpl implements BikeTypeDAO {
 	public BikeTypeDTOImpl getBikeType(int pBikeType)
 	{
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		Query lQuery = em.createQuery("from BikeType where BikeTypeId = :typeId ");
+		Query lQuery = em.createQuery("from BikeTypeDTOImpl where BikeTypeId = :typeId ");
 		lQuery.setParameter("typeId", pBikeType);
 		
 		List<BikeTypeDTOImpl> results = lQuery.getResultList();
@@ -29,7 +29,7 @@ public class BikeTypeDAOImpl implements BikeTypeDAO {
 	
 	public List<BikeTypeDTO> getBikeTypes() {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		Query lQuery = em.createQuery("SELECT a FROM BikeType a");
+		Query lQuery = em.createQuery("SELECT a FROM BikeTypeDTOImpl a");
 		
 		List<BikeTypeDTO> results = lQuery.getResultList();
 		return results;
@@ -38,11 +38,9 @@ public class BikeTypeDAOImpl implements BikeTypeDAO {
 	public int saveBikeType(BikeTypeDTO bikeType) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		em.getTransaction().begin();
-		
-		BikeTypeDTOImpl lBikeTypeDTOImpl = new BikeTypeDTOImpl();
-		em.persist(lBikeTypeDTOImpl);
+		em.persist(bikeType);
 		em.getTransaction().commit();
-		return lBikeTypeDTOImpl.getBikeTypeId();
+		return bikeType.getBikeTypeId();
 	}
 
 }

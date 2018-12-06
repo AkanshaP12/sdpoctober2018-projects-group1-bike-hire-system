@@ -14,63 +14,51 @@ public class LandingUIForCustomer {
 		this.loggedInEntity = loggedInEntity;
 	}
 	
-	public void showMenu() throws BikeHireSystemException
+	public void showMenu(Scanner sc) throws BikeHireSystemException
 	{
-		System.out.println("1) View bike catalog \n2) Your Account \n 3) Your Orders \n4) Logout");
+		System.out.println("1) View bike catalog \n2) Your Account \n3) Your Orders \n4) Logout");
 		System.out.println("Select option: ");
-		Scanner sc = null;
-		try
+		int input = sc.nextInt();
+		sc.nextLine();
+		switch(input)
 		{
-			sc = new Scanner(System.in);
-			int input = sc.nextInt();
-			switch(input)
-			{
-			case 1:
-				callCatalogUI();
-				showMenu();
-				break;
-			case 2:
-				callAccountUI();
-				showMenu();
-				break;
-			case 3:
-				callOrdersUI();
-				showMenu();
-				break;
-			case 4:
-				HomePage homepage = new HomePage();
-				homepage.display_menu();
-				break;
-			default:
-				throw new BikeHireSystemException(-1);
-			}
+		case 1:
+			callCatalogUI(sc);
+			showMenu(sc);
+			break;
+		case 2:
+			callAccountUI(sc);
+			showMenu(sc);
+			break;
+		case 3:
+			callOrdersUI(sc);
+			showMenu(sc);
+			break;
+		case 4:
+			HomePage homepage = new HomePage();
+			homepage.display_menu();
+			break;
+		default:
+			throw new BikeHireSystemException(-1);
 		}
-		finally
-		{
-			if(sc != null)
-			{
-				sc.close();
-			}
-		}
-		
 	}
 	
-	private void callCatalogUI() throws BikeHireSystemException
+	private void callCatalogUI(Scanner sc) throws BikeHireSystemException
 	{
 		CatalogUI lCatalogUI = new CatalogUI(loggedInEntity);
-		lCatalogUI.showCatalog();
+		lCatalogUI.showCatalog(sc);
 	}
 	
-	private void callAccountUI() throws BikeHireSystemException
+	private void callAccountUI(Scanner sc) throws BikeHireSystemException
 	{
 		AccountUI lAccountUI = new AccountUI(loggedInEntity);
-		lAccountUI.showAccountInfo();
+		lAccountUI.showAccountInfo(sc);
 	}
 	
-	private void callOrdersUI() throws BikeHireSystemException
+	private void callOrdersUI(Scanner sc) throws BikeHireSystemException
 	{
 		OrdersUI lOrders = new OrdersUI(loggedInEntity);
-		lOrders.showOrders();
+		lOrders.showOrders(sc);
 		
 	}
 	

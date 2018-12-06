@@ -49,7 +49,7 @@ public class AssetManagementServiceImpl implements AssetManagementService {
 	
 	private WarehouseDAO warehouseDAO;
 	
-	public void initializeService()
+	public AssetManagementServiceImpl()
 	{
 		bikeTypeDAO = DAOFactory.getDefaultBikeTypeDAOImpl();
 		bikeStockDAO = DAOFactory.getDefaultBikeStockDAOImpl();

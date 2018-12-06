@@ -13,53 +13,73 @@ import edu.srh.bikehire.service.core.Order;
 
 public class EmailNotificationService implements NotificationService {
 
-	public void emailVerification(Entity pEntity, String pSecurityCode, int pType) throws BikeHireSystemException {
+	public void emailVerification(String emailId, String pSecurityCode, boolean isOnboardingEmail) throws BikeHireSystemException {
 		MailSender lNewEmail = MailSender.getInstance();
 
 		List<String> pToEmailAddresses = new ArrayList<String>();
-		pToEmailAddresses.add(pEntity.getEmailId());
+		pToEmailAddresses.add(emailId);
 
-		lNewEmail.sendEmail(pToEmailAddresses, EmailNotificationType.REGISTRATION_CONFIRMATION.getSubjectLine(),
-				EmailNotificationType.REGISTRATION_CONFIRMATION.getBodyText());
+		String bodyTextLine = null;
+		String subjectLine = null;
+		if(isOnboardingEmail)
+		{
+			bodyTextLine = EmailNotificationType.REGISTRATION_CONFIRMATION.getBodyText();			
+			bodyTextLine = bodyTextLine.replace("$SECURITY_CODE$", pSecurityCode);
+			subjectLine = EmailNotificationType.REGISTRATION_CONFIRMATION.getSubjectLine();
+		}
+		else
+		{
+			bodyTextLine = EmailNotificationType.RESET_PASSWORD.getBodyText();			
+			bodyTextLine = bodyTextLine.replace("$SECURITY_CODE$", pSecurityCode);
+			subjectLine = EmailNotificationType.RESET_PASSWORD.getSubjectLine();
+		}
+		
+		lNewEmail.sendEmail(pToEmailAddresses,subjectLine,
+				bodyTextLine);
 	}
 
-	public void passwordResetSuccess(Entity pEntity) throws BikeHireSystemException {
+	public void passwordResetSuccess(String emailId) throws BikeHireSystemException {
 		MailSender lpasswordreset = MailSender.getInstance();
 
 		List<String> pToEmailAddresses = new ArrayList<String>();
-		pToEmailAddresses.add(pEntity.getEmailId());
-		lpasswordreset.sendEmail(pToEmailAddresses, EmailNotificationType.RESET_PASSWORD.getSubjectLine(),
-				EmailNotificationType.RESET_PASSWORD.getBodyText());
+		pToEmailAddresses.add(emailId);
+		lpasswordreset.sendEmail(pToEmailAddresses, EmailNotificationType.RESET_PASSWORD_SUCCESS.getSubjectLine(),
+				EmailNotificationType.RESET_PASSWORD_SUCCESS.getBodyText());
 
 	}
 
-	public void bookingConfirmation(Order pOrder, Entity pEntity) throws BikeHireSystemException {
+	public void bookingConfirmation(int orderId, String emailId) throws BikeHireSystemException {
 
 		MailSender lbookingconfirmed = MailSender.getInstance();
 
 		List<String> pToEmailAddresses = new ArrayList<String>();
-		pToEmailAddresses.add(pEntity.getEmailId());
+		pToEmailAddresses.add(emailId);
+		String bodyTextLine = EmailNotificationType.BOOKING_CONFIRMATION.getBodyText().replace("$ORDER_ID$", String.valueOf(orderId));
+		String subjectLine = EmailNotificationType.BOOKING_CONFIRMATION.getSubjectLine();
 
-		lbookingconfirmed.sendEmail(pToEmailAddresses, EmailNotificationType.BOOKING_CONFIRMATION.getSubjectLine(),
-				EmailNotificationType.BOOKING_CONFIRMATION.getBodyText());
+		lbookingconfirmed.sendEmail(pToEmailAddresses, subjectLine, bodyTextLine);
 	}
 
-	public void cancelBooking(Order pOrder, Entity pEntity) throws BikeHireSystemException {
+	public void cancelBooking(int orderId, String emailId) throws BikeHireSystemException {
 
 		MailSender lcancellation = MailSender.getInstance();
 		List<String> pToEmailAddresses = new ArrayList<String>();
-		pToEmailAddresses.add(pEntity.getEmailId());
-		lcancellation.sendEmail(pToEmailAddresses, EmailNotificationType.BOOKING_CANCEL.getSubjectLine(),
-				EmailNotificationType.BOOKING_CANCEL.getBodyText());
+		pToEmailAddresses.add(emailId);
+		String bodyTextLine = EmailNotificationType.BOOKING_CANCEL.getBodyText().replace("$ORDER_ID$", String.valueOf(orderId));
+		String subjectLine = EmailNotificationType.BOOKING_CANCEL.getSubjectLine();
+		lcancellation.sendEmail(pToEmailAddresses, subjectLine, bodyTextLine);
 
 	}
 
-	public void orderInvoice(Order pOrder, Invoice pInvoice, Entity pEntity) throws BikeHireSystemException {
+	public void orderInvoice(int orderId, String invoiceId, int finalAmount, String emailId) throws BikeHireSystemException {
 		MailSender lInvoice = MailSender.getInstance();
 		List<String> pToEmailAddresses = new ArrayList<String>();
-		pToEmailAddresses.add(pEntity.getEmailId());
-		lInvoice.sendEmail(pToEmailAddresses, EmailNotificationType.BOOKING_INVOICE.getSubjectLine(),
-				EmailNotificationType.BOOKING_CONFIRMATION.getBodyText());
+		pToEmailAddresses.add(emailId);
+		String bodyTextLine = EmailNotificationType.BOOKING_INVOICE.getBodyText().replace("$ORDER_ID$", String.valueOf(orderId));
+		bodyTextLine = bodyTextLine.replace("$INVOICE_ID$", invoiceId);
+		bodyTextLine = bodyTextLine.replace("$AMOUNT$", String.valueOf(finalAmount));
+		String subjectLine = EmailNotificationType.BOOKING_INVOICE.getSubjectLine();
+		lInvoice.sendEmail(pToEmailAddresses, subjectLine,bodyTextLine);
 	}
 	
 }

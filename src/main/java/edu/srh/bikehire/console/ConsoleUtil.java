@@ -1,5 +1,8 @@
 package edu.srh.bikehire.console;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class ConsoleUtil {
 	public static void clearConsole()
 	{
@@ -20,5 +23,11 @@ public class ConsoleUtil {
 	    {
 	        //  Handle any exceptions.
 	    }
+	}
+	
+	public static String getStringForDate(Calendar calendar)
+	{
+		SimpleDateFormat format = new SimpleDateFormat();
+		return format.format(calendar.getTime());
 	}
 }

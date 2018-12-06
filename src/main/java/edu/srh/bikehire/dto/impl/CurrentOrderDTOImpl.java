@@ -1,5 +1,6 @@
 package edu.srh.bikehire.dto.impl;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.persistence.Column;
@@ -19,7 +20,7 @@ import edu.srh.bikehire.dto.UserDTO;
 
 @Entity
 @Table(name= "CurrentOrder")
-public class CurrentOrderDTOImpl implements CurrentOrderDTO {
+public class CurrentOrderDTOImpl implements CurrentOrderDTO, Serializable {
 
 	@Id
 	@Column(name = "OrderID")

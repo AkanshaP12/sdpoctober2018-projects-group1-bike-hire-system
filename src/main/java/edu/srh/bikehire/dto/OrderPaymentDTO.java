@@ -8,5 +8,5 @@ public interface OrderPaymentDTO {
 	public int getDepositAmount();
 	public int getRentPerHour();
 	public int getRentPerDay();
-	public void setCurrentOrderDTO(CurrentOrderDTO pCurrentOrderDTO);
+	public void setOrderID(int orderID);
 }

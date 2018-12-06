@@ -13,6 +13,7 @@ import edu.srh.bikehire.dao.InvoiceDAO;
 import edu.srh.bikehire.dao.OrderHistoryDAO;
 import edu.srh.bikehire.dao.OrderPaymentDAO;
 import edu.srh.bikehire.dao.UserAccountDAO;
+import edu.srh.bikehire.dao.UserDAO;
 import edu.srh.bikehire.dao.WarehouseDAO;
 import edu.srh.bikehire.dashboard.BikeStatusType;
 import edu.srh.bikehire.dto.BikeDTO;
@@ -23,6 +24,7 @@ import edu.srh.bikehire.dto.InvoiceDTO;
 import edu.srh.bikehire.dto.OrderHistoryDTO;
 import edu.srh.bikehire.dto.OrderPaymentDTO;
 import edu.srh.bikehire.dto.UserAccountDTO;
+import edu.srh.bikehire.dto.UserDTO;
 import edu.srh.bikehire.dto.WareHouseDTO;
 import edu.srh.bikehire.dto.impl.BikeDTOImpl;
 import edu.srh.bikehire.dto.impl.BikeStatusDTOImpl;
@@ -63,7 +65,9 @@ public class OrderServiceImpl implements OrderService {
 	
 	private BikeRentMappingDAO bikeRentMappingDAO;
 	
-	public void initializeService()
+	private UserDAO userDAO;
+	
+	public OrderServiceImpl()
 	{
 		bikeDAO = DAOFactory.getDefualtBikeDAOImpl();
 		userAccountDAO = DAOFactory.getDefaultUserAccountDAOImpl();
@@ -74,6 +78,7 @@ public class OrderServiceImpl implements OrderService {
 		warehouseDAO = DAOFactory.getDefaultWarehouseDAOImpl();
 		orderPaymentDAO = DAOFactory.getDefaultOrderPaymentImpl();
 		bikeRentMappingDAO = DAOFactory.getDefaultBikeRentMappingDAOImpl();
+		userDAO = DAOFactory.getDefaultUserDAOImpl();
 	}
 
 	public List<OrderHistory> getOrderHistory(int userID) throws BikeHireSystemException {
@@ -110,6 +115,11 @@ public class OrderServiceImpl implements OrderService {
 		
 		updateOrderPaymentForDepositPayment(currentOrderDTO);
 		
+		UserDTO userDTO = userDAO.getUser(order.getUserId());
+		
+		//Send order notification
+		EmailNotificationService emailNotificationService = new EmailNotificationService();
+		emailNotificationService.bookingConfirmation(currentOrderDTO.getOrderID(), userDTO.getEmailId());
 		return orderId;
 	}
 
@@ -142,6 +152,12 @@ public class OrderServiceImpl implements OrderService {
 		orderHistoryDTOImpl.setReturnedTimeStamp(currentOrderDTO.getPickupTimeStamp());
 		orderHistoryDTOImpl.setOrderStatus(Constants.ORDER_STATUS_CANCELLED);
 		orderHistoryDAO.addOrderHistory(orderHistoryDTOImpl);
+		
+		UserDTO userDTO = userDAO.getUser(currentOrderDTO.getUserID());
+		
+		//Send cancel order notification
+		EmailNotificationService emailNotificationService = new EmailNotificationService();
+		emailNotificationService.cancelBooking(orderID, userDTO.getEmailId());
 	}
 
 	public Order getOrder(int orderID) throws BikeHireSystemException {		
@@ -156,17 +172,23 @@ public class OrderServiceImpl implements OrderService {
 		return lReturnOrder;
 	}
 
-	public Order getCurrentOrderForUser(int userId) throws BikeHireSystemException
+	public List<Order> getCurrentOrdersForUser(int userId) throws BikeHireSystemException
 	{
-		CurrentOrderDTO currentOrderDTO = currentOrderDAO.getCurrentOrderByUserId(userId);
-		if(currentOrderDTO == null)
+		List<CurrentOrderDTO> currentOrderDTOs = currentOrderDAO.getCurrentOrderByUserId(userId);
+		if(currentOrderDTOs == null)
 		{
 			//TODO: Resolve
 			throw new BikeHireSystemException(-1);
 		}
 		
-		Order lReturnOrder = getOrderFromDTO(currentOrderDTO);
-		return lReturnOrder;
+		System.out.println("You have " + currentOrderDTOs.size() + " order(s)");
+		List<Order> allOrders = new ArrayList<Order>();
+		for(CurrentOrderDTO currentOrder : currentOrderDTOs)
+		{			
+			Order lReturnOrder = getOrderFromDTO(currentOrder);
+			allOrders.add(lReturnOrder);
+		}
+		return allOrders;
 	}
 	
 	public String generateInvoice( int damageCharges, int warehouseId, String paymentReference) throws BikeHireSystemException {
@@ -189,10 +211,11 @@ public class OrderServiceImpl implements OrderService {
 		InvoiceDTOImpl invoiceDTO = new InvoiceDTOImpl();
 		invoiceDTO.setDamageCharges(damageCharges);
 		invoiceDTO.setCreationTimeStamp(Calendar.getInstance());
-		invoiceDTO.setCurrentOrderDTO(currentOrderDTO);
+		invoiceDTO.setOrderID(currentOrderDTO.getOrderID());
 		invoiceDTO.setWarehouseDTO(warehouseDTO);
 		invoiceDTO.setReturnDeposit(orderPaymentDTO.getDepositAmount() - damageCharges);
-		invoiceDTO.setFinalAmount(getFinalAmountPaid(currentOrderDTO, orderPaymentDTO));
+		int finalAmount = getFinalAmountPaid(currentOrderDTO, orderPaymentDTO);
+		invoiceDTO.setFinalAmount(finalAmount);
 		
 		String invoiceId = invoiceDAO.addInvoice(invoiceDTO);
 		
@@ -208,6 +231,7 @@ public class OrderServiceImpl implements OrderService {
 		OrderHistoryDTOImpl orderHistoryDTOImpl = new OrderHistoryDTOImpl();
 		orderHistoryDTOImpl.setInvoiceId(invoiceId);
 		orderHistoryDTOImpl.setBikeDTO(bikeDTOImpl);
+		orderHistoryDTOImpl.setOrderID(currentOrderDTO.getOrderID());
 		UserDTOImpl userDTOImpl = new UserDTOImpl();
 		userDTOImpl.setId(currentOrderDTO.getUserID());
 		orderHistoryDTOImpl.setUserDTO(userDTOImpl);
@@ -217,6 +241,11 @@ public class OrderServiceImpl implements OrderService {
 		orderHistoryDTOImpl.setOrderStatus(Constants.ORDER_STATUS_COMPLETED);
 		orderHistoryDAO.addOrderHistory(orderHistoryDTOImpl);
 		
+		UserDTO userDTO = userDAO.getUser(currentOrderDTO.getUserID());
+		
+		//Send invoice notification
+		EmailNotificationService emailNotificationService = new EmailNotificationService();
+		emailNotificationService.orderInvoice(currentOrderDTO.getOrderID(), invoiceId, finalAmount, userDTO.getEmailId());
 		return invoiceId;
 	}
 
@@ -353,7 +382,7 @@ public class OrderServiceImpl implements OrderService {
 		
 		//add in order payment table
 		OrderPaymentDTOImpl lOrderPaymentDTO = new OrderPaymentDTOImpl();
-		lOrderPaymentDTO.setCurrentOrderDTO(currentOrderDTO);
+		lOrderPaymentDTO.setOrderID(currentOrderDTO.getOrderID());
 		lOrderPaymentDTO.setDepositAmount(bikeDTO.getDepositAmount());
 		lOrderPaymentDTO.setRentPerDay(bikeRentMappingDTO.getRentPerDay());
 		lOrderPaymentDTO.setRentPerHour(bikeRentMappingDTO.getRentPerHour());

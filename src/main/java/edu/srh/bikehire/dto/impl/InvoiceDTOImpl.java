@@ -1,5 +1,6 @@
 package edu.srh.bikehire.dto.impl;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.persistence.Column;
@@ -17,15 +18,15 @@ import edu.srh.bikehire.dto.WareHouseDTO;
 
 @Entity
 @Table(name= "Invoice")
-public class InvoiceDTOImpl implements InvoiceDTO{
+public class InvoiceDTOImpl implements InvoiceDTO, Serializable{
 
 	@Id
 	@Column(name = "InvoiceID")
 	private String invoiceID;
 	
-	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "OrderID")
-	private CurrentOrderDTOImpl currentOrderDTOImpl;
+	@Column(name = "OrderID")
+	private int orderID;
 	
 	@Column(name = "CreationTimeStamp")
 	private Calendar creationTimeStamp;
@@ -52,7 +53,7 @@ public class InvoiceDTOImpl implements InvoiceDTO{
 	}
 	
 	public int getOrderID() {
-		return currentOrderDTOImpl.getOrderID();
+		return orderID;
 	}
 	
 	public Calendar getCreationTimeStamp() {
@@ -90,14 +91,6 @@ public class InvoiceDTOImpl implements InvoiceDTO{
 	public int getWarehouseID() {
 		return warehouseDTO.getWarehouseId();
 	}
-	
-	public CurrentOrderDTOImpl getCurrentOrderDTOImpl() {
-		return currentOrderDTOImpl;
-	}
-	
-	public void setCurrentOrderDTOImpl(CurrentOrderDTOImpl currentOrderDTOImpl) {
-		this.currentOrderDTOImpl = currentOrderDTOImpl;
-	}
 
 	public WareHouseDTOImpl getWarehouseDTO() {
 		return warehouseDTO;
@@ -107,11 +100,10 @@ public class InvoiceDTOImpl implements InvoiceDTO{
 		this.warehouseDTO = warehouseDTO;
 	}
 	
-	public void setCurrentOrderDTO(CurrentOrderDTO pCurrentOrderDTO)
-	{
-		this.currentOrderDTOImpl = (CurrentOrderDTOImpl) pCurrentOrderDTO;
+	public void setOrderID(int orderID) {
+		this.orderID = orderID;
 	}
-	
+
 	public void setWarehouseDTO(WareHouseDTO pWareHouseDTO)
 	{
 		this.warehouseDTO = (WareHouseDTOImpl) pWareHouseDTO;

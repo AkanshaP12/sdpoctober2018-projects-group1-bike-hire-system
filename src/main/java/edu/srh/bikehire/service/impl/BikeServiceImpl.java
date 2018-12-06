@@ -31,7 +31,7 @@ public class BikeServiceImpl implements BikeService {
 	
 	private BikeRentMappingDAO bikeRentMappingDAO;
 	
-	public void initializeService()
+	public BikeServiceImpl()
 	{
 		bikeDAO = DAOFactory.getDefualtBikeDAOImpl();
 		bikeTypeDAO = DAOFactory.getDefaultBikeTypeDAOImpl();

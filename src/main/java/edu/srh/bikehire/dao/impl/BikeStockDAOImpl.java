@@ -11,13 +11,14 @@ import edu.srh.bikehire.dao.impl.util.PersistenceManager;
 import edu.srh.bikehire.dto.BikeStockDTO;
 import edu.srh.bikehire.dto.BikeTypeDTO;
 import edu.srh.bikehire.dto.impl.BikeStockDTOImpl;
+import edu.srh.bikehire.dto.impl.BikeTypeDTOImpl;
 
 public class BikeStockDAOImpl implements BikeStockDAO {
 
 	public BikeStockDTOImpl getBikeStock(BikeTypeDTO bikeType) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		
-		Query lQuery = em.createQuery("from BikeStock where BikeTypeId = :typeId ");
+		Query lQuery = em.createQuery("from BikeStockDTOImpl where BikeTypeId = :typeId ");
 		lQuery.setParameter("typeId", bikeType.getBikeTypeId());
 		
 		List<BikeStockDTOImpl> lBikeStocks = lQuery.getResultList();
@@ -41,9 +42,18 @@ public class BikeStockDAOImpl implements BikeStockDAO {
 		
 		BikeStockDTOImpl lBikeStock = getBikeStock(bikeType);
 		em.getTransaction().begin();
-		lBikeStock.setTotalQuantity(bikeStock.getTotalQuantity());
-		lBikeStock.setLastModifiedTimeStamp(Calendar.getInstance());
+		Query lQuery = em.createQuery("UPDATE BikeStockDTOImpl bs SET bs.totalQuantity = :tq, bs.lastModifiedTimeStamp = :lm where bs.bikeType = :bti");
+		lQuery.setParameter("tq", bikeStock.getTotalQuantity());
+		lQuery.setParameter("lm", Calendar.getInstance());
+		BikeTypeDTOImpl bikeTypeDTO = new BikeTypeDTOImpl();
+		bikeTypeDTO.setBikeTypeId(lBikeStock.getBikeTypeId());
+		lQuery.setParameter("bti", bikeTypeDTO);
+		int rowsUpdated = lQuery.executeUpdate();
 		em.getTransaction().commit();
+		if(rowsUpdated <= 0)
+		{
+			return false;
+		}
 		return true;
 	}
 

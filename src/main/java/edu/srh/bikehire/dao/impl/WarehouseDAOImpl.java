@@ -16,7 +16,7 @@ public class WarehouseDAOImpl implements WarehouseDAO {
 
 	public WareHouseDTOImpl getWarehouse(int pWarehouseId) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		Query lQuery = em.createQuery("from WareHouse where WareHouseId = :typeId ");
+		Query lQuery = em.createQuery("from WareHouseDTOImpl where WareHouseId = :typeId ");
 		lQuery.setParameter("typeId", pWarehouseId);
 		
 		List<WareHouseDTOImpl> results = lQuery.getResultList();
@@ -29,30 +29,33 @@ public class WarehouseDAOImpl implements WarehouseDAO {
 
 	public int addWarehouse(WareHouseDTO pWarehouse) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		//Generate warehouse id
-		WareHouseDTOImpl lWareHouseDTOImpl = new WareHouseDTOImpl();
 		em.getTransaction().begin();
-		em.persist(lWareHouseDTOImpl);
+		em.persist(pWarehouse);
 		em.getTransaction().commit();
-		return lWareHouseDTOImpl.getWarehouseId();
+		return pWarehouse.getWarehouseId();
 	}
 
 	public boolean updateWarehouse(WareHouseDTO pWarehouse) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		
-		WareHouseDTOImpl lWarehouse = getWarehouse(pWarehouse.getWarehouseId());
 		em.getTransaction().begin();
-		lWarehouse.setStorageCapacity(pWarehouse.getStorageCapacity());
-		lWarehouse.setName(pWarehouse.getName());
-		lWarehouse.setLastmodifiedTimeStamp(Calendar.getInstance());
+		Query lQuery = em.createQuery("UPDATE WareHouseDTOImpl wh SET wh.storageCapacity = :sc, wh.name = :name, wh.lastmodifiedTimeStamp = :lm where wh.warehouseId = :id ");
+		lQuery.setParameter("sc", pWarehouse.getStorageCapacity());
+		lQuery.setParameter("name", pWarehouse.getName());
+		lQuery.setParameter("lm", Calendar.getInstance());
+		lQuery.setParameter("id", pWarehouse.getWarehouseId());
+		int rowsUpdated = lQuery.executeUpdate();
 		em.getTransaction().commit();
+		if(rowsUpdated <= 0)
+		{
+			return false;
+		}
 		return true;
 	}
 	
 	public List<WareHouseDTO> getAllWarehouses()
 	{
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		Query lQuery = em.createQuery("from WareHouse");
+		Query lQuery = em.createQuery("from WareHouseDTOImpl");
 		
 		List<WareHouseDTO> results = lQuery.getResultList();
 		return results;

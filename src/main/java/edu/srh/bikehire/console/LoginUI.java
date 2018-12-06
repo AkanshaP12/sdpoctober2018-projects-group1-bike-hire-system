@@ -13,14 +13,12 @@ public class LoginUI {
 	
 	private String password;
 	
-	public Entity login()
+	public Entity login(Scanner in)
 	{
 		System.out.println("login");
 		
-		Scanner in = null;
 		try
 		{			
-			in = new Scanner(System.in);
 			readInputs(in);
 			
 			//Call Login API using username and password
@@ -41,13 +39,6 @@ public class LoginUI {
 		{
 			//TODO: Handle exception and show message
 			return null;
-		}
-		finally
-		{
-			if(in != null)
-			{
-				in.close();
-			}
 		}
 	}
 	

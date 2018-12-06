@@ -1,18 +1,18 @@
 package edu.srh.bikehire.console;
 
+import java.io.IOException;
 import java.util.Scanner;
 
-import edu.srh.bikehire.dto.UserAccountDTO;
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.login.LoginConstants;
 import edu.srh.bikehire.service.core.Entity;
 import edu.srh.bikehire.service.core.EntityAccount;
 import edu.srh.bikehire.service.impl.DBBasedLoginService;
+import edu.srh.bikehire.startup.AppInitializer;
 
 public class HomePage {
-
+	private Scanner sc = null;
 	public void display_menu() {
-		Scanner in = null;
 		try {
 			String leftAlignFormat = "| %-4d | %-20s |%n";
 
@@ -25,9 +25,11 @@ public class HomePage {
 			System.out.format("+-------+---------------------+%n");
 			//System.out.println("1) Register \n2) Login \n 3) Forgot Password? \n");
 			System.out.println("Select option: ");
-			in = new Scanner(System.in);
+			sc = new Scanner(System.in);
 			ConsoleUtil.clearConsole();
-			switch (in.nextInt()) {
+			int option = sc.nextInt();
+			sc.nextLine();
+			switch (option) {
 			case 1:
 				this.callRegistrationUI();
 				break;
@@ -35,8 +37,9 @@ public class HomePage {
 				Entity loggedInUser = this.callLoginUI();
 				if(loggedInUser == null)
 				{
-					//TODO : Resolve
-					throw new BikeHireSystemException(-1);
+					System.out.println("Invalid username/password. Please try again with valid credentials.");
+					this.display_menu();
+					return;
 				}
 				else {
 					this.processLoggedInUser(loggedInUser);
@@ -52,34 +55,35 @@ public class HomePage {
 			}
 		} catch (Exception exception) {
 			// TODO: handle exception
+			exception.printStackTrace();
 		} finally {
-			if (in != null) {
-				in.close();
+			if (sc != null) {
+				sc.close();
 			}
 		}
 
 	}
 
-	public static void main(String[] args) {
-
+	public static void main(String[] args) throws IOException {
+		AppInitializer initializer = new AppInitializer();
+		initializer.initializeApplication();
 		HomePage homepage = new HomePage();
 		homepage.display_menu();
-		
 	}
 
-	private void callRegistrationUI() {
+	private void callRegistrationUI() throws BikeHireSystemException {
 		RegistrationUI registrationUI = new RegistrationUI();
-		registrationUI.register();
+		registrationUI.register(sc);
 	}
 
 	private Entity callLoginUI() {
 		LoginUI loginUI = new LoginUI();
-		return loginUI.login();
+		return loginUI.login(sc);
 	}
 
 	private void callForgotPasswordUI() throws BikeHireSystemException {
 		ForgotPasswordUI forgotPasswordUI = new ForgotPasswordUI();
-		forgotPasswordUI.startFPProcess();
+		forgotPasswordUI.startFPProcess(sc);
 	}
 
 	private void processLoggedInUser(Entity entity) throws BikeHireSystemException
@@ -101,12 +105,12 @@ public class HomePage {
 		if(LoginConstants.LOGIN_ACCOUNT_ROLE_CUSTOMER.equals(userAccount.getUserRole()))
 		{
 			LandingUIForCustomer landingUIForCustomer = new LandingUIForCustomer(entity);
-			landingUIForCustomer.showMenu();
+			landingUIForCustomer.showMenu(sc);
 		}
 		else
 		{
 			LandingUIForStaff landingUIForStaff = new LandingUIForStaff(entity);
-			landingUIForStaff.showMenu();
+			landingUIForStaff.showMenu(sc);
 		}
 	}
 }

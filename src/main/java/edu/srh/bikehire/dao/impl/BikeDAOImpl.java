@@ -8,14 +8,11 @@ import javax.persistence.Query;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.srh.dao.SomeDAO;
-
 import edu.srh.bikehire.dao.BikeDAO;
 import edu.srh.bikehire.dao.impl.util.PersistenceManager;
 import edu.srh.bikehire.dto.BikeDTO;
 import edu.srh.bikehire.dto.impl.BikeDTOImpl;
 import edu.srh.bikehire.dto.impl.WareHouseDTOImpl;
-import edu.srh.bikehire.util.Util;
 
 public class BikeDAOImpl implements BikeDAO {
 	private static final Logger LOG = LogManager.getLogger(BikeDAOImpl.class);
@@ -24,7 +21,7 @@ public class BikeDAOImpl implements BikeDAO {
 		LOG.debug("getBike : Start");
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		
-		Query lQuery = em.createQuery("from Bike where BikeId = :typeId ");
+		Query lQuery = em.createQuery("from BikeDTOImpl where BikeId = :typeId ");
 		lQuery.setParameter("typeId", pBikeId);
 		
 		List<BikeDTOImpl> lBikes = lQuery.getResultList();
@@ -49,7 +46,6 @@ public class BikeDAOImpl implements BikeDAO {
 	public boolean updateBike(BikeDTO pBike) {
 		BikeDTOImpl lBike = getBike(pBike.getBikeId());
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		em.getTransaction().begin();
 		if(pBike.getBikeTitle() != null)
 		{			
 			lBike.setBikeTitle(pBike.getBikeTitle());
@@ -58,14 +54,25 @@ public class BikeDAOImpl implements BikeDAO {
 		{
 			lBike.setDepositAmount(pBike.getDepositAmount());
 		}
+		WareHouseDTOImpl lWareHouse = new WareHouseDTOImpl();
 		if(pBike.getWareHouseID() > 0) 
 		{
-			WareHouseDTOImpl lWareHouse = new WareHouseDTOImpl();
 			lWareHouse.setWarehouseId(pBike.getWareHouseID());
 			lBike.setWarehouse(lWareHouse);
 		}
+		em.getTransaction().begin();
+		Query lQuery = em.createQuery("UPDATE BikeDTOImpl bd SET bd.bikeTitle = :bt, bd.depositAmount = :da, bd.warehouse = :wa where bd.bikeId = :bi");
+		lQuery.setParameter("bt", lBike.getBikeTitle());
+		lQuery.setParameter("da", lBike.getDepositAmount());
+		lQuery.setParameter("wa", lWareHouse);
+		lQuery.setParameter("bi", lBike.getBikeId());
 		
+		int rowsUpdated = lQuery.executeUpdate();
 		em.getTransaction().commit();
+		if(rowsUpdated <= 0)
+		{
+			return false;
+		}
 		return true;
 	}
 
@@ -74,11 +81,11 @@ public class BikeDAOImpl implements BikeDAO {
 		Query lQuery = null;
 		if(pSortPriceDescending)
 		{
-			lQuery = em.createQuery("from Bike where WareHouseId = :typeId Order by DepositAmount DESC");
+			lQuery = em.createQuery("from BikeDTOImpl where WareHouseId = :typeId Order by DepositAmount DESC");
 		}
 		else
 		{			
-			lQuery = em.createQuery("from Bike where WareHouseId = :typeId Order by DepositAmount ASC");
+			lQuery = em.createQuery("from BikeDTOImpl where WareHouseId = :typeId Order by DepositAmount ASC");
 		}
 		lQuery.setParameter("typeId", pWarehouseId);
 		
@@ -92,11 +99,11 @@ public class BikeDAOImpl implements BikeDAO {
 		Query lQuery = null;
 		if(pSortPriceDescending)
 		{			
-			lQuery = em.createQuery("from Bike where BikeTypeId = :typeId Order by DepositAmount DESC");
+			lQuery = em.createQuery("from BikeDTOImpl where BikeTypeId = :typeId Order by DepositAmount DESC");
 		}
 		else
 		{
-			lQuery = em.createQuery("from Bike where BikeTypeId = :typeId Order by DepositAmount ASC");
+			lQuery = em.createQuery("from BikeDTOImpl where BikeTypeId = :typeId Order by DepositAmount ASC");
 		}
 		
 		lQuery.setParameter("typeId", pBikeTypeId);
@@ -111,11 +118,11 @@ public class BikeDAOImpl implements BikeDAO {
 		Query lQuery = null;
 		if(pSortPriceDescending)
 		{
-			lQuery = em.createQuery("from Bike Order by DepositAmount DESC");
+			lQuery = em.createQuery("from BikeDTOImpl Order by DepositAmount DESC");
 		}
 		else
 		{
-			lQuery = em.createQuery("from Bike Order by DepositAmount ASC");
+			lQuery = em.createQuery("from BikeDTOImpl Order by DepositAmount ASC");
 		}
 		
 		List<BikeDTO> lBikes = lQuery.getResultList();

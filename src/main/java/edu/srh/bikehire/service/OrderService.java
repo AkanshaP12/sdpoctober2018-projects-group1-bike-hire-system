@@ -21,5 +21,5 @@ public interface OrderService {
 	
 	public Invoice getInvoice(String invoiceID) throws BikeHireSystemException ;
 	
-	public Order getCurrentOrderForUser(int userId) throws BikeHireSystemException;
+	public List<Order> getCurrentOrdersForUser(int userId) throws BikeHireSystemException;
 }

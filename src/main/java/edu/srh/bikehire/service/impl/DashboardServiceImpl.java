@@ -32,7 +32,7 @@ public class DashboardServiceImpl implements DashboardService {
 
 	private UserDAO userDAO;
 
-	public void initializeservice() {
+	public DashboardServiceImpl() {
 		bikeDAO = DAOFactory.getDefualtBikeDAOImpl();
 		bikeStatusDAO = DAOFactory.getDefaultBikeStatusDAOImpl();
 		currentorderDAO = DAOFactory.getDefaultOrderDAOImpl();
@@ -45,12 +45,6 @@ public class DashboardServiceImpl implements DashboardService {
 
 	
 	public List<OrderAppointment> getUpcomingAppointments(Calendar queryDate, boolean isPickUpAppointment) throws BikeHireSystemException {
-		if(queryDate.before(Calendar.getInstance()))
-		{
-			//TODO : Resolve later.
-			throw new BikeHireSystemException(-1);
-		}
-		
 		Calendar l5DayAfter = Calendar.getInstance();
 		l5DayAfter.add(Calendar.DATE, 5);
 		List<CurrentOrderDTO> lUpcomingOrders = null;

@@ -17,6 +17,7 @@ public class BikeTypeDTOImpl implements BikeTypeDTO {
 	
 	@Id
 	@Column(name="BikeTypeId")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int bikeTypeId;
 	
 	@Column(name="Type")

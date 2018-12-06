@@ -19,61 +19,83 @@ public class OrdersUI {
 		this.loggedInUser = loggedInUser;
 	}
 	
-	public void showOrders() throws BikeHireSystemException
+	public void showOrders(Scanner sc) throws BikeHireSystemException
 	{
 		OrderServiceImpl orderServiceImpl = new OrderServiceImpl();
-		Order order = orderServiceImpl.getCurrentOrderForUser(loggedInUser.getUserId());
-		
-		Scanner sc = null;
-		try
-		{
-			if(order == null)
-			{			
-				System.out.println("No current order for your account.");
-			}
-			else
-			{			
+		List<Order> orders = orderServiceImpl.getCurrentOrdersForUser(loggedInUser.getUserId());
+		if(orders == null || orders.isEmpty())
+		{			
+			System.out.println("No current order for your account.");
+		}
+		else
+		{	
+			for(Order order : orders)
+			{				
 				System.out.println("Current Order : ");
 				System.out.println("Order Id : " + order.getOrderId());
 				System.out.println("Bike Id : " + order.getBikeId());
 				System.out.println("Order Mode : " + order.getOrderMode());
-				System.out.println("Booking time : " + order.getBookingTimestamp());
-				
-				if(order.getPickupTimestamp().before(Calendar.getInstance()))
-				{
-					//Cancel order
-					System.out.println("Do you want to cancel this order? (y/n)");
-					String input = sc.nextLine(); 
-					if(input.equalsIgnoreCase("y"))
-					{
-						orderServiceImpl.cancelOrder(order.getOrderId());
-						System.out.println("Order cancelled successfully!");
-					}
-				}
+				System.out.println("Booking time : " + ConsoleUtil.getStringForDate(order.getBookingTimestamp()));
+				System.out.println("------------------------------------------------------");
 			}
 			
-			sc = new Scanner(System.in);	
-			
-			System.out.println("Do you want to view previous order history? (y/n)");
+			//Cancel order
+			System.out.println("Do you want to cancel any order? (y/n)");
 			String input = sc.nextLine(); 
 			if(input.equalsIgnoreCase("y"))
 			{
-				showOrderHistory(sc, orderServiceImpl);
+				System.out.println("Please enter order id : ");
+				int orderId = sc.nextInt();
+				sc.nextLine();
+				Order lCurrentOrder = null;
+				for(int i =0 ; i< orders.size() ; i++)
+				{
+					Order lTempOrder = orders.get(i);
+					if(lTempOrder.getOrderId() == orderId)
+					{
+						lCurrentOrder = lTempOrder;
+						break; 
+					}
+				}
+				
+				if(lCurrentOrder == null)
+				{
+					System.out.println("Please enter valid order id.");
+					this.showOrders(sc);
+					return;
+				}
+				
+				if(Calendar.getInstance().before(lCurrentOrder.getPickupTimestamp()))
+				{
+					System.out.println("Do you want to cancel order id "+lCurrentOrder.getOrderId()+ " ? (y/n)");
+					String cancelInput = sc.nextLine(); 
+					if(cancelInput.equalsIgnoreCase("y"))
+					{						
+						orderServiceImpl.cancelOrder(lCurrentOrder.getOrderId());
+						System.out.println("Order cancelled successfully!");
+					}
+				}
+				else
+				{
+					System.out.println("You cannot cancel this order as bike has already been rented. Contact customer support.");
+					this.showOrders(sc);
+					return;
+				}
 			}
-			else
-			{
-				LandingUIForCustomer landingUI = new LandingUIForCustomer(loggedInUser);
-				landingUI.showMenu();
-				return;
-			}
-					
+			
 		}
-		finally
+		
+		System.out.println("Do you want to view previous order history? (y/n)");
+		String input = sc.nextLine(); 
+		if(input.equalsIgnoreCase("y"))
 		{
-			if(sc != null)
-			{
-				sc.close();
-			}
+			showOrderHistory(sc, orderServiceImpl);
+		}
+		else
+		{
+			LandingUIForCustomer landingUI = new LandingUIForCustomer(loggedInUser);
+			landingUI.showMenu(sc);
+			return;
 		}
 		
 	}
@@ -85,7 +107,7 @@ public class OrdersUI {
 		{
 			System.out.println("No previous orders!");
 			LandingUIForCustomer landingUI = new LandingUIForCustomer(loggedInUser);
-			landingUI.showMenu();
+			landingUI.showMenu(sc);
 			return;
 		}
 		
@@ -96,7 +118,7 @@ public class OrdersUI {
 			System.out.println("Order Id : " + orderHistory.getOrderId());
 			System.out.println("Bike Id : " + orderHistory.getBikeId());
 			System.out.println("Order Status : " + orderHistory.getOrderStatus());
-			System.out.println("Booking time : " + orderHistory.getBookingTimeStamp());
+			System.out.println("Booking time : " + ConsoleUtil.getStringForDate(orderHistory.getBookingTimeStamp()));
 			System.out.println("-------------------------------------------------");
 		}
 	}

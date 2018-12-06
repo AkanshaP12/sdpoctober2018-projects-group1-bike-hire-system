@@ -23,7 +23,17 @@ public class CustomerRegistrationCredential implements EntityRegistrationCredent
 	public String getConfirmPassword() {
 		return mstrConfirmPassword;
 	}
-	
-	
+
+	public void setUserName(String userName) {
+		mstrUserName = userName;
+	}
+
+	public void setNewPassword(String newPassword) {
+		mstrNewPassword = newPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		mstrConfirmPassword = confirmPassword;
+	}
 	
 }

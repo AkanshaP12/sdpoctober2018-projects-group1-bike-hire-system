@@ -22,12 +22,6 @@ public class WarehouseValidator {
 		
 		validateWareHouse();
 		
-		if(mWarehouse.getWarehouseId() <= 0)
-		{
-			//TODO:
-			throw new BikeHireSystemException(-1);
-		}
-		
 		if(Util.isEmptyOrNullString(mWarehouse.getName()))
 		{
 			//TODO:

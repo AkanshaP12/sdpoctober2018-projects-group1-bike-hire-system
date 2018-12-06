@@ -1,5 +1,6 @@
 package edu.srh.bikehire.dto.impl;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.persistence.Column;
@@ -15,7 +16,7 @@ import edu.srh.bikehire.dto.BikeTypeDTO;
 
 @Entity
 @Table(name="BikeRentMapping")
-public class BikeRentMappingDTOImpl implements BikeRentMappingDTO {
+public class BikeRentMappingDTOImpl implements BikeRentMappingDTO, Serializable {
 	
 	@Id
 	@OneToOne(fetch=FetchType.LAZY)

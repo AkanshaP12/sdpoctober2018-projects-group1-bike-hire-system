@@ -15,7 +15,7 @@ public class UserDAOImpl implements UserDAO {
 
 	public UserDTOImpl getUser(int pUserId) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		Query lQuery = em.createQuery("from User where ID = :typeId ");
+		Query lQuery = em.createQuery("from UserDTOImpl where ID = :typeId ");
 		lQuery.setParameter("typeId", pUserId);
 		List<UserDTOImpl> results = lQuery.getResultList();
 		if(results == null || results.size() == 0)
@@ -27,7 +27,7 @@ public class UserDAOImpl implements UserDAO {
 
 	public UserDTO getUserByEmailId(String pEmailId) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		Query lQuery = em.createQuery("from User where EmailId = :typeId ");
+		Query lQuery = em.createQuery("from UserDTOImpl where EmailId = :typeId ");
 		lQuery.setParameter("typeId", pEmailId);
 		List<UserDTOImpl> results = lQuery.getResultList();
 		if(results == null || results.size() == 0)
@@ -40,11 +40,11 @@ public class UserDAOImpl implements UserDAO {
 	public int addUser(UserDTO pNewUser) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		//Generate user id
-		UserDTOImpl lUserDTOImpl = new UserDTOImpl();
+		//UserDTOImpl lUserDTOImpl = new UserDTOImpl();
 		em.getTransaction().begin();
-		em.persist(lUserDTOImpl);
+		em.persist(pNewUser);
 		em.getTransaction().commit();
-		return lUserDTOImpl.getId();
+		return pNewUser.getId();
 	}
 
 	public boolean updateUser(UserDTO pUser) {
@@ -52,6 +52,7 @@ public class UserDAOImpl implements UserDAO {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		UserDTOImpl lUserDTOImpl = getUser(pUser.getId());
 		em.getTransaction().begin();
+		Query lQuery = em.createQuery("UPDATE UserDTOImpl ud SET ud.address = :add, ud.firstName = :fn, ud.lastName = :ln, ud.phoneNo = :pn where ud.id = :identity");
 		
 		if(pUser.getAddress() != null)
 		{
@@ -72,10 +73,18 @@ public class UserDAOImpl implements UserDAO {
 		{
 			lUserDTOImpl.setPhoneNo(pUser.getPhoneNo());
 		}
-		
+		lQuery.setParameter("add", lUserDTOImpl.getAddress());
+		lQuery.setParameter("fn", lUserDTOImpl.getFirstName());
+		lQuery.setParameter("ln", lUserDTOImpl.getLastName());
+		lQuery.setParameter("pn", lUserDTOImpl.getPhoneNo());
+		lQuery.setParameter("identity", lUserDTOImpl.getId());
+		int rowsUpdated = lQuery.executeUpdate();
 		em.getTransaction().commit();
+		if(rowsUpdated <= 0)
+		{
+			return false;
+		}
 		return true;
-		
 	}
 
 }

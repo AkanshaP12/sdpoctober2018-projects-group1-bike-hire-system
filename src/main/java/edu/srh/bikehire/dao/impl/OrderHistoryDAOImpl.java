@@ -14,7 +14,7 @@ public class OrderHistoryDAOImpl implements OrderHistoryDAO {
 
 	public OrderHistoryDTOImpl getOrderHistoryByOrderId(int pOrderId) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		Query lQuery = em.createQuery("from OrderHistory where OrderID = :typeId ");
+		Query lQuery = em.createQuery("from OrderHistoryDTOImpl where OrderID = :typeId ");
 		lQuery.setParameter("typeId", pOrderId);
 		List<OrderHistoryDTOImpl> results = lQuery.getResultList();
 		if(results == null || results.size() == 0)
@@ -26,7 +26,7 @@ public class OrderHistoryDAOImpl implements OrderHistoryDAO {
 
 	public OrderHistoryDTO getOrderHistoryByInvoiceId(String pInvoiceId) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		Query lQuery = em.createQuery("from OrderHistory where InvoiceID = :typeId ");
+		Query lQuery = em.createQuery("from OrderHistoryDTOImpl where InvoiceID = :typeId ");
 		lQuery.setParameter("typeId", pInvoiceId);
 		List<OrderHistoryDTOImpl> results = lQuery.getResultList();
 		if(results == null || results.size() == 0)
@@ -38,7 +38,7 @@ public class OrderHistoryDAOImpl implements OrderHistoryDAO {
 
 	public List<OrderHistoryDTO> getOrderHistoryByBikeId(int pBikeId) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		Query lQuery = em.createQuery("from OrderHistory where BikeID = :typeId ");
+		Query lQuery = em.createQuery("from OrderHistoryDTOImpl where BikeID = :typeId ");
 		lQuery.setParameter("typeId", pBikeId);
 		List<OrderHistoryDTO> results = lQuery.getResultList();
 		return results;
@@ -46,7 +46,7 @@ public class OrderHistoryDAOImpl implements OrderHistoryDAO {
 
 	public List<OrderHistoryDTO> getOrderHistoryByUserId(int pUserId) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		Query lQuery = em.createQuery("from OrderHistory where UserID = :typeId ");
+		Query lQuery = em.createQuery("from OrderHistoryDTOImpl where UserID = :typeId ");
 		lQuery.setParameter("typeId", pUserId);
 		List<OrderHistoryDTO> results = lQuery.getResultList();
 		return results;

@@ -11,7 +11,7 @@ public enum PersistenceManager {
 	
 	private PersistenceManager()
 	{
-		emFactory = Persistence.createEntityManagerFactory("bikehiresystem");
+		emFactory = Persistence.createEntityManagerFactory("BikeHireSystem");
 	}
 	
 	public EntityManager getEntityManager() {

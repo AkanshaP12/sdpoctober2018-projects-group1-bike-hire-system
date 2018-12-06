@@ -23,54 +23,43 @@ public class AssetManagementUI {
 		loggedInStaff = loggedInEntity;
 	}
 	
-	public void manageAssets() throws BikeHireSystemException
+	public void manageAssets(Scanner sc) throws BikeHireSystemException
 	{
 		System.out.println("1) Add Bike Type \n2) Add Warehouse \n3) Add Bike \n4) Update Bike Rent \n5) Back");
 		System.out.println("Select option: ");
-		Scanner sc = null;
 		AssetManagementService assetManagementService = new AssetManagementServiceImpl();
-		try
+		int input = sc.nextInt();
+		sc.nextLine();
+		switch(input)
 		{
-			sc = new Scanner(System.in);
-			int input = sc.nextInt();
-			switch(input)
-			{
-			case 1:
-				addNewBikeType(sc, assetManagementService);
-				manageAssets();
-				break;
-				
-			case 2:
-				addNewWarehouse(sc, assetManagementService);
-				manageAssets();
-				break;
-				
-			case 3:
-				addNewBike(sc, assetManagementService);
-				manageAssets();
-				break;
-				
-			case 4:
-				updateBikeRent(sc, assetManagementService);
-				manageAssets();
-				break;
-				
-			case 5:
-				LandingUIForStaff landingUI = new LandingUIForStaff(loggedInStaff);
-				landingUI.showMenu();
-				break;
-				
-			default :
-				//TODO:
-				throw new BikeHireSystemException(-1);
-			}
-		}
-		finally
-		{
-			if(sc != null)
-			{
-				sc.close();
-			}
+		case 1:
+			addNewBikeType(sc, assetManagementService);
+			manageAssets(sc);
+			break;
+			
+		case 2:
+			addNewWarehouse(sc, assetManagementService);
+			manageAssets(sc);
+			break;
+			
+		case 3:
+			addNewBike(sc, assetManagementService);
+			manageAssets(sc);
+			break;
+			
+		case 4:
+			updateBikeRent(sc, assetManagementService);
+			manageAssets(sc);
+			break;
+			
+		case 5:
+			LandingUIForStaff landingUI = new LandingUIForStaff(loggedInStaff);
+			landingUI.showMenu(sc);
+			break;
+			
+		default :
+			//TODO:
+			throw new BikeHireSystemException(-1);
 		}
 	}
 	
@@ -87,8 +76,10 @@ public class AssetManagementUI {
 		bikeStock.setTotalQuantity(sc.nextLong());
 		System.out.println("Rent per hour : ");
 		bikeRentInfo.setRentPerHour(sc.nextInt());
+		sc.nextLine();
 		System.out.println("Rent per day : ");
 		bikeRentInfo.setRentPerDay(sc.nextInt());
+		sc.nextLine();
 		int bikeTypeId = assetManagementService.addNewBikeType(bikeTypeInfo, bikeStock, bikeRentInfo);
 		System.out.println("New Bike Type added successfully! Bike Type Id : " + bikeTypeId);
 	}
@@ -102,6 +93,7 @@ public class AssetManagementUI {
 		warehouseInfo.setLocation(sc.nextLine());
 		System.out.println("Enter storage capacity : ");
 		warehouseInfo.setStorageCapacity(sc.nextInt());
+		sc.nextLine();
 		int warehouseId = assetManagementService.addNewWarehouse(warehouseInfo);
 		System.out.println("New warehouse added successfully! warehouse id : " + warehouseId);
 	}
@@ -111,17 +103,21 @@ public class AssetManagementUI {
 		BikeInfo bikeInfo = new BikeInfo();
 		System.out.println("Enter bike type id : ");
 		bikeInfo.setBikeTypeId(sc.nextInt());
+		sc.nextLine();
 		System.out.println("Enter bike title : ");
 		bikeInfo.setBikeTitle(sc.nextLine());
 		System.out.println("Enter warehouse id : ");
 		bikeInfo.setWareHouseID(sc.nextInt());
+		sc.nextLine();
 		System.out.println("Enter deposit amount : ");
 		bikeInfo.setDepositAmount(sc.nextInt());
+		sc.nextLine();
 		System.out.println("Enter bike manufacturer : ");
 		String manufacturer = sc.nextLine();
 		bikeInfo.setManufacturer(manufacturer);
 		System.out.println("Enter year of manufacture : ");
 		bikeInfo.setYearOfManufacturer(sc.nextInt());
+		sc.nextLine();
 		
 		BikeStatusInfo bikeStatusInfo = new BikeStatusInfo();
 		bikeStatusInfo.setManufacturer(manufacturer);
@@ -137,10 +133,13 @@ public class AssetManagementUI {
 		BikeRentInfo bikeRentInfo = new BikeRentInfo();
 		System.out.println("Enter bike type id : ");
 		bikeRentInfo.setBikeTypeId(sc.nextInt());
+		sc.nextLine();
 		System.out.println("Rent per hour : ");
 		bikeRentInfo.setRentPerHour(sc.nextInt());
+		sc.nextLine();
 		System.out.println("Rent per day : ");
 		bikeRentInfo.setRentPerDay(sc.nextInt());
+		sc.nextLine();
 		boolean status = assetManagementService.updateBikeRent(bikeRentInfo);
 		if(status)
 		{

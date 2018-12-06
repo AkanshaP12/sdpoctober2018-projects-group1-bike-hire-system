@@ -13,7 +13,7 @@ public class EmailServerConfiguration {
 	private static EmailServerConfiguration sEmailServerConfiguration;
 	
 	private static final String LOCK_FOR_GET_INSTANCE = "emailserverconfiguration_lock";
-	private static final String RELATIVE_EMAIL_SERVER_CONFIG_FILE_PATH = "";
+	private static final String RELATIVE_EMAIL_SERVER_CONFIG_FILE_PATH = "src/main/resources/mail_config.properties";
 	
 	private String mAuthRequired;
 	

@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import edu.srh.bikehire.dto.UserDTO;
 
@@ -32,8 +34,8 @@ public class UserDTOImpl implements UserDTO{
 	@Column(name = "Gender")
 	private String gender;
 	
-	@Column(name = "DOB")
-	private Calendar dOB;
+	@Column(name = "Dob")
+	private Calendar dob;
 	
 	@Column(name = "Address")
 	private String address;
@@ -111,10 +113,11 @@ public class UserDTOImpl implements UserDTO{
 		this.identityProof = identityProof;
 	}
 	
-	public Calendar getDOB() {
-		return dOB;
+	public Calendar getDob() {
+		return dob;
 	}
-	public void setDOB(Calendar dOB) {
-		this.dOB = dOB;
+	
+	public void setDob(Calendar dOB) {
+		this.dob = dOB;
 	}
 }

@@ -9,16 +9,16 @@ public interface NotificationService {
 
 	//pType = 1 : For Registration
 	//pType = 2 : For forgot password
-	public void emailVerification(Entity pEntity, String pSecurityCode, int pType) throws BikeHireSystemException;
+	public void emailVerification(String emailId, String pSecurityCode, boolean isOnBoardingEmail) throws BikeHireSystemException;
 	
 	
-	public void passwordResetSuccess(Entity pEntity) throws BikeHireSystemException;
+	public void passwordResetSuccess(String emailId) throws BikeHireSystemException;
 	
-	public void bookingConfirmation(Order pOrder, Entity pEntity) throws BikeHireSystemException;
+	public void bookingConfirmation(int orderId, String emailId) throws BikeHireSystemException;
 	
-	public void cancelBooking(Order pOrder, Entity pEntity) throws BikeHireSystemException;
+	public void cancelBooking(int orderId, String emailId) throws BikeHireSystemException;
 	
-	public void orderInvoice(Order pOrder, Invoice pInvoice, Entity pEntity) throws BikeHireSystemException;
+	public void orderInvoice(int orderId, String invoiceId, int finalAmount ,String emailId) throws BikeHireSystemException;
 	
 	
 	

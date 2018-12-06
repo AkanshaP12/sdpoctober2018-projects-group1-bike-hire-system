@@ -14,7 +14,7 @@ import edu.srh.bikehire.util.Util;
 
 public class WarehouseDAOImpl implements WarehouseDAO {
 
-	public WareHouseDTOImpl getWarehouse(String pWarehouseId) {
+	public WareHouseDTOImpl getWarehouse(int pWarehouseId) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from WareHouse where WareHouseId = :typeId ");
 		lQuery.setParameter("typeId", pWarehouseId);
@@ -27,16 +27,14 @@ public class WarehouseDAOImpl implements WarehouseDAO {
 		return results.get(0);
 	}
 
-	public String addWarehouse(WareHouseDTO pWarehouse) {
+	public int addWarehouse(WareHouseDTO pWarehouse) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		//Generate warehouse id
-		String lstrWarehouseId = Util.getRandomAlphaNumericId();
 		WareHouseDTOImpl lWareHouseDTOImpl = new WareHouseDTOImpl();
-		lWareHouseDTOImpl.setWarehouseId(lstrWarehouseId);
 		em.getTransaction().begin();
 		em.persist(lWareHouseDTOImpl);
 		em.getTransaction().commit();
-		return lstrWarehouseId;
+		return lWareHouseDTOImpl.getWarehouseId();
 	}
 
 	public boolean updateWarehouse(WareHouseDTO pWarehouse) {
@@ -49,5 +47,15 @@ public class WarehouseDAOImpl implements WarehouseDAO {
 		lWarehouse.setLastmodifiedTimeStamp(Calendar.getInstance());
 		em.getTransaction().commit();
 		return true;
+	}
+	
+	public List<WareHouseDTO> getAllWarehouses()
+	{
+		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
+		Query lQuery = em.createQuery("from WareHouse");
+		
+		List<WareHouseDTO> results = lQuery.getResultList();
+		return results;
+		
 	}
 }

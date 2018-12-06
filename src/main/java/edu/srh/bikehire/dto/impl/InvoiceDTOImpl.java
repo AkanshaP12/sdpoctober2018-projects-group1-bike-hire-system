@@ -51,7 +51,7 @@ public class InvoiceDTOImpl implements InvoiceDTO{
 		this.invoiceID = invoiceID;
 	}
 	
-	public String getOrderID() {
+	public int getOrderID() {
 		return currentOrderDTOImpl.getOrderID();
 	}
 	
@@ -87,7 +87,7 @@ public class InvoiceDTOImpl implements InvoiceDTO{
 		this.damageCharges = damageCharges;
 	}
 	
-	public String getWarehouseID() {
+	public int getWarehouseID() {
 		return warehouseDTO.getWarehouseId();
 	}
 	

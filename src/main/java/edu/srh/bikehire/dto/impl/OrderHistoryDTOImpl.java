@@ -22,11 +22,10 @@ public class OrderHistoryDTOImpl implements OrderHistoryDTO {
 
 	@Id
 	@Column(name = "OrderID")
-	private String orderID;
+	private int orderID;
 	
-	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name = "InvoiceID")
-	private InvoiceDTOImpl invoiceDTO;
+	@Column(name = "InvoiceID")
+	private String invoiceId;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "UserID")
@@ -35,6 +34,9 @@ public class OrderHistoryDTOImpl implements OrderHistoryDTO {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "BikeID")
 	private BikeDTOImpl bikeDTO;
+	
+	@Column(name = "OrderStatus")
+	private String orderStatus;
 	
 	@Column(name = "BookingTimeStamp")
 	private Calendar bookingTimeStamp;
@@ -45,21 +47,21 @@ public class OrderHistoryDTOImpl implements OrderHistoryDTO {
 	@Column(name = "ReturnedTimeStamp")
 	private Calendar returnedTimeStamp;
 	
-	public String getOrderID() {
+	public int getOrderID() {
 		return orderID;
 	}
-	public void setOrderID(String orderID) {
+	public void setOrderID(int orderID) {
 		this.orderID = orderID;
 	}
-	public String getInvoiceID() {
-		return invoiceDTO.getInvoiceID();
+	public String getInvoiceId() {
+		return invoiceId;
 	}
 	
-	public String getUserID() {
+	public int getUserID() {
 		return userDTO.getId();
 	}
 	
-	public String getBikeID() {
+	public int getBikeID() {
 		return bikeDTO.getBikeId();
 	}
 	
@@ -85,12 +87,6 @@ public class OrderHistoryDTOImpl implements OrderHistoryDTO {
 	public void setReturnedTimeStamp(Calendar returnedTimeStamp) {
 		this.returnedTimeStamp = returnedTimeStamp;
 	}
-	public InvoiceDTOImpl getInvoiceDTO() {
-		return invoiceDTO;
-	}
-	public void setInvoiceDTO(InvoiceDTOImpl invoiceDTO) {
-		this.invoiceDTO = invoiceDTO;
-	}
 	public UserDTOImpl getUserDTO() {
 		return userDTO;
 	}
@@ -100,13 +96,19 @@ public class OrderHistoryDTOImpl implements OrderHistoryDTO {
 	public void setBikeDTO(BikeDTOImpl bikeID) {
 		this.bikeDTO = bikeID;
 	}
-	public void setInvoiceDTO(InvoiceDTO pInvoiceDTO) {
-		this.invoiceDTO = (InvoiceDTOImpl) pInvoiceDTO;
-	}
 	public void setUserDTO(UserDTO pUserDTO) {
 		this.userDTO = (UserDTOImpl) pUserDTO;
 	}
 	public void setBikeDTO(BikeDTO pBikeDTO) {
 		this.bikeDTO = (BikeDTOImpl) pBikeDTO;
+	}
+	public String getOrderStatus() {
+		return orderStatus;
+	}
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+	public void setInvoiceId(String invoiceId) {
+		this.invoiceId = invoiceId;
 	}
 }

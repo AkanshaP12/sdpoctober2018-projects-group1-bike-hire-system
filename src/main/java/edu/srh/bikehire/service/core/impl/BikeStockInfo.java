@@ -3,10 +3,10 @@ package edu.srh.bikehire.service.core.impl;
 import edu.srh.bikehire.service.core.BikeStock;
 
 public class BikeStockInfo implements BikeStock {
-	private String bikeTypeId;
+	private int bikeTypeId;
 	private long totalQuantity;
 	
-	public String getBikeTypeId() {
+	public int getBikeTypeId() {
 		return bikeTypeId;
 	}
 
@@ -14,4 +14,11 @@ public class BikeStockInfo implements BikeStock {
 		return totalQuantity;
 	}
 
+	public void setBikeTypeId(int bikeTypeId) {
+		this.bikeTypeId = bikeTypeId;
+	}
+
+	public void setTotalQuantity(long totalQuantity) {
+		this.totalQuantity = totalQuantity;
+	}
 }

@@ -20,7 +20,7 @@ public class BikeStatusValidator {
 			throw new BikeHireSystemException(-1);
 		}
 		
-		if(Util.isEmptyOrNullString(mBikeStatus.getBikeId()))
+		if(mBikeStatus.getBikeId() <= 0)
 		{
 			//TODO: Resolve
 			throw new BikeHireSystemException(-1);

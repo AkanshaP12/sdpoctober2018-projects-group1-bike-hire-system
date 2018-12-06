@@ -1,7 +1,7 @@
 package edu.srh.bikehire.service.core;
 
 public interface BikeType {
-	public String getBikeTypeId();
+	public int getBikeTypeId();
 	public String getBikeType();
 	public String getAgeCategory();
 }

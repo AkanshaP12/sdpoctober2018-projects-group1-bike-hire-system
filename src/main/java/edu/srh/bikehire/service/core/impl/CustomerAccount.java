@@ -7,7 +7,7 @@ import edu.srh.bikehire.service.core.EntityAccount;
 public class CustomerAccount implements EntityAccount {
 	//MEMBERS
 	
-	private String mstrUserId;
+	private int miUserId;
 	
 	private String mstrUserName;
 	
@@ -17,8 +17,8 @@ public class CustomerAccount implements EntityAccount {
 	
 	//GETTER
 	
-	public String getUserId() {
-		return mstrUserId;
+	public int getUserId() {
+		return miUserId;
 	}
 
 	public String getUserName() {
@@ -33,8 +33,8 @@ public class CustomerAccount implements EntityAccount {
 		return mstrAccountStatus;
 	}
 
-	public void setUserId(String userId) {
-		mstrUserId = userId;
+	public void setUserId(int userId) {
+		miUserId = userId;
 	}
 
 	public void setUserName(String userName) {

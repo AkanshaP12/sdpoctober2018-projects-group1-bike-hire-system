@@ -3,12 +3,12 @@ package edu.srh.bikehire.service.core.impl;
 import edu.srh.bikehire.service.core.Warehouse;
 
 public class WarehouseInfo implements Warehouse {
-	private String warehouseId;
+	private int warehouseId;
 	private String name;
 	private String location;
 	private int storageCapacity;
 	
-	public String getWarehouseId() {
+	public int getWarehouseId() {
 		return warehouseId;
 	}
 
@@ -22,6 +22,22 @@ public class WarehouseInfo implements Warehouse {
 
 	public int getStorageCapacity() {
 		return storageCapacity;
+	}
+
+	public void setWarehouseId(int warehouseId) {
+		this.warehouseId = warehouseId;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public void setStorageCapacity(int storageCapacity) {
+		this.storageCapacity = storageCapacity;
 	}
 
 }

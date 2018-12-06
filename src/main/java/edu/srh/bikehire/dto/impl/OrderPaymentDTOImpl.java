@@ -36,7 +36,7 @@ public class OrderPaymentDTOImpl implements OrderPaymentDTO {
 	public void setPaymentReference(String paymentReference) {
 		this.paymentReference = paymentReference;
 	}
-	public String getOrderID() {
+	public int getOrderID() {
 		return currentOrder.getOrderID();
 	}
 	public int getDepositAmount() {

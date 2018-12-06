@@ -5,7 +5,7 @@ import java.util.Calendar;
 public interface UserDTO {
 
 	
-	public String getId();
+	public int getId();
 	public String getFirstName();
 	public String getLastName();
 	public String getGender();

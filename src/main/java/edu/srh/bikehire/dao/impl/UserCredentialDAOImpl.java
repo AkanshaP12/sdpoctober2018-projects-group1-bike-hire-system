@@ -13,7 +13,7 @@ import edu.srh.bikehire.dto.impl.UserCredentialDTOImpl;
 
 public class UserCredentialDAOImpl implements UserCredentialDAO{
 
-	public UserCredentialDTOImpl getUserCredentialByUserId(String pUserId) {
+	public UserCredentialDTOImpl getUserCredentialByUserId(int pUserId) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from Credentials where UserID = :typeId ");
 		lQuery.setParameter("typeId", pUserId);
@@ -48,7 +48,7 @@ public class UserCredentialDAOImpl implements UserCredentialDAO{
 	public boolean updateUserCredential(UserCredentialDTO pUserCredentialDTO) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		UserCredentialDTOImpl lUserCredentialDTOImpl = null;
-		if(pUserCredentialDTO.getUserID() != null)
+		if(pUserCredentialDTO.getUserID() > 0)
 		{			
 			lUserCredentialDTOImpl = getUserCredentialByUserId(pUserCredentialDTO.getUserID());
 		}

@@ -13,7 +13,7 @@ import edu.srh.bikehire.dto.impl.UserAccountDTOImpl;
 
 public class UserAccountDAOImpl implements UserAccountDAO{
 
-	public UserAccountDTOImpl getUserAccount(String pUserId) {
+	public UserAccountDTOImpl getUserAccount(int pUserId) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from UserAccount where ID = :typeId ");
 		lQuery.setParameter("typeId", pUserId);

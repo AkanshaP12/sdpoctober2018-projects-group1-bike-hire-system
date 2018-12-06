@@ -4,14 +4,15 @@ import java.util.Calendar;
 
 public interface OrderHistoryDTO {
 	
-	public String getOrderID();
-	public String getInvoiceID();
-	public String getUserID();
-	public String getBikeID();
+	public int getOrderID();
+	public String getInvoiceId();
+	public int getUserID();
+	public int getBikeID();
+	public String getOrderStatus();
 	public Calendar getBookingTimeStamp();
 	public Calendar getPickupTimeStamp();
 	public Calendar getReturnedTimeStamp();
-	public void setInvoiceDTO(InvoiceDTO pInvoiceDTO);
+	public void setInvoiceId(String pInvoiceId);
 	public void setUserDTO(UserDTO pUserDTO);
 	public void setBikeDTO(BikeDTO pBikeDTO);
 }

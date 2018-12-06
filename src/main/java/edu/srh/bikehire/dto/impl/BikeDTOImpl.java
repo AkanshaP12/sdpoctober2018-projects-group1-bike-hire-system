@@ -16,7 +16,7 @@ public class BikeDTOImpl implements edu.srh.bikehire.dto.BikeDTO{
 	
 	@Id
 	@Column(name="BikeId")
-	private String bikeId;
+	private int bikeId;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "BikeTypeId")
@@ -41,11 +41,11 @@ public class BikeDTOImpl implements edu.srh.bikehire.dto.BikeDTO{
 	@Column(name = "CreationTimeStamp")
 	private Calendar creationTimeStamp;
 
-	public String getBikeId() {
+	public int getBikeId() {
 		return bikeId;
 	}
 
-	public void setBikeId(String bikeId) {
+	public void setBikeId(int bikeId) {
 		this.bikeId = bikeId;
 	}
 
@@ -105,11 +105,11 @@ public class BikeDTOImpl implements edu.srh.bikehire.dto.BikeDTO{
 		this.warehouse = warehousr;
 	}
 
-	public String getBikeTypeId() {
+	public int getBikeTypeId() {
 		return getBikeType().getBikeTypeId();
 	}
 
-	public String getWareHouseID() {
+	public int getWareHouseID() {
 		return getWarehouse().getWarehouseId();
 	}
 

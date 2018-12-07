@@ -37,7 +37,7 @@ public class DBBasedLoginService implements Login {
 	
 	private UserCredentialDAO mUserCredentialDAO;
 	
-	public void initializeService()
+	public DBBasedLoginService()
 	{
 		mUserDAO = DAOFactory.getDefaultUserDAOImpl();
 		mUserAccountDAO = DAOFactory.getDefaultUserAccountDAOImpl();
@@ -89,7 +89,7 @@ public class DBBasedLoginService implements Login {
 		}
 		
 		// Initialize resetpassword validator
-		DBBasedResetPasswordValidator lResetPasswordValidator = new DBBasedResetPasswordValidator(pEmailAddress, false);
+		DBBasedResetPasswordValidator lResetPasswordValidator = new DBBasedResetPasswordValidator(lUserDTO.getId(),pEmailAddress, false);
 		lResetPasswordValidator.generateToken();
 
 		//send email notification for security code
@@ -115,7 +115,6 @@ public class DBBasedLoginService implements Login {
 		UserRegistrationCredentialValidator lCredentialValidator = new UserRegistrationCredentialValidator(pEntityCredential);
 		lCredentialValidator.validateEntityCredentials();
 		
-		//TODO: Validate whether username exist in system or not. USERNAME SHOULD NOT EXIST
 		UserAccountDTO lUserAccountDTO = mUserAccountDAO.getUserAccountUsingUserName(pEntityCredential.getUserName());
 		
 		if(lUserAccountDTO != null)
@@ -136,7 +135,7 @@ public class DBBasedLoginService implements Login {
 		UserCredentialDTO lNewUserCredentials = getUserCredentialDTOFromInputs(pEntityCredential, lNewUserAccountDTO, lNewUserDTO);
 		boolean lbIsCredentialAdded = mUserCredentialDAO.addUserCredential(lNewUserCredentials);
 		
-		DBBasedResetPasswordValidator lResetPasswordValidator = new DBBasedResetPasswordValidator(pEntity.getEmailId(), true);
+		DBBasedResetPasswordValidator lResetPasswordValidator = new DBBasedResetPasswordValidator(userId, pEntity.getEmailId(), true);
 		lResetPasswordValidator.generateToken();
 
 		//send email notification for security code
@@ -156,6 +155,9 @@ public class DBBasedLoginService implements Login {
 		UserCredentialDTO lUserCredentialDTO = getUserCredentialDTOFromInputs(pEntityCredential, lUserAccountDTO, lUserDTO);
 		boolean lbCredentials = mUserCredentialDAO.updateUserCredential(lUserCredentialDTO);
 		
+		//send reset password notification
+		EmailNotificationService emailNotificationService = new EmailNotificationService();
+		emailNotificationService.passwordResetSuccess(lUserDTO.getEmailId());
 	}
 	
 	public void deactivateAccount(Entity pEntity) throws BikeHireSystemException {
@@ -167,6 +169,11 @@ public class DBBasedLoginService implements Login {
 		boolean lbResult = mUserAccountDAO.updateUserAccount(lUserAccountDTO);
 		//TODO: Call DAO to change user status in USERACCOUNT table.
 	}
+	
+	public EntityAccount getAccountInfo(int pUserId){
+		UserAccountDTO lUserAccountDTO = mUserAccountDAO.getUserAccount(pUserId);
+		return getEntityAccountFromDTO(lUserAccountDTO);
+	}
 
 	private Entity getEntityFromUserDTO(UserDTO pUserDTO, UserAccountDTO pUserAccountDTO)
 	{
@@ -177,7 +184,7 @@ public class DBBasedLoginService implements Login {
 		lCustomer.setGender(pUserDTO.getGender());
 		lCustomer.setLastName(pUserDTO.getLastName());
 		lCustomer.setUserId(pUserDTO.getId());
-		lCustomer.setDOB(pUserDTO.getDOB());
+		lCustomer.setDOB(pUserDTO.getDob());
 		lCustomer.setIdentityProofBytes(pUserDTO.getIdentityProof());
 		lCustomer.setPhoneNumber(pUserDTO.getPhoneNo());
 		lCustomer.setPhotoBytes(pUserDTO.getPhoto());
@@ -197,7 +204,7 @@ public class DBBasedLoginService implements Login {
 	{
 		UserDTOImpl lUserDTO = new UserDTOImpl();
 		lUserDTO.setAddress(pEntity.getAddress());
-		lUserDTO.setDOB(pEntity.getDOB());
+		lUserDTO.setDob(pEntity.getDOB());
 		lUserDTO.setEmailId(pEntity.getEmailId());
 		lUserDTO.setFirstName(pEntity.getFirstName());
 		lUserDTO.setGender(pEntity.getGender());
@@ -222,6 +229,16 @@ public class DBBasedLoginService implements Login {
 		return lUserAccountDTOImpl;
 	}
 	
+	private EntityAccount getEntityAccountFromDTO(UserAccountDTO userAccountDTO)
+	{
+		CustomerAccount lCustomerAccount = new CustomerAccount();
+		lCustomerAccount.setAccountStatus(userAccountDTO.getAccountStatus());
+		lCustomerAccount.setUserId(userAccountDTO.getId());
+		lCustomerAccount.setUserName(userAccountDTO.getUserName());
+		lCustomerAccount.setUserRole(userAccountDTO.getRole());
+		return lCustomerAccount;
+	}
+	
 	private UserCredentialDTO getUserCredentialDTOFromInputs(EntityRegistrationCredential pCredentials, UserAccountDTO pUserAccountDTO, UserDTO pUserDTO) throws BikeHireSystemException
 	{
 		UserCredentialDTOImpl lUserCredentialDTO = new UserCredentialDTOImpl();
@@ -244,5 +261,12 @@ public class DBBasedLoginService implements Login {
 		lUserAccountDTOImpl.setUserDTO(pUserDTO);
 		lUserAccountDTOImpl.setLastModifiedTimeStamp(Calendar.getInstance());
 		return lUserAccountDTOImpl;
+	}
+	
+	public boolean markUserAccountAsActive(int pUserId)
+	{
+		UserAccountDTOImpl userAccountDTOImpl = (UserAccountDTOImpl) mUserAccountDAO.getUserAccount(pUserId);
+		userAccountDTOImpl.setAccountStatus(LoginConstants.LOGIN_ACCOUNT_STATUS_ACTIVE);
+		return mUserAccountDAO.updateUserAccount(userAccountDTOImpl);
 	}
 }

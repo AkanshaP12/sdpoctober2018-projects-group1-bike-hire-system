@@ -19,4 +19,16 @@ public class BikeTypeInfo implements BikeType {
 		return ageCategory;
 	}
 
+	public void setBikeTypeId(int bikeTypeId) {
+		this.bikeTypeId = bikeTypeId;
+	}
+
+	public void setBikeType(String bikeType) {
+		this.bikeType = bikeType;
+	}
+
+	public void setAgeCategory(String ageCategory) {
+		this.ageCategory = ageCategory;
+	}
+
 }

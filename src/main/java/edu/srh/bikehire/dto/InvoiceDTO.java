@@ -6,7 +6,7 @@ public interface InvoiceDTO {
 
 	public String getInvoiceID();
 	public int getOrderID();
-	public void setCurrentOrderDTO(CurrentOrderDTO pCurrentOrderDTO);
+	public void setOrderID(int pOrderId);
 	public Calendar getCreationTimeStamp();
 	public int getFinalAmount();
 	public int getReturnDeposit();

@@ -8,6 +8,7 @@ import edu.srh.bikehire.dao.impl.BikeTypeDAOImpl;
 import edu.srh.bikehire.dao.impl.CurrentOrderDAOImpl;
 import edu.srh.bikehire.dao.impl.InvoiceDAOImpl;
 import edu.srh.bikehire.dao.impl.OrderHistoryDAOImpl;
+import edu.srh.bikehire.dao.impl.OrderPaymentDAOImpl;
 import edu.srh.bikehire.dao.impl.UserAccountDAOImpl;
 import edu.srh.bikehire.dao.impl.UserCredentialDAOImpl;
 import edu.srh.bikehire.dao.impl.UserDAOImpl;
@@ -76,5 +77,10 @@ public class DAOFactory {
 	public static OrderHistoryDAO getDefaultOrderHistoryImpl() 
 	{
 		return new OrderHistoryDAOImpl();
+	}
+	
+	public static OrderPaymentDAO getDefaultOrderPaymentImpl()
+	{
+		return new OrderPaymentDAOImpl();
 	}
 }

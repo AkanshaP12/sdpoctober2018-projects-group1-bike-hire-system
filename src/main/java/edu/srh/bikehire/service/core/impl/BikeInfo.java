@@ -40,4 +40,35 @@ public class BikeInfo implements Bike {
 		return depositAmount;
 	}
 
+	public int getYearOfManufacturer() {
+		return yearOfManufacturer;
+	}
+
+	public void setYearOfManufacturer(int yearOfManufacturer) {
+		this.yearOfManufacturer = yearOfManufacturer;
+	}
+
+	public void setBikeId(int bikeId) {
+		this.bikeId = bikeId;
+	}
+
+	public void setBikeTypeId(int bikeTypeId) {
+		this.bikeTypeId = bikeTypeId;
+	}
+
+	public void setManufacturer(String manufacturer) {
+		this.manufacturer = manufacturer;
+	}
+
+	public void setBikeTitle(String bikeTitle) {
+		this.bikeTitle = bikeTitle;
+	}
+
+	public void setWareHouseID(int wareHouseID) {
+		this.wareHouseID = wareHouseID;
+	}
+
+	public void setDepositAmount(int depositAmount) {
+		this.depositAmount = depositAmount;
+	}
 }

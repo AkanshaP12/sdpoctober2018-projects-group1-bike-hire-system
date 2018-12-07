@@ -17,7 +17,7 @@ public class CurrentOrderDAOImpl implements CurrentOrderDAO {
 
 	public CurrentOrderDTOImpl getCurrentOrderByOrderId(int pOrderId) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		Query lQuery = em.createQuery("from CurrentOrder where OrderID = :typeId ");
+		Query lQuery = em.createQuery("from CurrentOrderDTOImpl where OrderID = :typeId ");
 		lQuery.setParameter("typeId", pOrderId);
 		List<CurrentOrderDTOImpl> results = lQuery.getResultList();
 		if(results == null || results.size() == 0)
@@ -29,7 +29,7 @@ public class CurrentOrderDAOImpl implements CurrentOrderDAO {
 
 	public CurrentOrderDTOImpl getCurrentOrderByBikeId(int pBikeId) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		Query lQuery = em.createQuery("from CurrentOrder where BikeID = :typeId ");
+		Query lQuery = em.createQuery("from CurrentOrderDTOImpl where BikeID = :typeId ");
 		lQuery.setParameter("typeId", pBikeId);
 		List<CurrentOrderDTOImpl> results = lQuery.getResultList();
 		if(results == null || results.size() == 0)
@@ -39,6 +39,15 @@ public class CurrentOrderDAOImpl implements CurrentOrderDAO {
 		return results.get(0);
 	}
 
+	public List<CurrentOrderDTO> getCurrentOrderByUserId(int pUserId)
+	{
+		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
+		Query lQuery = em.createQuery("from CurrentOrderDTOImpl where UserID = :typeId ");
+		lQuery.setParameter("typeId", pUserId);
+		List<CurrentOrderDTO> results = lQuery.getResultList();
+		return results;
+	}
+	
 	public int addCurrentOrder(CurrentOrderDTO pCurrentOrderDTO) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		em.getTransaction().begin();
@@ -61,9 +70,11 @@ public class CurrentOrderDAOImpl implements CurrentOrderDAO {
 
 	public boolean deleteCurrentOrder(CurrentOrderDTO pCurrentOrderDTO) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		Query lQuery = em.createQuery("delete from CurrentOrder where OrderID = :typeId ");
+		em.getTransaction().begin();
+		Query lQuery = em.createQuery("delete from CurrentOrderDTOImpl where OrderID = :typeId ");
 		lQuery.setParameter("typeId", pCurrentOrderDTO.getOrderID());
 		int lRowsAffected = lQuery.executeUpdate();
+		em.getTransaction().commit();
 		if(lRowsAffected > 0)
 		{
 			return true;
@@ -74,7 +85,7 @@ public class CurrentOrderDAOImpl implements CurrentOrderDAO {
 	public List<CurrentOrderDTO> getOrdersBasedOnPickUpDate(Calendar pFromCalendar, Calendar pToCalendar)
 	{
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		Query lQuery = em.createQuery("from CurrentOrder where PickupTimeStamp >= :fromTime and PickupTimeStamp <= :toTime ");
+		Query lQuery = em.createQuery("from CurrentOrderDTOImpl where PickupTimeStamp >= :fromTime and PickupTimeStamp <= :toTime ");
 		lQuery.setParameter("fromTime", pFromCalendar, TemporalType.TIMESTAMP);
 		lQuery.setParameter("toTime", pToCalendar, TemporalType.TIMESTAMP);
 		
@@ -85,7 +96,7 @@ public class CurrentOrderDAOImpl implements CurrentOrderDAO {
 	public List<CurrentOrderDTO> getOrdersBasedOnDropOffDate(Calendar pFromCalendar, Calendar pToCalendar)
 	{
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		Query lQuery = em.createQuery("from CurrentOrder where DropOffTimeStamp >= :fromTime and DropOffTimeStamp <= :toTime ");
+		Query lQuery = em.createQuery("from CurrentOrderDTOImpl where DropOffTimeStamp >= :fromTime and DropOffTimeStamp <= :toTime ");
 		lQuery.setParameter("fromTime", pFromCalendar, TemporalType.TIMESTAMP);
 		lQuery.setParameter("toTime", pToCalendar, TemporalType.TIMESTAMP);
 		

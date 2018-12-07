@@ -16,4 +16,13 @@ public class LoginCredential implements EntityLoginCredential {
 		return mstrPassword;
 	}
 
+	public void setUserName(String userName) {
+		this.mstrUserName = userName;
+	}
+
+	public void setPassword(String password) {
+		this.mstrPassword = password;
+	}
+
+	
 }

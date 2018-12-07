@@ -24,9 +24,8 @@ public class OrderHistoryDTOImpl implements OrderHistoryDTO {
 	@Column(name = "OrderID")
 	private int orderID;
 	
-	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name = "InvoiceID")
-	private InvoiceDTOImpl invoiceDTO;
+	@Column(name = "InvoiceID")
+	private String invoiceId;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "UserID")
@@ -35,6 +34,9 @@ public class OrderHistoryDTOImpl implements OrderHistoryDTO {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "BikeID")
 	private BikeDTOImpl bikeDTO;
+	
+	@Column(name = "OrderStatus")
+	private String orderStatus;
 	
 	@Column(name = "BookingTimeStamp")
 	private Calendar bookingTimeStamp;
@@ -51,8 +53,8 @@ public class OrderHistoryDTOImpl implements OrderHistoryDTO {
 	public void setOrderID(int orderID) {
 		this.orderID = orderID;
 	}
-	public String getInvoiceID() {
-		return invoiceDTO.getInvoiceID();
+	public String getInvoiceId() {
+		return invoiceId;
 	}
 	
 	public int getUserID() {
@@ -85,12 +87,6 @@ public class OrderHistoryDTOImpl implements OrderHistoryDTO {
 	public void setReturnedTimeStamp(Calendar returnedTimeStamp) {
 		this.returnedTimeStamp = returnedTimeStamp;
 	}
-	public InvoiceDTOImpl getInvoiceDTO() {
-		return invoiceDTO;
-	}
-	public void setInvoiceDTO(InvoiceDTOImpl invoiceDTO) {
-		this.invoiceDTO = invoiceDTO;
-	}
 	public UserDTOImpl getUserDTO() {
 		return userDTO;
 	}
@@ -100,13 +96,19 @@ public class OrderHistoryDTOImpl implements OrderHistoryDTO {
 	public void setBikeDTO(BikeDTOImpl bikeID) {
 		this.bikeDTO = bikeID;
 	}
-	public void setInvoiceDTO(InvoiceDTO pInvoiceDTO) {
-		this.invoiceDTO = (InvoiceDTOImpl) pInvoiceDTO;
-	}
 	public void setUserDTO(UserDTO pUserDTO) {
 		this.userDTO = (UserDTOImpl) pUserDTO;
 	}
 	public void setBikeDTO(BikeDTO pBikeDTO) {
 		this.bikeDTO = (BikeDTOImpl) pBikeDTO;
+	}
+	public String getOrderStatus() {
+		return orderStatus;
+	}
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+	public void setInvoiceId(String invoiceId) {
+		this.invoiceId = invoiceId;
 	}
 }

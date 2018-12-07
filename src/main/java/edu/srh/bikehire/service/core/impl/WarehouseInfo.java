@@ -24,4 +24,20 @@ public class WarehouseInfo implements Warehouse {
 		return storageCapacity;
 	}
 
+	public void setWarehouseId(int warehouseId) {
+		this.warehouseId = warehouseId;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public void setStorageCapacity(int storageCapacity) {
+		this.storageCapacity = storageCapacity;
+	}
+
 }

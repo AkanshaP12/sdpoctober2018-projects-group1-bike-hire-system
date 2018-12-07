@@ -10,12 +10,13 @@ import edu.srh.bikehire.dao.UserCredentialDAO;
 import edu.srh.bikehire.dao.impl.util.PersistenceManager;
 import edu.srh.bikehire.dto.UserCredentialDTO;
 import edu.srh.bikehire.dto.impl.UserCredentialDTOImpl;
+import edu.srh.bikehire.dto.impl.UserDTOImpl;
 
 public class UserCredentialDAOImpl implements UserCredentialDAO{
 
 	public UserCredentialDTOImpl getUserCredentialByUserId(int pUserId) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		Query lQuery = em.createQuery("from Credentials where UserID = :typeId ");
+		Query lQuery = em.createQuery("from UserCredentialDTOImpl where UserID = :typeId ");
 		lQuery.setParameter("typeId", pUserId);
 		List<UserCredentialDTOImpl> results = lQuery.getResultList();
 		if(results == null || results.size() == 0)
@@ -27,7 +28,7 @@ public class UserCredentialDAOImpl implements UserCredentialDAO{
 
 	public UserCredentialDTOImpl getUserCredentialByUserName(String pUserName) {
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		Query lQuery = em.createQuery("from Credentials where UserName = :typeId ");
+		Query lQuery = em.createQuery("from UserCredentialDTOImpl where UserName = :typeId ");
 		lQuery.setParameter("typeId", pUserName);
 		List<UserCredentialDTOImpl> results = lQuery.getResultList();
 		if(results == null || results.size() == 0)
@@ -57,12 +58,19 @@ public class UserCredentialDAOImpl implements UserCredentialDAO{
 			lUserCredentialDTOImpl = getUserCredentialByUserName(pUserCredentialDTO.getUserName());
 		}
 		em.getTransaction().begin();
-		
-		lUserCredentialDTOImpl.setPasswordHash(pUserCredentialDTO.getPasswordHash());
-		lUserCredentialDTOImpl.setPasswordSalt(pUserCredentialDTO.getPasswordSalt());
-		lUserCredentialDTOImpl.setLastModifiedTimeStamp(Calendar.getInstance());
-		
+		Query lQuery = em.createQuery("UPDATE UserCredentialDTOImpl ucd SET ucd.passwordHash = :ph, ucd.passwordSalt = :ps, ucd.lastModifiedTimeStamp = :lm where ucd.userDTO =:identity");
+		lQuery.setParameter("ph", pUserCredentialDTO.getPasswordHash());
+		lQuery.setParameter("ps", pUserCredentialDTO.getPasswordSalt());
+		lQuery.setParameter("lm", Calendar.getInstance());
+		UserDTOImpl userDTO = new UserDTOImpl();
+		userDTO.setId(lUserCredentialDTOImpl.getUserID());
+		lQuery.setParameter("identity",userDTO);
+		int rowsUpdated = lQuery.executeUpdate();
 		em.getTransaction().commit();
+		if(rowsUpdated <= 0)
+		{
+			return false;
+		}
 		return true;
 	}
 

@@ -64,7 +64,7 @@ public class UserDetailsValidator {
 			throw new BikeHireSystemException(10014);
 		}
 		
-		if(mEntity.getPhoneNumber().length() <= 10)
+		if(mEntity.getPhoneNumber().length() < 10)
 		{
 			//Error_Message: Entity phone number is invalid.
 			throw new BikeHireSystemException(10016);
@@ -77,8 +77,8 @@ public class UserDetailsValidator {
 		}
 		
 		int year = Calendar.getInstance().get(Calendar.YEAR);
-		int ageLimit = year - mEntity.getDOB().get(Calendar.YEAR);
-		if (ageLimit < 95 && ageLimit > 7) {
+		int age = year - mEntity.getDOB().get(Calendar.YEAR);
+		if (age > 95 && age < 7) {
 			//TODO : Resolve later
 			throw new BikeHireSystemException(-1);
 		}
@@ -136,7 +136,7 @@ public class UserDetailsValidator {
 			throw new BikeHireSystemException(10010);
 		}
 		
-		if(Util.isValidEmailAddress(mEntity.getEmailId()))
+		if(!Util.isValidEmailAddress(mEntity.getEmailId()))
 		{
 			//Error_Message : Entity email id {0} is not valid.
 			throw new BikeHireSystemException(10011, new Object[] {mEntity.getEmailId()});

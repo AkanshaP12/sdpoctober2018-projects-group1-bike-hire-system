@@ -5,6 +5,7 @@ import java.util.Calendar;
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.login.ResetPasswordValidator;
 import edu.srh.bikehire.login.util.LoginUtil;
+import edu.srh.bikehire.service.impl.EmailNotificationService;
 import edu.srh.bikehire.startup.AppInitializer;
 
 public class DBBasedResetPasswordValidator implements ResetPasswordValidator {
@@ -17,6 +18,8 @@ public class DBBasedResetPasswordValidator implements ResetPasswordValidator {
 	
 	private String mstrToken;
 	
+	private int miUserId;
+	
 	private Calendar mGenerationTime;
 	
 	private Calendar mLastAttemptTime;
@@ -25,8 +28,9 @@ public class DBBasedResetPasswordValidator implements ResetPasswordValidator {
 	
 	private boolean mbIsEmailVerificationOnboarding;
 	
-	public DBBasedResetPasswordValidator(String pEmailAddress, boolean pIsEmailVerification)
+	public DBBasedResetPasswordValidator(int pUserId, String pEmailAddress, boolean pIsEmailVerification)
 	{
+		miUserId = pUserId;
 		mstrUserEmailId = pEmailAddress;
 		mbIsEmailVerificationOnboarding = pIsEmailVerification;
 	}
@@ -64,10 +68,10 @@ public class DBBasedResetPasswordValidator implements ResetPasswordValidator {
 		AppInitializer.getResetPasswordCache().removeFromCache(mstrUserEmailId);
 	}
 	
-	public void sendNotfificationForSecurityCode()
+	public void sendNotfificationForSecurityCode() throws BikeHireSystemException
 	{
-		//TODO: Create instance of EmailNotification from factory
-		//Call Send email and pass mstrUserEmailId and SecurityCode
+		EmailNotificationService emailNotificationService = new EmailNotificationService();
+		emailNotificationService.emailVerification(mstrUserEmailId, mstrToken, isEmailVerificationOnboarding());
 	}
 	
 	public void generateToken()
@@ -93,5 +97,10 @@ public class DBBasedResetPasswordValidator implements ResetPasswordValidator {
 	public boolean isEmailVerificationOnboarding() {
 		return mbIsEmailVerificationOnboarding;
 	}
+
+	public int getUserId() {
+		return miUserId;
+	}
+	
 	
 }

@@ -3,6 +3,9 @@ package edu.srh.bikehire.service.impl;
 import java.util.Calendar;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import edu.srh.bikehire.dao.BikeDAO;
 import edu.srh.bikehire.dao.BikeRentMappingDAO;
 import edu.srh.bikehire.dao.BikeStatusDAO;
@@ -21,6 +24,8 @@ import edu.srh.bikehire.service.BikeService;
 
 public class BikeServiceImpl implements BikeService {
 
+	private static final Logger LOG = LogManager.getLogger(BikeServiceImpl.class);
+	
 	private BikeDAO bikeDAO;
 	
 	private BikeStatusDAO bikeStatusDAO;
@@ -50,6 +55,7 @@ public class BikeServiceImpl implements BikeService {
 	}
 
 	public void updateBikeStatus(int id, BikeStatusType bikeStatusType) throws BikeHireSystemException {
+		LOG.info("updateBikeStatus : Start");
 		BikeDTO bikeDTO = bikeDAO.getBike(id);
 		if(bikeDTO == null)
 		{
@@ -66,10 +72,13 @@ public class BikeServiceImpl implements BikeService {
 		bikeStatusDTOImpl.setStatus(bikeStatusType.getBikeStatus());
 		
 		bikeStatusDAO.updateBikeStatus(bikeStatusDTOImpl);
+		LOG.info("updateBikeStatus : bike status updated successfully.");
+		LOG.info("updateBikeStatus : End");
 	}
 
 	public List<BikeDTO> getAllBikesBasedOnType(int bikeTypeId, boolean sortPriceDescending) throws BikeHireSystemException
 	{
+		LOG.info("getAllBikesBasedOnType : Start");
 		BikeTypeDTO bikeTypeDTO = bikeTypeDAO.getBikeType(bikeTypeId);
 		if(bikeTypeDTO == null)
 		{
@@ -77,12 +86,14 @@ public class BikeServiceImpl implements BikeService {
 			throw new BikeHireSystemException(-1);
 		}
 		
-		return bikeDAO.getBikeForBikeType(bikeTypeId, sortPriceDescending);
-		
+		List<BikeDTO> allBikes = bikeDAO.getBikeForBikeType(bikeTypeId, sortPriceDescending);
+		LOG.info("getAllBikesBasedOnType : End");
+		return allBikes;
 	}
 	
 	public List<BikeDTO> getAllBikesBasedOnWarehouse(int warehouseId, boolean sortPriceDescending) throws BikeHireSystemException
 	{
+		LOG.info("getAllBikesBasedOnWarehouse : Start");
 		WareHouseDTO warehouseDTO = warehouseDAO.getWarehouse(warehouseId);
 		if(warehouseDTO == null)
 		{
@@ -90,29 +101,46 @@ public class BikeServiceImpl implements BikeService {
 			throw new BikeHireSystemException(-1);
 		}
 		
-		return bikeDAO.getBikeForWarehouseId(warehouseId, sortPriceDescending);
+		List<BikeDTO> allBikes = bikeDAO.getBikeForWarehouseId(warehouseId, sortPriceDescending);
+		LOG.info("getAllBikesBasedOnWarehouse : End");
+		return allBikes;
 	}
 	
 	public BikeTypeDTO getBikeTypeInfo(int bikeTypeId) {
-		return bikeTypeDAO.getBikeType(bikeTypeId);
+		LOG.info("getBikeTypeInfo : Start");
+		BikeTypeDTO bikeTypeDTO = bikeTypeDAO.getBikeType(bikeTypeId);
+		LOG.info("getBikeTypeInfo : End");
+		return bikeTypeDTO;
 	}
 	
 	public List<BikeTypeDTO> getBikeTypes()
 	{
-		return bikeTypeDAO.getBikeTypes();
+		LOG.info("getBikeTypes : Start");
+		List<BikeTypeDTO> allBikeTypes = bikeTypeDAO.getBikeTypes();
+		LOG.info("getBikeTypes : End");
+		return allBikeTypes;
 	}
 	
 	public List<BikeDTO> getAllBikesBasedOnStatus(BikeStatusType bikeStatusType, boolean sortPriceDescending)
 	{
-		return bikeStatusDAO.getAllBikesBasedOnStatus(bikeStatusType.getBikeStatus(), sortPriceDescending);
+		LOG.info("getAllBikesBasedOnStatus : Start");
+		List<BikeDTO> allBikes = bikeStatusDAO.getAllBikesBasedOnStatus(bikeStatusType.getBikeStatus(), sortPriceDescending); 
+		LOG.info("getAllBikesBasedOnStatus : End");
+		return allBikes;
 	}
 	
 	public BikeRentMappingDTO getBikeRent(int bikeId){
-		return bikeRentMappingDAO.getBikeRentMapping(bikeId);
+		LOG.info("getBikeRent : Start");
+		BikeRentMappingDTO bikeRentMappingDTO = bikeRentMappingDAO.getBikeRentMapping(bikeId);
+		LOG.info("getBikeRent : End");
+		return bikeRentMappingDTO;
 	}
 	
 	public List<WareHouseDTO> getAllWarehouses(){
-		return warehouseDAO.getAllWarehouses();
+		LOG.info("getAllWarehouses : Start");
+		List<WareHouseDTO> warehouses = warehouseDAO.getAllWarehouses();
+		LOG.info("getAllWarehouses : End");
+		return warehouses;
 	}
 	
 }

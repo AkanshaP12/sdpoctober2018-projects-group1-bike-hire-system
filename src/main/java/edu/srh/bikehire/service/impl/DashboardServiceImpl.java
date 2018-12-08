@@ -2,12 +2,13 @@ package edu.srh.bikehire.service.impl;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import edu.srh.bikehire.dao.BikeDAO;
 import edu.srh.bikehire.dao.BikeStatusDAO;
-import edu.srh.bikehire.dao.BikeTypeDAO;
 import edu.srh.bikehire.dao.CurrentOrderDAO;
 import edu.srh.bikehire.dao.DAOFactory;
 import edu.srh.bikehire.dao.UserDAO;
@@ -20,10 +21,10 @@ import edu.srh.bikehire.service.DashboardService;
 import edu.srh.bikehire.service.core.OrderAppointment;
 import edu.srh.bikehire.service.core.impl.UpcomingAppointment;
 
-//import bike interface here(if created)
-
 public class DashboardServiceImpl implements DashboardService {
 
+	private static final Logger LOG = LogManager.getLogger(DashboardServiceImpl.class);
+	
 	private BikeDAO bikeDAO;
 
 	private BikeStatusDAO bikeStatusDAO;
@@ -40,11 +41,15 @@ public class DashboardServiceImpl implements DashboardService {
 	}
 
 	public long getBikeCount(BikeStatusType statusType, int bikeTypeId) {
-		return bikeStatusDAO.getBikeCount(statusType.getBikeStatus(), bikeTypeId);
+		LOG.info("getBikeCount : Start");
+		long count = bikeStatusDAO.getBikeCount(statusType.getBikeStatus(), bikeTypeId);
+		LOG.info("getBikeCount : End");
+		return count;
 	}
 
 	
 	public List<OrderAppointment> getUpcomingAppointments(Calendar queryDate, boolean isPickUpAppointment) throws BikeHireSystemException {
+		LOG.info("getUpcomingAppointments : Start");
 		Calendar l5DayAfter = Calendar.getInstance();
 		l5DayAfter.add(Calendar.DATE, 5);
 		List<CurrentOrderDTO> lUpcomingOrders = null;
@@ -61,6 +66,8 @@ public class DashboardServiceImpl implements DashboardService {
 		{
 			return new ArrayList<OrderAppointment>();
 		}
+		
+		LOG.info("getUpcomingAppointments : Upcoming appointments found.");
 		List<UpcomingAppointment> lReturnList = new ArrayList<UpcomingAppointment>();
 		for(CurrentOrderDTO lCurrentOrderDTO : lUpcomingOrders)
 		{
@@ -79,7 +86,7 @@ public class DashboardServiceImpl implements DashboardService {
 			
 			lReturnList.add(lUpcomingAppointment);
 		}
-		
+		LOG.info("getUpcomingAppointments : End");
 		return (List)lReturnList;
 	}
 }

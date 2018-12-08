@@ -5,6 +5,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import edu.srh.bikehire.dao.InvoiceDAO;
 import edu.srh.bikehire.dao.impl.util.PersistenceManager;
 import edu.srh.bikehire.dto.InvoiceDTO;
@@ -12,32 +15,40 @@ import edu.srh.bikehire.dto.impl.InvoiceDTOImpl;
 import edu.srh.bikehire.util.Util;
 
 public class InvoiceDAOImpl implements InvoiceDAO {
-
+	private static final Logger LOG = LogManager.getLogger(InvoiceDAOImpl.class);
+	
 	public InvoiceDTOImpl getInvoiceByInvoiceId(String pInvoiceId) {
+		LOG.debug("getInvoiceByInvoiceId : Start");
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from InvoiceDAOImpl where InvoiceID = :typeId ");
 		lQuery.setParameter("typeId", pInvoiceId);
 		List<InvoiceDTOImpl> results = lQuery.getResultList();
 		if(results == null || results.size() == 0)
 		{
+			LOG.debug("getInvoiceByInvoiceId : End");
 			return null;
 		}
+		LOG.debug("getInvoiceByInvoiceId : End");
 		return results.get(0);
 	}
 
 	public InvoiceDTO getInvoiceByOrderId(int pOrderId) {
+		LOG.debug("getInvoiceByOrderId : Start");
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from InvoiceDAOImpl where OrderID = :typeId ");
 		lQuery.setParameter("typeId", pOrderId);
 		List<InvoiceDTOImpl> results = lQuery.getResultList();
 		if(results == null || results.size() == 0)
 		{
+			LOG.debug("getInvoiceByOrderId : End");
 			return null;
 		}
+		LOG.debug("getInvoiceByOrderId : End");
 		return results.get(0);
 	}
 
 	public String addInvoice(InvoiceDTO pInvoiceDTO) {
+		LOG.debug("addInvoice : Start");
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		//Generate random invoice id.
 		String lstrInvoiceId = Util.getRandomAlphaNumericId();
@@ -46,6 +57,8 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 		em.getTransaction().begin();
 		em.persist(lInvoiceDTOImpl);
 		em.getTransaction().commit();
+		LOG.info("addInvoice : new invoice added successfully.");
+		LOG.debug("addInvoice : End");
 		return lstrInvoiceId;
 	}
 

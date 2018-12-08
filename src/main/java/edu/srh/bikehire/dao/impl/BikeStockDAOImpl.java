@@ -6,6 +6,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import edu.srh.bikehire.dao.BikeStockDAO;
 import edu.srh.bikehire.dao.impl.util.PersistenceManager;
 import edu.srh.bikehire.dto.BikeStockDTO;
@@ -14,8 +17,10 @@ import edu.srh.bikehire.dto.impl.BikeStockDTOImpl;
 import edu.srh.bikehire.dto.impl.BikeTypeDTOImpl;
 
 public class BikeStockDAOImpl implements BikeStockDAO {
-
+	private static final Logger LOG = LogManager.getLogger(BikeStockDAOImpl.class);
+	
 	public BikeStockDTOImpl getBikeStock(BikeTypeDTO bikeType) {
+		LOG.debug("getBikeStock : Start");
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		
 		Query lQuery = em.createQuery("from BikeStockDTOImpl where BikeTypeId = :typeId ");
@@ -24,20 +29,26 @@ public class BikeStockDAOImpl implements BikeStockDAO {
 		List<BikeStockDTOImpl> lBikeStocks = lQuery.getResultList();
 		if(lBikeStocks.size() == 0)
 		{
+			LOG.debug("getBikeStock : End");
 			return null;
 		}
+		LOG.debug("getBikeStock : End");
 		return lBikeStocks.get(0);
 	}
 
 	public boolean addBikeStock(BikeStockDTO bikeStock) {
+		LOG.debug("addBikeStock : Start");
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		em.getTransaction().begin();
 		em.persist(bikeStock);
 		em.getTransaction().commit();
+		LOG.info("addBikeStock : new bike stock added successfully.");
+		LOG.debug("addBikeStock : End");
 		return false;
 	}
 
 	public boolean updateBikeStock(BikeStockDTO bikeStock, BikeTypeDTO bikeType) {
+		LOG.debug("updateBikeStock : Start");
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		
 		BikeStockDTOImpl lBikeStock = getBikeStock(bikeType);
@@ -52,8 +63,12 @@ public class BikeStockDAOImpl implements BikeStockDAO {
 		em.getTransaction().commit();
 		if(rowsUpdated <= 0)
 		{
+			LOG.info("updateBikeStock : failed to update bike stock.");
+			LOG.debug("updateBikeStock : End");
 			return false;
 		}
+		LOG.info("updateBikeStock : new bike stock updated successfully.");
+		LOG.debug("updateBikeStock : End");
 		return true;
 	}
 

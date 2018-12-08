@@ -2,6 +2,9 @@ package edu.srh.bikehire.service.impl;
 
 import java.util.Calendar;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import edu.srh.bikehire.assetmangement.impl.BikeRentMappingValidator;
 import edu.srh.bikehire.assetmangement.impl.BikeStatusValidator;
 import edu.srh.bikehire.assetmangement.impl.BikeStockValidator;
@@ -37,6 +40,8 @@ import edu.srh.bikehire.service.core.BikeType;
 import edu.srh.bikehire.service.core.Warehouse;
 
 public class AssetManagementServiceImpl implements AssetManagementService {
+	private static final Logger LOG = LogManager.getLogger(AssetManagementServiceImpl.class);
+	
 	private BikeTypeDAO bikeTypeDAO;
 	
 	private BikeStockDAO bikeStockDAO;
@@ -60,7 +65,7 @@ public class AssetManagementServiceImpl implements AssetManagementService {
 	}
 	
 	public int addNewBikeType(BikeType pNewBikeType, BikeStock pBikeStock, BikeRent pRentMapping) throws BikeHireSystemException {
-		
+		LOG.info("addNewBikeType : Start");
 		BikeTypeDTO lBikeTypeDTO = getBikeTypeDTOFromInputs(pNewBikeType);
 		BikeStockDTO lBikeStockDTO = getBikeStockDTOFromInputs(pBikeStock, false);
 		BikeRentMappingDTO lBikeRentMappingDTO = getBikeRentMappingDTOFromInputs(pRentMapping);
@@ -69,24 +74,25 @@ public class AssetManagementServiceImpl implements AssetManagementService {
 		lBikeTypeValidator.validateAddBikeType();
 		
 		int bikeTypeId = bikeTypeDAO.saveBikeType(lBikeTypeDTO);
-		
+		LOG.info("addNewBikeType : new bike type added successfully.");
 		lBikeStockDTO.setBikeTypeDTO(lBikeTypeDTO);
 		BikeStockValidator lBikeStockValidator = new BikeStockValidator(lBikeStockDTO);
 		lBikeStockValidator.validateAddBikeStock();
 		
 		bikeStockDAO.addBikeStock(lBikeStockDTO);
-		
+		LOG.info("addNewBikeType : bike stock added successfully.");
 		lBikeRentMappingDTO.setBikeType(lBikeTypeDTO);
 		BikeRentMappingValidator lBikeRentMappingValidator = new BikeRentMappingValidator(lBikeRentMappingDTO);
 		lBikeRentMappingValidator.validateAddBikeRentDetails();
 		
 		bikeRentMappingDAO.addBikeRentMapping(lBikeRentMappingDTO);
-		
+		LOG.info("addNewBikeType : bike rent mapping added successfully.");
+		LOG.info("addNewBikeType : End");
 		return bikeTypeId;
 	}
 
 	public int addNewBikeDetails(Bike pNewBike, BikeStatus pBikeStatus) throws BikeHireSystemException {
-		
+		LOG.info("addNewBikeDetails : Start");
 		BikeDTO lBikeDTO = getBikeDTOFromInputs(pNewBike, false);
 		BikeStatusDTO lBikeStatusDTO = getBikeStatusDTOFromInputs(pBikeStatus);
 		
@@ -94,68 +100,75 @@ public class AssetManagementServiceImpl implements AssetManagementService {
 		lBikeValidator.validateAddBike();
 		
 		int bikeId = bikeDAO.addBike(lBikeDTO);
+		LOG.info("addNewBikeDetails : new bike added successfully.");
 		
 		lBikeStatusDTO.setBikeDTO(lBikeDTO);
 		BikeStatusValidator lBikeStatusValidator = new BikeStatusValidator(lBikeStatusDTO);
 		lBikeStatusValidator.validateAddBikeStatus();
 		
 		bikeStatusDAO.addBikeStatus(lBikeStatusDTO);
-		
+		LOG.info("addNewBikeDetails : bike status added successfully.");
+		LOG.info("addNewBikeDetails : End");
 		return bikeId;
 	}
 
 	public int addNewWarehouse(Warehouse pNewWarehouse) throws BikeHireSystemException {
+		LOG.info("addNewWarehouse : Start");
 		WareHouseDTO lWareHouseDTO = getWarehouseDTOFromInputs(pNewWarehouse, false);
 		
 		WarehouseValidator lWarehouseValidator = new WarehouseValidator(lWareHouseDTO);
 		lWarehouseValidator.validateAddWarehouse();
+		LOG.info("addNewWarehouse : warehouse details validated");
 		
 		int warehouseId = warehouseDAO.addWarehouse(lWareHouseDTO);
-		
+		LOG.info("addNewWarehouse : new warehouse added successfully.");
+		LOG.info("addNewWarehouse : End");
 		return warehouseId;
 	}
 
-	public boolean deleteBikeDetails(Bike pDeleteBike) throws BikeHireSystemException {
-		// TODO Auto-generated method stub
-		
-		return false;
-	}
-
 	public boolean updateWarehouse(Warehouse pUpdatedWarehouse) throws BikeHireSystemException {
+		LOG.info("updateWarehouse : Start");
 		WareHouseDTO lWareHouseDTO = getWarehouseDTOFromInputs(pUpdatedWarehouse, true);
 
 		WarehouseValidator lWarehouseValidator = new WarehouseValidator(lWareHouseDTO);
 		lWarehouseValidator.validateUpdateWareHouse();
+		LOG.info("updateWarehouse : warehouse updated successfully.");
 		
 		boolean lWarehouseUpdateStatus = warehouseDAO.updateWarehouse(lWareHouseDTO);
-		
+		LOG.info("updateWarehouse : End");
 		return lWarehouseUpdateStatus;
 	}
 
 	public boolean updateBikeDetails(Bike pUpdatedBikeDetails) throws BikeHireSystemException {
+		LOG.info("updateBikeDetails : Start");
 		BikeDTO lBikeDTO = getBikeDTOFromInputs(pUpdatedBikeDetails, true);
 		
 		BikeValidator lBikeValidator = new BikeValidator(lBikeDTO);
 		lBikeValidator.validateUpdateBike();
 		
 		boolean lBikeUpdateStatus = bikeDAO.updateBike(lBikeDTO);
+		LOG.info("updateBikeDetails : Bike details updated successfully.");
 		
+		LOG.info("updateBikeDetails : End");
 		return lBikeUpdateStatus;
 	}
 
 	public boolean updateBikeRent(BikeRent pUpdatedBikeRent) throws BikeHireSystemException {
+		LOG.info("updateBikeRent : Start");
 		BikeRentMappingDTO lBikeRentMappingDTO = getBikeRentMappingDTOFromInputs(pUpdatedBikeRent);
 
 		BikeRentMappingValidator lRentMappingValidator = new BikeRentMappingValidator(lBikeRentMappingDTO);
 		lRentMappingValidator.validateUpdateBikeRentDetails();
 		
 		boolean lBikeRentMappingUpdateStatus = bikeRentMappingDAO.updateBikeRentMapping(lBikeRentMappingDTO);
-		
+		LOG.info("updateBikeRent : bike rent updated successfully.");
+		LOG.info("updateBikeRent : End");
 		return lBikeRentMappingUpdateStatus;
 		
 	}
 
 	public boolean updateBikeStock(BikeStock pUpdatedBikeStock, BikeType pUpdatedBikeType) throws BikeHireSystemException {
+		LOG.info("updateBikeStock : Start");
 		BikeStockDTO lBikeStockDTO = getBikeStockDTOFromInputs(pUpdatedBikeStock, true);
 		BikeTypeDTO lBikeTypeDTO = getBikeTypeDTOFromInputs(pUpdatedBikeType);
 		
@@ -163,17 +176,23 @@ public class AssetManagementServiceImpl implements AssetManagementService {
 		lBikeStockValidator.validateUpdateBikeStock();
 		
 		boolean lBikeStockUpdateStatus = bikeStockDAO.updateBikeStock(lBikeStockDTO, lBikeTypeDTO);
+		LOG.info("updateBikeStock : bike stock updated successfully.");
 		
+		LOG.info("updateBikeStock : End");
 		return lBikeStockUpdateStatus;
 	}
 
 	public boolean updateBikeStatus(BikeStatus pUpdatedBikeStatus) throws BikeHireSystemException {
+		LOG.info("updateBikeStatus : Start");
 		BikeStatusDTO lBikeStatusDTO = getBikeStatusDTOFromInputs(pUpdatedBikeStatus);
 		
 		BikeStatusValidator lBikeStatusValidator = new BikeStatusValidator(lBikeStatusDTO);
 		lBikeStatusValidator.validateUpdateBikeStatus();
 		
 		boolean lBikeUpdateStatus = bikeStatusDAO.updateBikeStatus(lBikeStatusDTO);
+		LOG.info("updateBikeStatus : bike status changed successfully.");
+		
+		LOG.info("updateBikeStatus : End");
 		return lBikeUpdateStatus;
 	}
 

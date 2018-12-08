@@ -35,15 +35,19 @@ public class BikeDAOImpl implements BikeDAO {
 	}
 
 	public int addBike(BikeDTO pBike) {
+		LOG.debug("addBike : Start");
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		BikeDTOImpl lBikeDTOImpl = (BikeDTOImpl) pBike;
 		em.getTransaction().begin();
 		em.persist(lBikeDTOImpl);
 		em.getTransaction().commit();
+		LOG.info("addBike : new bike added successfully.");
+		LOG.debug("addBike : End");
 		return lBikeDTOImpl.getBikeId();
 	}
 
 	public boolean updateBike(BikeDTO pBike) {
+		LOG.debug("updateBike : Start");
 		BikeDTOImpl lBike = getBike(pBike.getBikeId());
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		if(pBike.getBikeTitle() != null)
@@ -71,12 +75,17 @@ public class BikeDAOImpl implements BikeDAO {
 		em.getTransaction().commit();
 		if(rowsUpdated <= 0)
 		{
+			LOG.info("updateBike : failed to update bike.");
+			LOG.debug("updateBike : End");
 			return false;
 		}
+		LOG.info("updateBike : successfully updated bike.");
+		LOG.debug("updateBike : End");
 		return true;
 	}
 
 	public List<BikeDTO> getBikeForWarehouseId(int pWarehouseId, boolean pSortPriceDescending) {
+		LOG.debug("getBikeForWarehouseId : Start");
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = null;
 		if(pSortPriceDescending)
@@ -91,10 +100,12 @@ public class BikeDAOImpl implements BikeDAO {
 		
 		//IF failes, make list of List<BikeDTOImpl>
 		List<BikeDTO> lBikes = lQuery.getResultList();
+		LOG.debug("getBikeForWarehouseId : End");
 		return (List<BikeDTO>)lBikes;
 	}
 
 	public List<BikeDTO> getBikeForBikeType(int pBikeTypeId, boolean pSortPriceDescending) {
+		LOG.debug("getBikeForBikeType : Start");
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = null;
 		if(pSortPriceDescending)
@@ -109,11 +120,13 @@ public class BikeDAOImpl implements BikeDAO {
 		lQuery.setParameter("typeId", pBikeTypeId);
 		
 		List<BikeDTO> lBikes = lQuery.getResultList();
+		LOG.debug("getBikeForBikeType : End");
 		return lBikes;
 	}
 
 	public List<BikeDTO> getAllBikes(boolean pSortPriceDescending)
 	{
+		LOG.debug("getAllBikes : Start");
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = null;
 		if(pSortPriceDescending)
@@ -126,6 +139,7 @@ public class BikeDAOImpl implements BikeDAO {
 		}
 		
 		List<BikeDTO> lBikes = lQuery.getResultList();
+		LOG.debug("getAllBikes : End");
 		return lBikes;
 		
 	}

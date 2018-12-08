@@ -15,8 +15,6 @@ public interface AssetManagementService {
 	
 	public int addNewWarehouse(Warehouse pNewWarehouse) throws BikeHireSystemException;
 	
-	public boolean deleteBikeDetails(Bike pDeleteBike) throws BikeHireSystemException;
-	
 	public boolean updateWarehouse(Warehouse pUpdatedWarehouse) throws BikeHireSystemException;
 	
 	public boolean updateBikeDetails(Bike pUpdatedBike) throws BikeHireSystemException;

@@ -6,6 +6,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import edu.srh.bikehire.dao.BikeRentMappingDAO;
 import edu.srh.bikehire.dao.impl.util.PersistenceManager;
 import edu.srh.bikehire.dto.BikeRentMappingDTO;
@@ -14,8 +17,10 @@ import edu.srh.bikehire.dto.impl.BikeRentMappingDTOImpl;
 import edu.srh.bikehire.dto.impl.BikeTypeDTOImpl;
 
 public class BikeRentMappingDAOImpl implements BikeRentMappingDAO {
-
+	private static final Logger LOG = LogManager.getLogger(BikeRentMappingDAOImpl.class);
+	
 	public BikeRentMappingDTOImpl getBikeRentMapping(int pBikeTypeId) {
+		LOG.debug("getBikeRentMapping : Start");
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		
 		Query lQuery = em.createQuery("from BikeRentMappingDTOImpl where BikeTypeId = :typeId ");
@@ -24,20 +29,26 @@ public class BikeRentMappingDAOImpl implements BikeRentMappingDAO {
 		List<BikeRentMappingDTOImpl> lBikeRentMappings = lQuery.getResultList();
 		if(lBikeRentMappings.size() == 0)
 		{
+			LOG.debug("getBikeRentMapping : End");
 			return null;
 		}
+		LOG.debug("getBikeRentMapping : End");
 		return lBikeRentMappings.get(0);
 	}
 
 	public boolean addBikeRentMapping(BikeRentMappingDTO pBikeRentMappingDTO) {
+		LOG.debug("addBikeRentMapping : Start");
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		em.getTransaction().begin();
 		em.persist(pBikeRentMappingDTO);
 		em.getTransaction().commit();
+		LOG.info("addBikeRentMapping : new bike rent mapping added successfully.");
+		LOG.debug("addBikeRentMapping : End");
 		return true;
 	}
 
 	public boolean updateBikeRentMapping(BikeRentMappingDTO pBikeRentMappingDTO) {
+		LOG.debug("updateBikeRentMapping : Start");
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		
 		BikeRentMappingDTOImpl lBikeRentMapping = getBikeRentMapping(pBikeRentMappingDTO.getBikeTypeId());
@@ -63,8 +74,12 @@ public class BikeRentMappingDAOImpl implements BikeRentMappingDAO {
 		em.getTransaction().commit();
 		if(rowsUpdated <= 0)
 		{
+			LOG.info("updateBikeRentMapping : failed to update bike rent mapping.");
+			LOG.debug("updateBikeRentMapping : End");
 			return false;
 		}
+		LOG.info("updateBikeRentMapping : bike rent mapping updated successfully.");
+		LOG.debug("updateBikeRentMapping : End");
 		return true;
 	}
 

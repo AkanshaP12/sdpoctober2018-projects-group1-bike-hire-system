@@ -6,6 +6,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import edu.srh.bikehire.dao.WarehouseDAO;
 import edu.srh.bikehire.dao.impl.util.PersistenceManager;
 import edu.srh.bikehire.dto.WareHouseDTO;
@@ -13,8 +16,10 @@ import edu.srh.bikehire.dto.impl.WareHouseDTOImpl;
 import edu.srh.bikehire.util.Util;
 
 public class WarehouseDAOImpl implements WarehouseDAO {
-
+	private static final Logger LOG = LogManager.getLogger(WareHouseDTOImpl.class);
+	
 	public WareHouseDTOImpl getWarehouse(int pWarehouseId) {
+		LOG.debug("getWarehouse : Start");
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from WareHouseDTOImpl where WareHouseId = :typeId ");
 		lQuery.setParameter("typeId", pWarehouseId);
@@ -22,20 +27,26 @@ public class WarehouseDAOImpl implements WarehouseDAO {
 		List<WareHouseDTOImpl> results = lQuery.getResultList();
 		if(results == null || results.size() == 0)
 		{
+			LOG.debug("getWarehouse : End");
 			return null;
 		}
+		LOG.debug("getWarehouse : End");
 		return results.get(0);
 	}
 
 	public int addWarehouse(WareHouseDTO pWarehouse) {
+		LOG.debug("addWarehouse : Start");
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		em.getTransaction().begin();
 		em.persist(pWarehouse);
 		em.getTransaction().commit();
+		LOG.info("addWarehouse : new warehouse added successfully.");
+		LOG.debug("addWarehouse : End");
 		return pWarehouse.getWarehouseId();
 	}
 
 	public boolean updateWarehouse(WareHouseDTO pWarehouse) {
+		LOG.debug("updateWarehouse : Start");
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		em.getTransaction().begin();
 		Query lQuery = em.createQuery("UPDATE WareHouseDTOImpl wh SET wh.storageCapacity = :sc, wh.name = :name, wh.lastmodifiedTimeStamp = :lm where wh.warehouseId = :id ");
@@ -47,17 +58,23 @@ public class WarehouseDAOImpl implements WarehouseDAO {
 		em.getTransaction().commit();
 		if(rowsUpdated <= 0)
 		{
+			LOG.info("updateWarehouse : failed to update warehouse.");
+			LOG.debug("updateWarehouse : End");
 			return false;
 		}
+		LOG.info("updateWarehouse : warehouse updated successfully.");
+		LOG.debug("updateWarehouse : End");
 		return true;
 	}
 	
 	public List<WareHouseDTO> getAllWarehouses()
 	{
+		LOG.debug("getAllWarehouses : Start");
 		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from WareHouseDTOImpl");
 		
 		List<WareHouseDTO> results = lQuery.getResultList();
+		LOG.debug("getAllWarehouses : End");
 		return results;
 		
 	}

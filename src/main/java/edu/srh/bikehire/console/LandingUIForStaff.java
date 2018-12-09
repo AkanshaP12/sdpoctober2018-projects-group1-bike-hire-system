@@ -60,6 +60,16 @@ public class LandingUIForStaff {
 	
 	private void callPlaceOrderUI(Scanner sc) throws BikeHireSystemException
 	{
+		System.out.println("Do you want to do group booking? (y/n) ");
+		String input = sc.nextLine();
+		if(input.equalsIgnoreCase("y"))
+		{
+			GroupBookingUI groupBookingUI = new GroupBookingUI(loggedInEntity, false);
+			groupBookingUI.processGroupBooking(sc);
+			this.showMenu(sc);
+			return;
+		}
+		
 		System.out.println("Enter Bike Id : ");
 		int bikeId = sc.nextInt();
 		sc.nextLine();
@@ -72,16 +82,17 @@ public class LandingUIForStaff {
 	
 	private void callGenerateInvoice(Scanner sc) throws BikeHireSystemException
 	{
-		System.out.println("Enter damage charges if any : ");
-		int damageCharges = sc.nextInt();
+		System.out.println("Enter order id : ");
+		int orderId = sc.nextInt();
 		sc.nextLine();
 		System.out.println("Enter warehouse id : ");
 		int warehouseId = sc.nextInt();
 		sc.nextLine();
-		System.out.println("Enter payment reference : ");
-		String paymentReference = sc.nextLine();
+		System.out.println("Enter damage charges if any : ");
+		int damageCharges = sc.nextInt();
+		sc.nextLine();
 		OrderServiceImpl orderService = new OrderServiceImpl();
-		String invoiceId = orderService.generateInvoice( damageCharges, warehouseId, paymentReference);
+		String invoiceId = orderService.generateInvoice( damageCharges, warehouseId, orderId);
 		System.out.println("Invoice generated successfully! Invoice id : " + invoiceId);
 	}
 }

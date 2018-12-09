@@ -265,12 +265,12 @@ public class OrderServiceImpl implements OrderService {
 		}
 	}
 	
-	public String generateInvoice( int damageCharges, int warehouseId, String paymentReference) throws BikeHireSystemException {
+	public String generateInvoice( int damageCharges, int warehouseId, int orderId) throws BikeHireSystemException {
 		LOG.info("getCurrentOrdersForUser : Start");
 		try
 		{
 			daoFactory.beginTransaction();
-			OrderPaymentDTO orderPaymentDTO = orderPaymentDAO.getOrderPaymentByPaymentReference(paymentReference);
+			OrderPaymentDTO orderPaymentDTO = orderPaymentDAO.getOrderPaymentByOrderId(orderId);
 			if(orderPaymentDTO == null)
 			{
 				//TODO: Resolve

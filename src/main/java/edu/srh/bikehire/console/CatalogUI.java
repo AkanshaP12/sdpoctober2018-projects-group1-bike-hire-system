@@ -42,7 +42,7 @@ public class CatalogUI {
 		//STEP 3:  get user input.
 	}
 	
-	private void displayBikes(List<BikeDTO> listOfBikes, BikeService bikeService)
+	private void displayBikes(List<BikeDTO> listOfBikes, BikeService bikeService) throws BikeHireSystemException
 	{
 		System.out.println("Total bikes : " + listOfBikes.size());
 		System.out.println("-----------------------------------------------");

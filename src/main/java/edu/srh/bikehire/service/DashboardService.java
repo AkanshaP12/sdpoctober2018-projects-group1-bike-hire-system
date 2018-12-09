@@ -9,7 +9,7 @@ import edu.srh.bikehire.service.core.OrderAppointment;
 
 public interface DashboardService{
 
-	public long getBikeCount(BikeStatusType statusType,  int bikeTypeId );
+	public long getBikeCount(BikeStatusType statusType,  int bikeTypeId ) throws BikeHireSystemException;
 
 
     public List<OrderAppointment> getUpcomingAppointments(Calendar queryDate, boolean isPickUpAppointment) throws BikeHireSystemException;

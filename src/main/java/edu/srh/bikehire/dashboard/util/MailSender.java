@@ -100,8 +100,7 @@ public class MailSender {
 			
 		} catch (MessagingException mex) {
 			//TODO: Resolve exception
-			mex.printStackTrace();
-			throw new BikeHireSystemException(-1);
+			throw new BikeHireSystemException(-1, new Object[] {}, mex);
 		}
 	}
 	

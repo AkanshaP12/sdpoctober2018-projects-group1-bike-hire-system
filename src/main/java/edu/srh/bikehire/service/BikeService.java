@@ -12,9 +12,9 @@ import edu.srh.bikehire.exception.BikeHireSystemException;
 
 public interface BikeService{
 
-	public List<BikeDTO> getAllBikes(boolean sortPriceDescending);
+	public List<BikeDTO> getAllBikes(boolean sortPriceDescending) throws BikeHireSystemException;
 
-	public BikeDTO getBikeByID(int id);
+	public BikeDTO getBikeByID(int id) throws BikeHireSystemException;
 
 	public void updateBikeStatus(int id, BikeStatusType bikeStatusType) throws BikeHireSystemException;
 	
@@ -22,13 +22,13 @@ public interface BikeService{
 	
 	public List<BikeDTO> getAllBikesBasedOnWarehouse(int warehouseId, boolean sortPriceDescending) throws BikeHireSystemException;
 	
-	public BikeTypeDTO getBikeTypeInfo(int bikeTypeId);
+	public BikeTypeDTO getBikeTypeInfo(int bikeTypeId) throws BikeHireSystemException;
 	
-	public List<BikeTypeDTO> getBikeTypes();
+	public List<BikeTypeDTO> getBikeTypes() throws BikeHireSystemException;
 	
-	public List<BikeDTO> getAllBikesBasedOnStatus(BikeStatusType bikeStatusType, boolean sortPriceDescending);
+	public List<BikeDTO> getAllBikesBasedOnStatus(BikeStatusType bikeStatusType, boolean sortPriceDescending) throws BikeHireSystemException;
 	
-	public BikeRentMappingDTO getBikeRent(int bikeId);
+	public BikeRentMappingDTO getBikeRent(int bikeId) throws BikeHireSystemException;
 	
-	public List<WareHouseDTO> getAllWarehouses();
+	public List<WareHouseDTO> getAllWarehouses() throws BikeHireSystemException;
 }

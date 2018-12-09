@@ -4,7 +4,7 @@ bike-hire-system created by GitHub Classroom
 ## Abstract
 Bike Hire System where shop owner can manage assets and track user orders. It has 2 user contexts, One for Customer who can rent bike remotely and Store Staff who can view dashboard statistics about assets and upcoming appointments.
 
-### Features
+## Features
 * Customer
   * Sign-Up
   * Password management

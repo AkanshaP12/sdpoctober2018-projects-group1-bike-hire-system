@@ -15,10 +15,15 @@ import edu.srh.bikehire.dto.impl.UserDTOImpl;
 
 public class UserDAOImpl implements UserDAO {
 	private static final Logger LOG = LogManager.getLogger(UserDAOImpl.class);
+	private EntityManager em;
+	
+	public UserDAOImpl(EntityManager em)
+	{
+		this.em = em;
+	}
 	
 	public UserDTOImpl getUser(int pUserId) {
 		LOG.debug("getUser : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from UserDTOImpl where ID = :typeId ");
 		lQuery.setParameter("typeId", pUserId);
 		List<UserDTOImpl> results = lQuery.getResultList();
@@ -33,7 +38,6 @@ public class UserDAOImpl implements UserDAO {
 
 	public UserDTO getUserByEmailId(String pEmailId) {
 		LOG.debug("getUserByEmailId : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from UserDTOImpl where EmailId = :typeId ");
 		lQuery.setParameter("typeId", pEmailId);
 		List<UserDTOImpl> results = lQuery.getResultList();
@@ -48,10 +52,7 @@ public class UserDAOImpl implements UserDAO {
 	
 	public int addUser(UserDTO pNewUser) {
 		LOG.debug("addUser : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		em.getTransaction().begin();
 		em.persist(pNewUser);
-		em.getTransaction().commit();
 		LOG.info("addUser : new user added successfully.");
 		LOG.debug("addUser : End");
 		return pNewUser.getId();
@@ -59,9 +60,7 @@ public class UserDAOImpl implements UserDAO {
 
 	public boolean updateUser(UserDTO pUser) {
 		LOG.debug("updateUser : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		UserDTOImpl lUserDTOImpl = getUser(pUser.getId());
-		em.getTransaction().begin();
 		Query lQuery = em.createQuery("UPDATE UserDTOImpl ud SET ud.address = :add, ud.firstName = :fn, ud.lastName = :ln, ud.phoneNo = :pn where ud.id = :identity");
 		
 		if(pUser.getAddress() != null)
@@ -89,7 +88,6 @@ public class UserDAOImpl implements UserDAO {
 		lQuery.setParameter("pn", lUserDTOImpl.getPhoneNo());
 		lQuery.setParameter("identity", lUserDTOImpl.getId());
 		int rowsUpdated = lQuery.executeUpdate();
-		em.getTransaction().commit();
 		if(rowsUpdated <= 0)
 		{
 			LOG.info("updateUser : failed to update user.");

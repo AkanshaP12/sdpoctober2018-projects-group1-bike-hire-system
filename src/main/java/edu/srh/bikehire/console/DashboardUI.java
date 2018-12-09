@@ -53,7 +53,7 @@ public class DashboardUI {
 		
 	}
 	
-	private void showBikeStatus(DashboardService dashboardService, BikeService bikeService)
+	private void showBikeStatus(DashboardService dashboardService, BikeService bikeService) throws BikeHireSystemException
 	{
 		List<BikeTypeDTO> allBikeTypes = bikeService.getBikeTypes();
 		

@@ -19,9 +19,15 @@ import edu.srh.bikehire.util.Util;
 public class CurrentOrderDAOImpl implements CurrentOrderDAO {
 	private static final Logger LOG = LogManager.getLogger(CurrentOrderDAOImpl.class);
 	
+	private EntityManager em;
+	
+	public CurrentOrderDAOImpl(EntityManager em)
+	{
+		this.em = em;
+	}
+	
 	public CurrentOrderDTOImpl getCurrentOrderByOrderId(int pOrderId) {
 		LOG.debug("getCurrentOrderByOrderId : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from CurrentOrderDTOImpl where OrderID = :typeId ");
 		lQuery.setParameter("typeId", pOrderId);
 		List<CurrentOrderDTOImpl> results = lQuery.getResultList();
@@ -36,7 +42,6 @@ public class CurrentOrderDAOImpl implements CurrentOrderDAO {
 
 	public CurrentOrderDTOImpl getCurrentOrderByBikeId(int pBikeId) {
 		LOG.debug("getCurrentOrderByBikeId : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from CurrentOrderDTOImpl where BikeID = :typeId ");
 		lQuery.setParameter("typeId", pBikeId);
 		List<CurrentOrderDTOImpl> results = lQuery.getResultList();
@@ -52,7 +57,6 @@ public class CurrentOrderDAOImpl implements CurrentOrderDAO {
 	public List<CurrentOrderDTO> getCurrentOrderByUserId(int pUserId)
 	{
 		LOG.debug("getCurrentOrderByUserId : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from CurrentOrderDTOImpl where UserID = :typeId ");
 		lQuery.setParameter("typeId", pUserId);
 		List<CurrentOrderDTO> results = lQuery.getResultList();
@@ -62,11 +66,8 @@ public class CurrentOrderDAOImpl implements CurrentOrderDAO {
 	
 	public int addCurrentOrder(CurrentOrderDTO pCurrentOrderDTO) {
 		LOG.debug("addCurrentOrder : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		em.getTransaction().begin();
 		CurrentOrderDTOImpl lCurrentOrderDTOImpl = (CurrentOrderDTOImpl) pCurrentOrderDTO;
 		em.persist(lCurrentOrderDTOImpl);
-		em.getTransaction().commit();
 		LOG.info("addCurrentOrder : new order added successfully.");
 		LOG.debug("addCurrentOrder : End");
 		return lCurrentOrderDTOImpl.getOrderID();
@@ -74,13 +75,10 @@ public class CurrentOrderDAOImpl implements CurrentOrderDAO {
 
 	public boolean updateCurrentOrder(CurrentOrderDTO pCurrentOrderDTO) {
 		LOG.debug("updateCurrentOrder : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		CurrentOrderDTOImpl lCurrentOrderDTOImpl = getCurrentOrderByOrderId(pCurrentOrderDTO.getOrderID());
-		em.getTransaction().begin();
 		
 		lCurrentOrderDTOImpl.setPickupTimeStamp(pCurrentOrderDTO.getPickupTimeStamp());
 		
-		em.getTransaction().commit();
 		LOG.info("updateCurrentOrder : order updated successfully.");
 		LOG.debug("updateCurrentOrder : End");
 		return true;
@@ -88,12 +86,9 @@ public class CurrentOrderDAOImpl implements CurrentOrderDAO {
 
 	public boolean deleteCurrentOrder(CurrentOrderDTO pCurrentOrderDTO) {
 		LOG.debug("deleteCurrentOrder : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		em.getTransaction().begin();
 		Query lQuery = em.createQuery("delete from CurrentOrderDTOImpl where OrderID = :typeId ");
 		lQuery.setParameter("typeId", pCurrentOrderDTO.getOrderID());
 		int lRowsAffected = lQuery.executeUpdate();
-		em.getTransaction().commit();
 		if(lRowsAffected > 0)
 		{
 			LOG.info("deleteCurrentOrder : order deleted successfully.");
@@ -108,7 +103,6 @@ public class CurrentOrderDAOImpl implements CurrentOrderDAO {
 	public List<CurrentOrderDTO> getOrdersBasedOnPickUpDate(Calendar pFromCalendar, Calendar pToCalendar)
 	{
 		LOG.debug("getOrdersBasedOnPickUpDate : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from CurrentOrderDTOImpl where PickupTimeStamp >= :fromTime and PickupTimeStamp <= :toTime ");
 		lQuery.setParameter("fromTime", pFromCalendar, TemporalType.TIMESTAMP);
 		lQuery.setParameter("toTime", pToCalendar, TemporalType.TIMESTAMP);
@@ -121,7 +115,6 @@ public class CurrentOrderDAOImpl implements CurrentOrderDAO {
 	public List<CurrentOrderDTO> getOrdersBasedOnDropOffDate(Calendar pFromCalendar, Calendar pToCalendar)
 	{
 		LOG.debug("getOrdersBasedOnDropOffDate : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from CurrentOrderDTOImpl where DropOffTimeStamp >= :fromTime and DropOffTimeStamp <= :toTime ");
 		lQuery.setParameter("fromTime", pFromCalendar, TemporalType.TIMESTAMP);
 		lQuery.setParameter("toTime", pToCalendar, TemporalType.TIMESTAMP);

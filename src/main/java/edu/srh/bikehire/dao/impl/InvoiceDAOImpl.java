@@ -17,9 +17,15 @@ import edu.srh.bikehire.util.Util;
 public class InvoiceDAOImpl implements InvoiceDAO {
 	private static final Logger LOG = LogManager.getLogger(InvoiceDAOImpl.class);
 	
+	private EntityManager em;
+	
+	public InvoiceDAOImpl(EntityManager em)
+	{
+		this.em = em;
+	}
+	
 	public InvoiceDTOImpl getInvoiceByInvoiceId(String pInvoiceId) {
 		LOG.debug("getInvoiceByInvoiceId : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from InvoiceDAOImpl where InvoiceID = :typeId ");
 		lQuery.setParameter("typeId", pInvoiceId);
 		List<InvoiceDTOImpl> results = lQuery.getResultList();
@@ -34,7 +40,6 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 
 	public InvoiceDTO getInvoiceByOrderId(int pOrderId) {
 		LOG.debug("getInvoiceByOrderId : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from InvoiceDAOImpl where OrderID = :typeId ");
 		lQuery.setParameter("typeId", pOrderId);
 		List<InvoiceDTOImpl> results = lQuery.getResultList();
@@ -49,14 +54,10 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 
 	public String addInvoice(InvoiceDTO pInvoiceDTO) {
 		LOG.debug("addInvoice : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		//Generate random invoice id.
 		String lstrInvoiceId = Util.getRandomAlphaNumericId();
 		InvoiceDTOImpl lInvoiceDTOImpl = (InvoiceDTOImpl) pInvoiceDTO;
 		lInvoiceDTOImpl.setInvoiceID(lstrInvoiceId);
-		em.getTransaction().begin();
 		em.persist(lInvoiceDTOImpl);
-		em.getTransaction().commit();
 		LOG.info("addInvoice : new invoice added successfully.");
 		LOG.debug("addInvoice : End");
 		return lstrInvoiceId;

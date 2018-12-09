@@ -17,9 +17,15 @@ import edu.srh.bikehire.util.Util;
 public class OrderPaymentDAOImpl implements OrderPaymentDAO {
 	private static final Logger LOG = LogManager.getLogger(OrderPaymentDAOImpl.class);
 
+	private EntityManager em;
+	
+	public OrderPaymentDAOImpl(EntityManager em)
+	{
+		this.em = em;
+	}
+	
 	public OrderPaymentDTOImpl getOrderPaymentByPaymentReference(String pPaymentReference) {
 		LOG.debug("getOrderPaymentByPaymentReference : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from OrderPaymentDTOImpl where PaymentReference = :typeId ");
 		lQuery.setParameter("typeId", pPaymentReference);
 		List<OrderPaymentDTOImpl> results = lQuery.getResultList();
@@ -34,7 +40,6 @@ public class OrderPaymentDAOImpl implements OrderPaymentDAO {
 
 	public OrderPaymentDTO getOrderPaymentByOrderId(int pOrderId) {
 		LOG.debug("getOrderPaymentByOrderId : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from OrderPaymentDTOImpl where OrderID = :typeId ");
 		lQuery.setParameter("typeId", pOrderId);
 		List<OrderPaymentDTOImpl> results = lQuery.getResultList();
@@ -49,14 +54,10 @@ public class OrderPaymentDAOImpl implements OrderPaymentDAO {
 
 	public String addOrderPayment(OrderPaymentDTO pOrderPaymentDTO) {
 		LOG.debug("addOrderPayment : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		//Generate random payment reference.
 		String lstrPaymentReference = Util.getRandomAlphaNumericId();
-		em.getTransaction().begin();
 		OrderPaymentDTOImpl lOrderPaymentDTOImpl = (OrderPaymentDTOImpl) pOrderPaymentDTO;
 		lOrderPaymentDTOImpl.setPaymentReference(lstrPaymentReference);
 		em.persist(lOrderPaymentDTOImpl);
-		em.getTransaction().commit();
 		LOG.info("addOrderPayment : a new order payment added successfully.");
 		LOG.debug("addOrderPayment : End");
 		return lstrPaymentReference;

@@ -18,9 +18,15 @@ import edu.srh.bikehire.dto.impl.UserDTOImpl;
 public class UserAccountDAOImpl implements UserAccountDAO{
 	private static final Logger LOG = LogManager.getLogger(UserAccountDAOImpl.class);
 	
+	private EntityManager em;
+	
+	public UserAccountDAOImpl(EntityManager em)
+	{
+		this.em = em;
+	}
+	
 	public UserAccountDTOImpl getUserAccount(int pUserId) {
 		LOG.debug("getUserAccount : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from UserAccountDTOImpl where ID = :typeId ");
 		lQuery.setParameter("typeId", pUserId);
 		List<UserAccountDTOImpl> results = lQuery.getResultList();
@@ -36,7 +42,6 @@ public class UserAccountDAOImpl implements UserAccountDAO{
 	public UserAccountDTOImpl getUserAccountUsingUserName(String pUserName)
 	{
 		LOG.debug("getUserAccountUsingUserName : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from UserAccountDTOImpl where UserName = :typeId ");
 		lQuery.setParameter("typeId", pUserName);
 		List<UserAccountDTOImpl> results = lQuery.getResultList();
@@ -51,10 +56,7 @@ public class UserAccountDAOImpl implements UserAccountDAO{
 	
 	public boolean addUserAccount(UserAccountDTO pUserAccountDTO) {
 		LOG.debug("addUserAccount : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		em.getTransaction().begin();
 		em.persist(pUserAccountDTO);
-		em.getTransaction().commit();
 		LOG.info("addUserAccount : new user account added successfully.");
 		LOG.debug("addUserAccount : End");
 		return true;
@@ -62,8 +64,6 @@ public class UserAccountDAOImpl implements UserAccountDAO{
 
 	public boolean updateUserAccount(UserAccountDTO pUserAccountDTO) {
 		LOG.debug("updateUserAccount : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		em.getTransaction().begin();
 		Query lQuery = em.createQuery("UPDATE UserAccountDTOImpl uad SET uad.accountStatus = :as, uad.lastModifiedTimeStamp= :lm where uad.userDTO = :identity ");
 		lQuery.setParameter("as", pUserAccountDTO.getAccountStatus());
 		lQuery.setParameter("lm", Calendar.getInstance());
@@ -71,7 +71,6 @@ public class UserAccountDAOImpl implements UserAccountDAO{
 		lUserDTO.setId(pUserAccountDTO.getId());
 		lQuery.setParameter("identity", lUserDTO);
 		int rowsUpdated = lQuery.executeUpdate();
-		em.getTransaction().commit();
 		if(rowsUpdated <= 0)
 		{
 			LOG.info("updateUserCredential : failed to update user account.");

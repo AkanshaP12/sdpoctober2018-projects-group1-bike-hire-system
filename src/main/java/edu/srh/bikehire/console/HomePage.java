@@ -16,16 +16,16 @@ public class HomePage {
 	private static AppInitializer initializer = null; 
 	public void display_menu() {
 		try {
-			String leftAlignFormat = "| %-4d | %-20s |%n";
+			String leftAlignFormat = "| %-4d | %-19s |%n";
 
-			System.out.format("+-------+---------------------+%n");
-			System.out.format("| ID    | Task Name           |%n");
-			System.out.format("+-------+---------------------+%n");
+			System.out.format("+------+---------------------+%n");
+			System.out.format("| ID   | Task Name           |%n");
+			System.out.format("+------+---------------------+%n");
 			System.out.format(leftAlignFormat, 1, "Register");
 			System.out.format(leftAlignFormat, 2, "Login");
 			System.out.format(leftAlignFormat, 3, "Forgot Password?");
 			System.out.format(leftAlignFormat, 4, "Exit");
-			System.out.format("+-------+---------------------+%n");
+			System.out.format("+------+---------------------+%n");
 			//System.out.println("1) Register \n2) Login \n 3) Forgot Password? \n");
 			System.out.println("Select option: ");
 			sc = new Scanner(System.in);
@@ -129,5 +129,6 @@ public class HomePage {
 			System.out.println("Some error occured while terminating application.");
 		}
 		PersistenceManager.INSTANCE.close();
+		System.out.println("Successfully terminated application.");
 	}
 }

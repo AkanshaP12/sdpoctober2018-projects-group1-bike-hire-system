@@ -16,9 +16,15 @@ import edu.srh.bikehire.dto.impl.OrderHistoryDTOImpl;
 public class OrderHistoryDAOImpl implements OrderHistoryDAO {
 	private static final Logger LOG = LogManager.getLogger(OrderHistoryDAOImpl.class);
 	
+	private EntityManager em;
+	
+	public OrderHistoryDAOImpl(EntityManager em)
+	{
+		this.em = em;
+	}
+	
 	public OrderHistoryDTOImpl getOrderHistoryByOrderId(int pOrderId) {
 		LOG.debug("getOrderHistoryByOrderId : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from OrderHistoryDTOImpl where OrderID = :typeId ");
 		lQuery.setParameter("typeId", pOrderId);
 		List<OrderHistoryDTOImpl> results = lQuery.getResultList();
@@ -33,7 +39,6 @@ public class OrderHistoryDAOImpl implements OrderHistoryDAO {
 
 	public OrderHistoryDTO getOrderHistoryByInvoiceId(String pInvoiceId) {
 		LOG.debug("getOrderHistoryByInvoiceId : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from OrderHistoryDTOImpl where InvoiceID = :typeId ");
 		lQuery.setParameter("typeId", pInvoiceId);
 		List<OrderHistoryDTOImpl> results = lQuery.getResultList();
@@ -48,7 +53,6 @@ public class OrderHistoryDAOImpl implements OrderHistoryDAO {
 
 	public List<OrderHistoryDTO> getOrderHistoryByBikeId(int pBikeId) {
 		LOG.debug("getOrderHistoryByBikeId : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from OrderHistoryDTOImpl where BikeID = :typeId ");
 		lQuery.setParameter("typeId", pBikeId);
 		List<OrderHistoryDTO> results = lQuery.getResultList();
@@ -58,7 +62,6 @@ public class OrderHistoryDAOImpl implements OrderHistoryDAO {
 
 	public List<OrderHistoryDTO> getOrderHistoryByUserId(int pUserId) {
 		LOG.debug("getOrderHistoryByUserId : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from OrderHistoryDTOImpl where UserID = :typeId ");
 		lQuery.setParameter("typeId", pUserId);
 		List<OrderHistoryDTO> results = lQuery.getResultList();
@@ -68,10 +71,7 @@ public class OrderHistoryDAOImpl implements OrderHistoryDAO {
 
 	public boolean addOrderHistory(OrderHistoryDTO pOrderHistoryDTO) {
 		LOG.debug("addOrderHistory : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		em.getTransaction().begin();
 		em.persist(pOrderHistoryDTO);
-		em.getTransaction().commit();
 		LOG.info("addOrderHistory : new order history added successfully.");
 		LOG.debug("addOrderHistory : End");
 		return true;

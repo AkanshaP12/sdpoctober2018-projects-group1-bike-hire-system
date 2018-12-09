@@ -18,10 +18,15 @@ import edu.srh.bikehire.dto.impl.BikeStatusDTOImpl;
 
 public class BikeStatusDAOImpl implements BikeStatusDAO {
 	private static final Logger LOG = LogManager.getLogger(BikeStatusDAOImpl.class);
+	private EntityManager em;
+	
+	public BikeStatusDAOImpl(EntityManager em)
+	{
+		this.em = em;
+	}
 	
 	public BikeStatusDTOImpl getBikeStatus(int pBikeId) {
 		LOG.debug("getBikeStatus : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		
 		Query lQuery = em.createQuery("from BikeStatusDTOImpl where BikeId = :typeId ");
 		lQuery.setParameter("typeId", pBikeId);
@@ -38,10 +43,7 @@ public class BikeStatusDAOImpl implements BikeStatusDAO {
 
 	public boolean addBikeStatus(BikeStatusDTO pBikeStatus) {
 		LOG.debug("addBikeStatus : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		em.getTransaction().begin();
 		em.persist(pBikeStatus);
-		em.getTransaction().commit();
 		LOG.info("addBikeStatus : new bike status added successfully.");
 		LOG.debug("addBikeStatus : End");
 		return true;
@@ -50,12 +52,10 @@ public class BikeStatusDAOImpl implements BikeStatusDAO {
 	public boolean updateBikeStatus(BikeStatusDTO pBikeStatus) {
 		LOG.debug("addBikeStatus : Start");
 		BikeStatusDTOImpl lOrgBikeStatus = getBikeStatus(pBikeStatus.getBikeId());
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		if(pBikeStatus.getLastServiceDate() != null)
 		{			
 			lOrgBikeStatus.setLastServiceDate(pBikeStatus.getLastServiceDate());
 		}
-		em.getTransaction().begin();
 		Query lQuery = em.createQuery("UPDATE BikeStatusDTOImpl bsd SET bsd.status = :st, bsd.lastServiceDate = :lsd, bsd.lastModifiedDate = :lmd where bsd.bike = :bikeId");
 		lQuery.setParameter("st", pBikeStatus.getStatus());
 		lQuery.setParameter("lsd", lOrgBikeStatus.getLastServiceDate());
@@ -64,7 +64,6 @@ public class BikeStatusDAOImpl implements BikeStatusDAO {
 		bikeDTO.setBikeId(pBikeStatus.getBikeId());
 		lQuery.setParameter("bikeId", bikeDTO);
 		int rowsUpdated = lQuery.executeUpdate();
-		em.getTransaction().commit();
 		if(rowsUpdated <= 0)
 		{
 			LOG.debug("addBikeStatus : End");
@@ -78,7 +77,6 @@ public class BikeStatusDAOImpl implements BikeStatusDAO {
 	
 	public List<BikeDTO> getAllBikesBasedOnStatus(String pStatus, boolean sortPriceDescending) {
 		LOG.debug("getAllBikesBasedOnStatus : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = null;
 		
 		if(sortPriceDescending)
@@ -99,7 +97,6 @@ public class BikeStatusDAOImpl implements BikeStatusDAO {
 	public long getBikeCount(String pStatus, int pBikeTypeId)
 	{
 		LOG.debug("getBikeCount : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("select count(bs) from BikeStatusDTOImpl bs, BikeDTOImpl b, BikeTypeDTOImpl bt where b.bikeId = bs.bike and bs.status = :bikestatus and b.bikeType = bt.bikeTypeId and bt.bikeTypeId = :biketyp");
         lQuery.setParameter("bikestatus", pStatus);
         lQuery.setParameter("biketyp", pBikeTypeId);

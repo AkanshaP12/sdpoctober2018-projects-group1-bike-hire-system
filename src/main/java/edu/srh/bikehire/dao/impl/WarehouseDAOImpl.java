@@ -18,9 +18,15 @@ import edu.srh.bikehire.util.Util;
 public class WarehouseDAOImpl implements WarehouseDAO {
 	private static final Logger LOG = LogManager.getLogger(WareHouseDTOImpl.class);
 	
+	private EntityManager em;
+	
+	public WarehouseDAOImpl(EntityManager em)
+	{
+		this.em = em;
+	}
+	
 	public WareHouseDTOImpl getWarehouse(int pWarehouseId) {
 		LOG.debug("getWarehouse : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from WareHouseDTOImpl where WareHouseId = :typeId ");
 		lQuery.setParameter("typeId", pWarehouseId);
 		
@@ -36,10 +42,7 @@ public class WarehouseDAOImpl implements WarehouseDAO {
 
 	public int addWarehouse(WareHouseDTO pWarehouse) {
 		LOG.debug("addWarehouse : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		em.getTransaction().begin();
 		em.persist(pWarehouse);
-		em.getTransaction().commit();
 		LOG.info("addWarehouse : new warehouse added successfully.");
 		LOG.debug("addWarehouse : End");
 		return pWarehouse.getWarehouseId();
@@ -47,15 +50,12 @@ public class WarehouseDAOImpl implements WarehouseDAO {
 
 	public boolean updateWarehouse(WareHouseDTO pWarehouse) {
 		LOG.debug("updateWarehouse : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		em.getTransaction().begin();
 		Query lQuery = em.createQuery("UPDATE WareHouseDTOImpl wh SET wh.storageCapacity = :sc, wh.name = :name, wh.lastmodifiedTimeStamp = :lm where wh.warehouseId = :id ");
 		lQuery.setParameter("sc", pWarehouse.getStorageCapacity());
 		lQuery.setParameter("name", pWarehouse.getName());
 		lQuery.setParameter("lm", Calendar.getInstance());
 		lQuery.setParameter("id", pWarehouse.getWarehouseId());
 		int rowsUpdated = lQuery.executeUpdate();
-		em.getTransaction().commit();
 		if(rowsUpdated <= 0)
 		{
 			LOG.info("updateWarehouse : failed to update warehouse.");
@@ -70,7 +70,6 @@ public class WarehouseDAOImpl implements WarehouseDAO {
 	public List<WareHouseDTO> getAllWarehouses()
 	{
 		LOG.debug("getAllWarehouses : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		Query lQuery = em.createQuery("from WareHouseDTOImpl");
 		
 		List<WareHouseDTO> results = lQuery.getResultList();

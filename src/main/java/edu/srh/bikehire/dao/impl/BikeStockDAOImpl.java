@@ -18,10 +18,15 @@ import edu.srh.bikehire.dto.impl.BikeTypeDTOImpl;
 
 public class BikeStockDAOImpl implements BikeStockDAO {
 	private static final Logger LOG = LogManager.getLogger(BikeStockDAOImpl.class);
+	private EntityManager em;
+	
+	public BikeStockDAOImpl(EntityManager em)
+	{
+		this.em = em;
+	}
 	
 	public BikeStockDTOImpl getBikeStock(BikeTypeDTO bikeType) {
 		LOG.debug("getBikeStock : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		
 		Query lQuery = em.createQuery("from BikeStockDTOImpl where BikeTypeId = :typeId ");
 		lQuery.setParameter("typeId", bikeType.getBikeTypeId());
@@ -38,10 +43,7 @@ public class BikeStockDAOImpl implements BikeStockDAO {
 
 	public boolean addBikeStock(BikeStockDTO bikeStock) {
 		LOG.debug("addBikeStock : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		em.getTransaction().begin();
 		em.persist(bikeStock);
-		em.getTransaction().commit();
 		LOG.info("addBikeStock : new bike stock added successfully.");
 		LOG.debug("addBikeStock : End");
 		return false;
@@ -49,10 +51,8 @@ public class BikeStockDAOImpl implements BikeStockDAO {
 
 	public boolean updateBikeStock(BikeStockDTO bikeStock, BikeTypeDTO bikeType) {
 		LOG.debug("updateBikeStock : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		
 		BikeStockDTOImpl lBikeStock = getBikeStock(bikeType);
-		em.getTransaction().begin();
 		Query lQuery = em.createQuery("UPDATE BikeStockDTOImpl bs SET bs.totalQuantity = :tq, bs.lastModifiedTimeStamp = :lm where bs.bikeType = :bti");
 		lQuery.setParameter("tq", bikeStock.getTotalQuantity());
 		lQuery.setParameter("lm", Calendar.getInstance());
@@ -60,7 +60,6 @@ public class BikeStockDAOImpl implements BikeStockDAO {
 		bikeTypeDTO.setBikeTypeId(lBikeStock.getBikeTypeId());
 		lQuery.setParameter("bti", bikeTypeDTO);
 		int rowsUpdated = lQuery.executeUpdate();
-		em.getTransaction().commit();
 		if(rowsUpdated <= 0)
 		{
 			LOG.info("updateBikeStock : failed to update bike stock.");

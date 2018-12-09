@@ -18,10 +18,15 @@ import edu.srh.bikehire.dto.impl.BikeTypeDTOImpl;
 
 public class BikeRentMappingDAOImpl implements BikeRentMappingDAO {
 	private static final Logger LOG = LogManager.getLogger(BikeRentMappingDAOImpl.class);
+	private EntityManager em;
+	
+	public BikeRentMappingDAOImpl(EntityManager em)
+	{
+		this.em = em;
+	}
 	
 	public BikeRentMappingDTOImpl getBikeRentMapping(int pBikeTypeId) {
 		LOG.debug("getBikeRentMapping : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		
 		Query lQuery = em.createQuery("from BikeRentMappingDTOImpl where BikeTypeId = :typeId ");
 		lQuery.setParameter("typeId", pBikeTypeId);
@@ -38,10 +43,7 @@ public class BikeRentMappingDAOImpl implements BikeRentMappingDAO {
 
 	public boolean addBikeRentMapping(BikeRentMappingDTO pBikeRentMappingDTO) {
 		LOG.debug("addBikeRentMapping : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		em.getTransaction().begin();
 		em.persist(pBikeRentMappingDTO);
-		em.getTransaction().commit();
 		LOG.info("addBikeRentMapping : new bike rent mapping added successfully.");
 		LOG.debug("addBikeRentMapping : End");
 		return true;
@@ -49,7 +51,6 @@ public class BikeRentMappingDAOImpl implements BikeRentMappingDAO {
 
 	public boolean updateBikeRentMapping(BikeRentMappingDTO pBikeRentMappingDTO) {
 		LOG.debug("updateBikeRentMapping : Start");
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
 		
 		BikeRentMappingDTOImpl lBikeRentMapping = getBikeRentMapping(pBikeRentMappingDTO.getBikeTypeId());
 		if(pBikeRentMappingDTO.getRentPerDay() != 0)
@@ -61,7 +62,6 @@ public class BikeRentMappingDAOImpl implements BikeRentMappingDAO {
 		{
 			lBikeRentMapping.setRentPerHour(pBikeRentMappingDTO.getRentPerHour());
 		}
-		em.getTransaction().begin();
 		
 		Query lQuery = em.createQuery("UPDATE BikeRentMappingDTOImpl brm SET brm.rentPerHour = :rph, brm.rentPerDay = :rpd, brm.lastModifiedTimeStamp = :lm where brm.bikeType = :bikeTypeId");
 		lQuery.setParameter("rph", lBikeRentMapping.getRentPerHour());
@@ -71,7 +71,6 @@ public class BikeRentMappingDAOImpl implements BikeRentMappingDAO {
 		bikeTypeDTO.setBikeTypeId(pBikeRentMappingDTO.getBikeTypeId());
 		lQuery.setParameter("bikeTypeId", bikeTypeDTO);
 		int rowsUpdated = lQuery.executeUpdate();
-		em.getTransaction().commit();
 		if(rowsUpdated <= 0)
 		{
 			LOG.info("updateBikeRentMapping : failed to update bike rent mapping.");

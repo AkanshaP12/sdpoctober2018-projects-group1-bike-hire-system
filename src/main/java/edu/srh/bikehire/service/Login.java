@@ -22,7 +22,7 @@ public interface Login {
 	
 	public void deactivateAccount(Entity pEntity) throws BikeHireSystemException;
 	
-	public EntityAccount getAccountInfo(int pUserId);
+	public EntityAccount getAccountInfo(int pUserId) throws BikeHireSystemException;
 	
-	public boolean markUserAccountAsActive(int pUserId);
+	public boolean markUserAccountAsActive(int pUserId) throws BikeHireSystemException;
 }

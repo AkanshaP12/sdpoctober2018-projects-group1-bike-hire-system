@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.login.ResetPasswordValidator;
+import edu.srh.bikehire.service.Login;
+import edu.srh.bikehire.service.core.EntityAccount;
 import edu.srh.bikehire.service.core.EntityRegistrationCredential;
 import edu.srh.bikehire.service.core.impl.CustomerRegistrationCredential;
 import edu.srh.bikehire.service.impl.DBBasedLoginService;
@@ -21,7 +23,6 @@ public class ForgotPasswordUI {
 		DBBasedLoginService loginService = new DBBasedLoginService();
 		ResetPasswordValidator validator = loginService.sendSecurityTokenForResetPassword(emailAddress);
 		
-		
 		//STEP 3 : Verify security token from user.
 		sc = new Scanner(System.in);
 		System.out.println("Enter Your Security Token : ");
@@ -34,8 +35,17 @@ public class ForgotPasswordUI {
 		String password = sc.nextLine();
 		System.out.println("Re-Enter Password: ");
 		String resetpassword = sc.nextLine();
-		EntityRegistrationCredential lCredential = new CustomerRegistrationCredential();
+		CustomerRegistrationCredential lCredential = new CustomerRegistrationCredential();
+		EntityAccount userAccount = loginService.getAccountInfo(validator.getUserId());
+		lCredential.setUserName(userAccount.getUserName());
+		lCredential.setNewPassword(password);
+		lCredential.setConfirmPassword(resetpassword);
 		loginService.resetPassword(lCredential);
+		System.out.println("Your password has been changed successfully!");
+		
+		HomePage redirectHome = new HomePage();
+		redirectHome.display_menu();
+		return;
 	}
 	
 	

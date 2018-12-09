@@ -5,53 +5,62 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import edu.srh.bikehire.dao.UserDAO;
 import edu.srh.bikehire.dao.impl.util.PersistenceManager;
 import edu.srh.bikehire.dto.UserDTO;
 import edu.srh.bikehire.dto.impl.UserDTOImpl;
-import edu.srh.bikehire.login.util.LoginUtil;
 
 public class UserDAOImpl implements UserDAO {
-
+	private static final Logger LOG = LogManager.getLogger(UserDAOImpl.class);
+	private EntityManager em;
+	
+	public UserDAOImpl(EntityManager em)
+	{
+		this.em = em;
+	}
+	
 	public UserDTOImpl getUser(int pUserId) {
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
+		LOG.debug("getUser : Start");
 		Query lQuery = em.createQuery("from UserDTOImpl where ID = :typeId ");
 		lQuery.setParameter("typeId", pUserId);
 		List<UserDTOImpl> results = lQuery.getResultList();
 		if(results == null || results.size() == 0)
 		{
+			LOG.debug("getUser : End");
 			return null;
 		}
+		LOG.debug("getUser : End");
 		return results.get(0);
 	}
 
 	public UserDTO getUserByEmailId(String pEmailId) {
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
+		LOG.debug("getUserByEmailId : Start");
 		Query lQuery = em.createQuery("from UserDTOImpl where EmailId = :typeId ");
 		lQuery.setParameter("typeId", pEmailId);
 		List<UserDTOImpl> results = lQuery.getResultList();
 		if(results == null || results.size() == 0)
 		{
+			LOG.debug("getUserByEmailId : End");
 			return null;
 		}
+		LOG.debug("getUserByEmailId : End");
 		return results.get(0);
 	}
 	
 	public int addUser(UserDTO pNewUser) {
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		//Generate user id
-		//UserDTOImpl lUserDTOImpl = new UserDTOImpl();
-		em.getTransaction().begin();
+		LOG.debug("addUser : Start");
 		em.persist(pNewUser);
-		em.getTransaction().commit();
+		LOG.info("addUser : new user added successfully.");
+		LOG.debug("addUser : End");
 		return pNewUser.getId();
 	}
 
 	public boolean updateUser(UserDTO pUser) {
-		
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
+		LOG.debug("updateUser : Start");
 		UserDTOImpl lUserDTOImpl = getUser(pUser.getId());
-		em.getTransaction().begin();
 		Query lQuery = em.createQuery("UPDATE UserDTOImpl ud SET ud.address = :add, ud.firstName = :fn, ud.lastName = :ln, ud.phoneNo = :pn where ud.id = :identity");
 		
 		if(pUser.getAddress() != null)
@@ -79,11 +88,14 @@ public class UserDAOImpl implements UserDAO {
 		lQuery.setParameter("pn", lUserDTOImpl.getPhoneNo());
 		lQuery.setParameter("identity", lUserDTOImpl.getId());
 		int rowsUpdated = lQuery.executeUpdate();
-		em.getTransaction().commit();
 		if(rowsUpdated <= 0)
 		{
+			LOG.info("updateUser : failed to update user.");
+			LOG.debug("updateUser : End");
 			return false;
 		}
+		LOG.info("updateUser : user updated successfully.");
+		LOG.debug("updateUser : End");
 		return true;
 	}
 

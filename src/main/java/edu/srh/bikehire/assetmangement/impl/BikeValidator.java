@@ -28,7 +28,7 @@ public class BikeValidator {
 		
 		//TODO: Resolve
 		int year = Calendar.getInstance().get(Calendar.YEAR);
-		if(mBike.getYearOfManufacture() <1960 && mBike.getYearOfManufacture() >year)
+		if(mBike.getYearOfManufacture() <1960 || mBike.getYearOfManufacture() >year)
 		{		
 		throw new BikeHireSystemException(-1);
 		}

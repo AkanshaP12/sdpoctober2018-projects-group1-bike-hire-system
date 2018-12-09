@@ -53,10 +53,10 @@ public class DashboardUI {
 		
 	}
 	
-	private void showBikeStatus(DashboardService dashboardService, BikeService bikeService)
+	private void showBikeStatus(DashboardService dashboardService, BikeService bikeService) throws BikeHireSystemException
 	{
 		List<BikeTypeDTO> allBikeTypes = bikeService.getBikeTypes();
-		
+		System.out.println("No Bikes are available");
 		for(BikeTypeDTO bikeTypeDTO : allBikeTypes)
 		{
 			System.out.println("Bike Type Id : " + bikeTypeDTO.getBikeTypeId());

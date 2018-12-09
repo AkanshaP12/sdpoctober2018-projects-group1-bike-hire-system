@@ -78,7 +78,8 @@ public class OrdersUI {
 				else
 				{
 					System.out.println("You cannot cancel this order as bike has already been rented. Contact customer support.");
-					this.showOrders(sc);
+					LandingUIForCustomer uiCustomer = new LandingUIForCustomer(loggedInUser);
+					uiCustomer.showMenu(sc);
 					return;
 				}
 			}

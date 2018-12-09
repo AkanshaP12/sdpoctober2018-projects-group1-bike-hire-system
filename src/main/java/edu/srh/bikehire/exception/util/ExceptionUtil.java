@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.exception.ErrorMessage;
 
 public class ExceptionUtil {
@@ -13,7 +14,7 @@ public class ExceptionUtil {
 	static
 	{
 		smapErrorCodesToMessages = new HashMap<Long, ErrorMessage>();
-		
+		smapErrorCodesToMessages.put(10000L, new ErrorMessage("Unexpected error occurred - {0} " , "Unexpected error occurred. Please try after some time.") );
 		smapErrorCodesToMessages.put(10001L, new ErrorMessage("Invalid token provided.", "Invalid security code provided."));
 		smapErrorCodesToMessages.put(10002L, new ErrorMessage("Maximum allowed attempts reached.", "You have exceeded maximum allowed attempts. Please try after sometime."));
 		smapErrorCodesToMessages.put(10003L, new ErrorMessage("Token has expired.", "Your security code has expired. Please request new security code."));
@@ -74,5 +75,15 @@ public class ExceptionUtil {
 			return lMessageFormat.format(pPlaceHolderValues);
 		}
 		return "Unexpected Error Occured!";
+	}
+	
+	public static BikeHireSystemException wrapThrowableToBHSException(Throwable throwable)
+	{
+		if(throwable instanceof BikeHireSystemException)
+		{
+			return (BikeHireSystemException) throwable;
+		}
+		
+		return new BikeHireSystemException(10000L, new Object[] {throwable.getMessage()}, throwable);
 	}
 }

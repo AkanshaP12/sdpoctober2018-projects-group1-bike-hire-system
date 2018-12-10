@@ -44,7 +44,8 @@ public class BikeServiceImpl implements BikeService {
 		return bikeDAO.getAllBikes(sortPriceDescending);
 	}
 
-	public BikeDTO getBikeByID(int id) {
+	public BikeDTO getBikeByID(int id)
+	{
 		
 		return bikeDAO.getBike(id);
 	}

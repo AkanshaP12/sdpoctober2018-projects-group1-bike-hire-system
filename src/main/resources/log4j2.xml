@@ -10,10 +10,10 @@
         </File>
     </Appenders>
     <Loggers>
-        <Logger name="edu.srh.bikehire.dao.impl" level="TRACE">
+        <Logger name="edu.srh.bikehire.dao.impl" level="TRACE" additivity="false">
         	<Appender-ref ref="FILE" level="TRACE"/>
         </Logger>
-        <Logger name="edu.srh.bikehire.service.impl" level="TRACE">
+        <Logger name="edu.srh.bikehire.service.impl" level="TRACE" additivity="false">
         	<Appender-ref ref="FILE" level="TRACE"/>
         </Logger>
     </Loggers>

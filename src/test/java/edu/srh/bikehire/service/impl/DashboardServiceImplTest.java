@@ -15,9 +15,6 @@ import edu.srh.bikehire.exception.BikeHireSystemException;
 public class DashboardServiceImplTest {
 
 	DashboardServiceImpl dashboardTest = new DashboardServiceImpl();
-	
-	@Rule
-    public ExpectedException expectedException = ExpectedException.none();
 
 	@Test
 	public void testGetBikeCountAvail() throws BikeHireSystemException {

@@ -13,25 +13,21 @@ public class BikeTypeValidator {
 
 	public void validateAddBikeType() throws BikeHireSystemException {
 		if (mBikeType == null) {
-			// TODO:Resolve
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: Bike Type not provided for Add Bike Type Validation.
+			throw new BikeHireSystemException(10043);
 		}
 
-//		if (Util.isEmptyOrNullString(mBikeType.getBikeTypeId())) {
-//			// TODO:Resolve
-//			throw new BikeHireSystemException(-1);
-//		}
-
 		if (Util.isEmptyOrNullString(mBikeType.getBikeType())) {
-			// TODO:
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: Invalid Bike Type for Add Bike Type Validation.
+			throw new BikeHireSystemException(10044);
 		}
 
 		if (Util.isEmptyOrNullString(mBikeType.getAgeCategory())) {
-			// TODO:Resolve
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: Invalid Age Category for Add Bike Type Validation.
+			throw new BikeHireSystemException(10045);
 
 		}
+		
 		// TODO:OTHER BIKETYPE EXCEPTIONS
 
 	}

@@ -1,5 +1,7 @@
 package edu.srh.bikehire.console;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
 
@@ -24,7 +26,6 @@ public class CatalogUI {
 	
 	public void showCatalog(Scanner sc) throws BikeHireSystemException
 	{
-		//STEP 1 : Get bike information from database
 		
 		BikeServiceImpl bikeService = new BikeServiceImpl();
 		List<BikeDTO> listOfBikes = bikeService.getAllBikesBasedOnStatus(BikeStatusType.AVALIABLE_BIKE, false);
@@ -39,10 +40,9 @@ public class CatalogUI {
 		
 		nextInput(sc, listOfBikes, bikeService);
 		
-		//STEP 3:  get user input.
 	}
 	
-	private void displayBikes(List<BikeDTO> listOfBikes, BikeService bikeService)
+	private void displayBikes(List<BikeDTO> listOfBikes, BikeService bikeService) throws BikeHireSystemException
 	{
 		System.out.println("Total bikes : " + listOfBikes.size());
 		System.out.println("-----------------------------------------------");
@@ -62,10 +62,12 @@ public class CatalogUI {
 	
 	private void nextInput(Scanner sc, List<BikeDTO> listOfBikes, BikeService bikeService) throws BikeHireSystemException
 	{
-		//STEP 2 : Display catalog.
-		displayBikes(listOfBikes, bikeService);
+		if(listOfBikes != null)
+		{			
+			displayBikes(listOfBikes, bikeService);
+		}
 		
-		System.out.println("1) Select bike \n2) Sort bike by deposit amount \n 3) View bikes by type \n 4) View bike by warehouse\n 5) Back");
+		System.out.println("1) Select bike \n2) Sort bike by deposit amount \n3) View bikes by type \n4) View bike by warehouse\n5) Group Booking \n6) Back");
 		System.out.println("Select option: ");
 		int input = sc.nextInt();
 		sc.nextLine();
@@ -92,6 +94,9 @@ public class CatalogUI {
 			viewBikeByWarehouse(sc, bikeService);
 			break;
 		case 5:
+			groupBookingOption(sc, bikeService);
+			break;
+		case 6:
 			LandingUIForCustomer customerLandingUi = new LandingUIForCustomer(loggedInEntity);
 			customerLandingUi.showMenu(sc);
 			break;
@@ -202,5 +207,14 @@ public class CatalogUI {
 		
 		List<BikeDTO> lAllBikesForType = bikeService.getAllBikesBasedOnWarehouse(warehouseId, isSortDescending);
 		nextInput(sc, lAllBikesForType, bikeService);
+	}
+	
+	private void groupBookingOption(Scanner sc, BikeService bikeService) throws BikeHireSystemException
+	{
+		GroupBookingUI groupBookingUi = new GroupBookingUI(loggedInEntity, true);
+		groupBookingUi.processGroupBooking(sc);
+		LandingUIForCustomer landingUI = new LandingUIForCustomer(loggedInEntity);
+		landingUI.showMenu(sc);
+		return;
 	}
 }

@@ -2,6 +2,7 @@ package edu.srh.bikehire.validator;
 
 import edu.srh.bikehire.dto.CurrentOrderDTO;
 import edu.srh.bikehire.exception.BikeHireSystemException;
+import edu.srh.bikehire.exception.ErrorMessage;
 import edu.srh.bikehire.service.core.Order;
 import edu.srh.bikehire.util.Util;
 
@@ -17,50 +18,50 @@ public class OrderValidator {
 	{
 		if(currentOrderDTO == null)
 		{
-			// TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Current Order Data Transfer Object Not Found.
+			throw new BikeHireSystemException(10086);
 		}
 		
 		if(currentOrderDTO.getBikeId() <= 0)
 		{
-			// TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid Bike ID of Current Order Data Transfer Object.
+			throw new BikeHireSystemException(10096);
 		}
 		
 		if(currentOrderDTO.getUserId() <= 0)
 		{
-			// TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid User ID of Current Order Data Transfer Object.
+			throw new BikeHireSystemException(10097);
 		}
 		
 		if(Util.isEmptyOrNullString(currentOrderDTO.getOrderMode()))
 		{
-			// TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid Order mode of Current Order Data Transfer Object.
+			throw new BikeHireSystemException(10098);
 		}
 		
 		if(currentOrderDTO.getActualdropoffTimestamp() == null)
 		{
-			// TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid Actual dropoff Timestamp of Current Order Data Transfer Object.
+			throw new BikeHireSystemException(10099);
 		}
 		
 		if(currentOrderDTO.getBookingTimestamp() == null)
 		{
-			// TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid Booking Timestamp of Current Order Data Transfer Object.
+			throw new BikeHireSystemException(10100);
 		}
 		
 		if(currentOrderDTO.getDropoffTimestamp() == null)
 		{
-			// TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid Dropoff Timestamp of Current Order Data Transfer Object.
+			throw new BikeHireSystemException(10101);
 		}
 		
 		if(currentOrderDTO.getPickupTimestamp() == null)
 		{
-			// TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid Pickup Timestamp of Current Order Data Transfer Object.
+			throw new BikeHireSystemException(10102);
 		}
 	}
 }

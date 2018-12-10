@@ -3,6 +3,7 @@ package edu.srh.bikehire.service.impl;
 import static org.junit.Assert.*;
 
 import java.util.Calendar;
+
 import java.util.List;
 
 import org.junit.Test;
@@ -32,7 +33,6 @@ public class OrderServiceImplTest {
 		orderInfo.setActualDropoffTimestamp(Calendar.getInstance());
 		int OrderId = orderService.placeOrder(orderInfo);
 		assertTrue(OrderId > 0);
-	
 	}
 	
 	@Test(expected = BikeHireSystemException.class)
@@ -121,10 +121,8 @@ public class OrderServiceImplTest {
 		orderInfo.setPickupTimestamp(Calendar.getInstance());
 		orderInfo.setDropOffTimestamp(Calendar.getInstance());
 		orderInfo.setActualDropoffTimestamp(null);
-		int OrderId = orderService.placeOrder(orderInfo);
-		
+		int OrderId = orderService.placeOrder(orderInfo);	
 	}
-
 
 	@Test
 	public void testGetOrderHistory() throws BikeHireSystemException {
@@ -140,11 +138,7 @@ public class OrderServiceImplTest {
 		int userID = -1;
 		
 		List<OrderHistory> lReturnList  = orderService.getOrderHistory(userID);
-
 	}
-
-		
-	
 
 	@Test
 	public void testCancelOrder() throws BikeHireSystemException  {
@@ -167,7 +161,6 @@ public class OrderServiceImplTest {
 		int orderID=-1;
 		
 		orderService.cancelOrder(orderID);
-		
 	}
 
 	@Test
@@ -253,7 +246,11 @@ public class OrderServiceImplTest {
 	public void testGetInvoiceInvalidInvoiceID() throws BikeHireSystemException {
 		String invoiceID = null;
 		Invoice lReturnInvoice  = orderService.getInvoice(invoiceID);
-		
+		assertNotNull(orderService.getOrder(1));
 	}
 
+	@Test
+	public void testGetCurrentOrderForUser() throws BikeHireSystemException {
+		assertNotNull(orderService.getCurrentOrdersForUser(1));
+	}
 }

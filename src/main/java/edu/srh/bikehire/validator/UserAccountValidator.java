@@ -15,38 +15,38 @@ public class UserAccountValidator {
 	public void validateUserAccount() throws BikeHireSystemException {
 		
 		if (mUserAccount == null) {
-			// TODO:Resolve
-						throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: User Account Data Transfer Object Not Found.
+			throw new BikeHireSystemException(10085);
 		}
 		
 		if(mUserAccount.getId() <= 0) {
-			// TODO:Resolve
-						throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid User ID of User Account Data Transfer Object.
+			throw new BikeHireSystemException(10103);
 		}
 		
 		if(Util.isEmptyOrNullString(mUserAccount.getUserName())) {
-			// TODO:Resolve
-						throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid User Name of User Account Data Transfer Object.
+			throw new BikeHireSystemException(10104);
 		}
 		
 		if(Util.isEmptyOrNullString(mUserAccount.getRole())) {
-			// TODO:Resolve
-						throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid User Role of User Account Data Transfer Object.
+			throw new BikeHireSystemException(10105);
 		}
 
 		if(Util.isEmptyOrNullString(mUserAccount.getAccountStatus())) {
-			// TODO:Resolve
-						throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid User Account Status of User Account Data Transfer Object.
+			throw new BikeHireSystemException(10106);
 		}
 		
 		if(mUserAccount.getCreationTimeStamp() == null) {
-			// TODO:Resolve
-						throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid Creation TimeStamp of User Account Data Transfer Object.
+			throw new BikeHireSystemException(10107);
 		}
 		
 		if(mUserAccount.getLastModifiedTimeStamp() == null) {
-			// TODO:Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid Last Modified TimeStamp of User Account Data Transfer Object.
+			throw new BikeHireSystemException(10108);
 	
 		}
 	}

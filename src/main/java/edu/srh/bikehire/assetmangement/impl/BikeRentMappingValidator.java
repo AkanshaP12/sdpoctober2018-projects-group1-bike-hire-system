@@ -15,15 +15,15 @@ public class BikeRentMappingValidator {
 	{
 		if(mBikeRentDetails == null)
 		{
-			//TODO:
-			throw new BikeHireSystemException(-1);
+			//ERROR_MESSAGE : 
+			throw new BikeHireSystemException(10029);
 		}
 		
 		
 		if(mBikeRentDetails.getBikeTypeId() <= 0)
 		{
-			//TODO:
-			throw new BikeHireSystemException(-1);
+			//ERROR_MESSAGE :
+			throw new BikeHireSystemException(10030);
 		}
 		
 		validateRentPerHour();
@@ -35,8 +35,8 @@ public class BikeRentMappingValidator {
 	{
 		if(mBikeRentDetails == null)
 		{
-			//TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERROR_MESSAGE :
+			throw new BikeHireSystemException(10031);
 		}
 	
 		validateRentPerHour();
@@ -50,8 +50,8 @@ public class BikeRentMappingValidator {
 	{
 		if(mBikeRentDetails.getRentPerHour()<=0)
 		{
-			//TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERROR_MESSAGE :
+			throw new BikeHireSystemException(10032);
 		
 		}
 	}
@@ -60,8 +60,8 @@ public class BikeRentMappingValidator {
 	{
 		if(mBikeRentDetails.getRentPerDay()<=0)
 		{
-			//TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERROR_MESSAGE :
+			throw new BikeHireSystemException(10033);
 		
 		}
 	}

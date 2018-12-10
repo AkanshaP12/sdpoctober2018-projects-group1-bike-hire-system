@@ -30,15 +30,15 @@ public class LoginUI {
 			
 			if(loggedInEntity == null)
 			{
-				//TODO: resolve
-				throw new BikeHireSystemException(-1);
+				//ERROR MESSAGE: Invalid credentials are used for login.
+				throw new BikeHireSystemException(10065);
 			}
 			return loggedInEntity;
 		}
 		catch(Exception exception)
 		{
-			//TODO: Handle exception and show message
-			return null;
+			System.out.println(exception.getMessage());
+			return this.login(in);
 		}
 	}
 	

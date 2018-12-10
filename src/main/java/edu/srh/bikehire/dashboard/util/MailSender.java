@@ -99,9 +99,8 @@ public class MailSender {
 			Transport.send(message);
 			
 		} catch (MessagingException mex) {
-			//TODO: Resolve exception
-			mex.printStackTrace();
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Mail Sender didn't able to send an email.
+			throw new BikeHireSystemException(10074, new Object[] {}, mex);
 		}
 	}
 	

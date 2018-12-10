@@ -15,33 +15,33 @@ public class CredentialValidator {
 	public void validateCredential() throws BikeHireSystemException {
 
 		if (mUserCredentail == null) {
-			// TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: User Credential not found.
+			throw new BikeHireSystemException(10092);
 		}
 
 		if (mUserCredentail.getUserID() <= 0) {
-			// TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid User ID.
+			throw new BikeHireSystemException(10093);
 		}
 		
 		validateUserName();
 
 		if (Util.isEmptyOrNullString(mUserCredentail.getPasswordHash())) {
-			// TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid Password Hash.
+			throw new BikeHireSystemException(10094);
 		}
 
 		if (Util.isEmptyOrNullString(mUserCredentail.getPasswordSalt())) {
-			// TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid Password Salt.
+			throw new BikeHireSystemException(10095);
 		}
 
 	}
 
 	public void validateUserName() throws BikeHireSystemException {
 		if (Util.isEmptyOrNullString(mUserCredentail.getUserName())) {
-			// TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid User name.
+			throw new BikeHireSystemException(10079);
 		}
 	}
 

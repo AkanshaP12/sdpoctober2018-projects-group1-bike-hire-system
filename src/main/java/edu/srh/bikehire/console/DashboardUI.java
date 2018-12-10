@@ -47,16 +47,16 @@ public class DashboardUI {
 			landingUI.showMenu(sc);
 			return;
 		default:
-			//TODO:
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: Invalid option is selected
+			throw new BikeHireSystemException(10062);
 		}
 		
 	}
 	
-	private void showBikeStatus(DashboardService dashboardService, BikeService bikeService)
+	private void showBikeStatus(DashboardService dashboardService, BikeService bikeService) throws BikeHireSystemException
 	{
 		List<BikeTypeDTO> allBikeTypes = bikeService.getBikeTypes();
-		
+		System.out.println("No Bikes are available");
 		for(BikeTypeDTO bikeTypeDTO : allBikeTypes)
 		{
 			System.out.println("Bike Type Id : " + bikeTypeDTO.getBikeTypeId());

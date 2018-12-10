@@ -2,7 +2,11 @@ package edu.srh.bikehire.service.impl;
 
 import java.util.Calendar;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import edu.srh.bikehire.dao.DAOFactory;
+import edu.srh.bikehire.dao.DAOFactoryType;
 import edu.srh.bikehire.dao.UserAccountDAO;
 import edu.srh.bikehire.dao.UserCredentialDAO;
 import edu.srh.bikehire.dao.UserDAO;
@@ -13,13 +17,13 @@ import edu.srh.bikehire.dto.impl.UserAccountDTOImpl;
 import edu.srh.bikehire.dto.impl.UserCredentialDTOImpl;
 import edu.srh.bikehire.dto.impl.UserDTOImpl;
 import edu.srh.bikehire.exception.BikeHireSystemException;
+import edu.srh.bikehire.exception.util.ExceptionUtil;
 import edu.srh.bikehire.login.LoginConstants;
 import edu.srh.bikehire.login.ResetPasswordValidator;
 import edu.srh.bikehire.login.core.CustomerCredentialValidator;
 import edu.srh.bikehire.login.core.UserDetailsValidator;
 import edu.srh.bikehire.login.core.UserRegistrationCredentialValidator;
 import edu.srh.bikehire.login.impl.DBBasedResetPasswordValidator;
-import edu.srh.bikehire.login.util.LoginUtil;
 import edu.srh.bikehire.login.util.PasswordHashGenerator;
 import edu.srh.bikehire.service.Login;
 import edu.srh.bikehire.service.core.Entity;
@@ -31,150 +35,188 @@ import edu.srh.bikehire.service.core.impl.CustomerAccount;
 import edu.srh.bikehire.util.Util;
 
 public class DBBasedLoginService implements Login {
+	
+	private static final Logger LOG = LogManager.getLogger(DBBasedLoginService.class);
+	
 	private UserDAO mUserDAO;
 	
 	private UserAccountDAO mUserAccountDAO;
 	
 	private UserCredentialDAO mUserCredentialDAO;
 	
+	private DAOFactory daoFactory;
+	
 	public DBBasedLoginService()
 	{
-		mUserDAO = DAOFactory.getDefaultUserDAOImpl();
-		mUserAccountDAO = DAOFactory.getDefaultUserAccountDAOImpl();
-		mUserCredentialDAO = DAOFactory.getDefaultUserCredentialDAOImpl();
+		daoFactory = DAOFactory.getDAOFactory(DAOFactoryType.JPADAOFACTORY);
+		mUserDAO = daoFactory.getUserDAO();
+		mUserAccountDAO = daoFactory.getUserAccountDAO();
+		mUserCredentialDAO = daoFactory.getUserCredentialDAO();
 	}
 	
 	
 	public Entity authenticate(EntityLoginCredential pInputEntityCredentials) throws BikeHireSystemException {
-		
-		CustomerCredentialValidator lLoginCredentialValidator = new CustomerCredentialValidator(pInputEntityCredentials);
-		int userId = lLoginCredentialValidator.validateLoginCredentials(mUserCredentialDAO);
-		
-		//If correct password, fetch entity object and return it
-		UserDTO lLoggedInUser = mUserDAO.getUser(userId);
-		
-		if(lLoggedInUser == null)
-		{
-			//ERROR_MESSAGE : Invalid login credentials provided. Username doesn't exists.
-			throw new BikeHireSystemException(10024);
+		LOG.info("authenticate : Start");
+		try
+		{			
+			CustomerCredentialValidator lLoginCredentialValidator = new CustomerCredentialValidator(pInputEntityCredentials);
+			int userId = lLoginCredentialValidator.validateLoginCredentials(mUserCredentialDAO);
+			LOG.info("authenticate : password validated successfully.");
+			
+			UserDTO lLoggedInUser = validateAndGetUserDTO(userId);
+			UserAccountDTO lLoggedInUserAccountDTO = validateAndGetUserAccountDTO(userId);
+			
+			Entity lLoggedInEntity = getEntityFromUserDTO(lLoggedInUser, lLoggedInUserAccountDTO);
+			LOG.info("authenticate : End");
+			return lLoggedInEntity;
 		}
-		
-		UserAccountDTO lLoggedInUserAccountDTO = mUserAccountDAO.getUserAccount(userId);
-		
-		if(lLoggedInUserAccountDTO == null)
+		catch(Throwable throwable)
 		{
-			//ERROR_MESSAGE : Invalid login credentials provided. Username doesn't exists.
-			throw new BikeHireSystemException(10024);
+			LOG.error("authenticate : " + throwable.getMessage(), throwable);
+			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
 		}
-		
-		Entity lLoggedInEntity = getEntityFromUserDTO(lLoggedInUser, lLoggedInUserAccountDTO);
-		// Client should maintain User Sessions
-		return lLoggedInEntity;
 	}
 
 	public ResetPasswordValidator sendSecurityTokenForResetPassword(String pEmailAddress) throws BikeHireSystemException {
-		
-		if(Util.isEmptyOrNullString(pEmailAddress))
-		{
-			//ERROR_MESSAGE : Invalid email address provided for reset password.
-			throw new BikeHireSystemException(10025);
+		LOG.info("sendSecurityTokenForResetPassword : Start");
+		try
+		{			
+			UserDTO lUserDTO = validateAndGetUserDTOForEmailId(pEmailAddress);
+			
+			DBBasedResetPasswordValidator lResetPasswordValidator = new DBBasedResetPasswordValidator(lUserDTO.getId(),pEmailAddress, false);
+			lResetPasswordValidator.generateToken();
+			
+			lResetPasswordValidator.sendNotfificationForSecurityCode();
+			LOG.info("sendSecurityTokenForResetPassword : Security code email sent successfully.");
+			
+			LOG.info("sendSecurityTokenForResetPassword : End");
+			return lResetPasswordValidator;
 		}
-		
-		UserDTO lUserDTO = mUserDAO.getUserByEmailId(pEmailAddress);
-		
-		if(lUserDTO == null)
+		catch(Throwable throwable)
 		{
-			//ERROR_MESSAGE : Invalid email address {0} provided for reset password. 
-			throw new BikeHireSystemException(10026, new Object[] {pEmailAddress});
+			LOG.error("sendSecurityTokenForResetPassword : " + throwable.getMessage(), throwable);
+			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
 		}
-		
-		// Initialize resetpassword validator
-		DBBasedResetPasswordValidator lResetPasswordValidator = new DBBasedResetPasswordValidator(lUserDTO.getId(),pEmailAddress, false);
-		lResetPasswordValidator.generateToken();
-
-		//send email notification for security code
-		lResetPasswordValidator.sendNotfificationForSecurityCode();
-		
-		return lResetPasswordValidator;
 	}
 
 	public ResetPasswordValidator registerUserAccount(Entity pEntity, EntityRegistrationCredential pEntityCredential) throws BikeHireSystemException {
-		//Validate entity details
-		UserDetailsValidator lUserDetailsValidator = new UserDetailsValidator(pEntity);
-		lUserDetailsValidator.validateUserInformationForRegistartion();
+		LOG.info("registerUserAccount : Start");
 		
-		//Validate that user email address is not registered before.
-		UserDTO lUserDTO = mUserDAO.getUserByEmailId(pEntity.getEmailId());
-		
-		if(lUserDTO != null)
+		try
 		{
-			//ERROR_MESSAGE : User with email address {0} already exists. 
-			throw new BikeHireSystemException(10027, new Object[] {pEntity.getEmailId()});
+			daoFactory.beginTransaction();
+			validateUserInfoForRegistration(pEntity);
+			LOG.info("registerUserAccount : No user exists with email address. Proceed to user creation.");
+			
+			validateUserAccountForRegistration(pEntityCredential);
+			
+			int userId = insertRegistrationInfo(pEntity, pEntityCredential);
+			
+			DBBasedResetPasswordValidator lResetPasswordValidator = new DBBasedResetPasswordValidator(userId, pEntity.getEmailId(), true);
+			lResetPasswordValidator.generateToken();
+			
+			daoFactory.commitTransaction();
+			
+			//send email notification for security code
+			lResetPasswordValidator.sendNotfificationForSecurityCode();
+			
+			LOG.info("registerUserAccount : Security code for email verification sent successfully.");
+			LOG.info("registerUserAccount : End");
+			return lResetPasswordValidator;
 		}
-		
-		UserRegistrationCredentialValidator lCredentialValidator = new UserRegistrationCredentialValidator(pEntityCredential);
-		lCredentialValidator.validateEntityCredentials();
-		
-		UserAccountDTO lUserAccountDTO = mUserAccountDAO.getUserAccountUsingUserName(pEntityCredential.getUserName());
-		
-		if(lUserAccountDTO != null)
+		catch(Throwable throwable)
 		{
-			//ERROR_MESSAGE : User with username {0} already exists. 
-			throw new BikeHireSystemException(10028, new Object[] {pEntityCredential.getUserName()});
+			LOG.error("registerUserAccount : " + throwable.getMessage(), throwable);
+			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
 		}
-		
-		//Insert information using mUserDAO
-		UserDTO lNewUserDTO = getUserDTOFromInputs(pEntity);
-		int userId = mUserDAO.addUser(lNewUserDTO);
-		
-		//Insert information using mUserAccounrDAO
-		UserAccountDTO lNewUserAccountDTO = getUserAccountDTOFromInputs(pEntity.getEntityAccount(), lNewUserDTO);
-		boolean lbIsAdded = mUserAccountDAO.addUserAccount(lNewUserAccountDTO);
-		
-		//Insert information using mUserCredentialDAO
-		UserCredentialDTO lNewUserCredentials = getUserCredentialDTOFromInputs(pEntityCredential, lNewUserAccountDTO, lNewUserDTO);
-		boolean lbIsCredentialAdded = mUserCredentialDAO.addUserCredential(lNewUserCredentials);
-		
-		DBBasedResetPasswordValidator lResetPasswordValidator = new DBBasedResetPasswordValidator(userId, pEntity.getEmailId(), true);
-		lResetPasswordValidator.generateToken();
-
-		//send email notification for security code
-		lResetPasswordValidator.sendNotfificationForSecurityCode();
-		return lResetPasswordValidator;
 	}
 	
 	public void resetPassword(EntityRegistrationCredential pEntityCredential) throws BikeHireSystemException
 	{
-		//Check EntityRegistrationCredentials
-		UserRegistrationCredentialValidator lCredentialValidator = new UserRegistrationCredentialValidator(pEntityCredential);
-		lCredentialValidator.validateEntityCredentials();
-		
-		UserAccountDTO lUserAccountDTO = mUserAccountDAO.getUserAccountUsingUserName(pEntityCredential.getUserName());
-		UserDTO lUserDTO = mUserDAO.getUser(lUserAccountDTO.getId());
-		
-		UserCredentialDTO lUserCredentialDTO = getUserCredentialDTOFromInputs(pEntityCredential, lUserAccountDTO, lUserDTO);
-		boolean lbCredentials = mUserCredentialDAO.updateUserCredential(lUserCredentialDTO);
-		
-		//send reset password notification
-		EmailNotificationService emailNotificationService = new EmailNotificationService();
-		emailNotificationService.passwordResetSuccess(lUserDTO.getEmailId());
+		LOG.info("resetPassword : Start");
+		try
+		{	
+			daoFactory.beginTransaction();
+			UserAccountDTO lUserAccountDTO = validateAndGetAccountInfoForReset(pEntityCredential);
+			UserDTO lUserDTO = mUserDAO.getUser(lUserAccountDTO.getId());
+			
+			UserCredentialDTO lUserCredentialDTO = getUserCredentialDTOFromInputs(pEntityCredential, lUserAccountDTO, lUserDTO);
+			boolean lbCredentials = mUserCredentialDAO.updateUserCredential(lUserCredentialDTO);
+			LOG.info("resetPassword : Password reset successfully.");
+			
+			daoFactory.commitTransaction();
+			
+			EmailNotificationService emailNotificationService = new EmailNotificationService();
+			emailNotificationService.passwordResetSuccess(lUserDTO.getEmailId());
+			LOG.info("resetPassword : password reset email sent.");
+			LOG.info("resetPassword : End");
+		}
+		catch(Throwable throwable)
+		{
+			LOG.error("resetPassword : " + throwable.getMessage(), throwable);
+			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
+		}
 	}
 	
+
 	public void deactivateAccount(Entity pEntity) throws BikeHireSystemException {
-		UserDetailsValidator lUserDetailsValidator = new UserDetailsValidator(pEntity);
-		lUserDetailsValidator.validateUserInformationForDeactiviation();
-		
-		UserDTO lUserDTO = mUserDAO.getUserByEmailId(pEntity.getEmailId());
-		UserAccountDTO lUserAccountDTO = getUserAccountForDeactivation(lUserDTO);
-		boolean lbResult = mUserAccountDAO.updateUserAccount(lUserAccountDTO);
-		//TODO: Call DAO to change user status in USERACCOUNT table.
+		LOG.info("deactivateAccount : Start");
+		try
+		{			
+			daoFactory.beginTransaction();
+			UserDetailsValidator lUserDetailsValidator = new UserDetailsValidator(pEntity);
+			lUserDetailsValidator.validateUserInformationForDeactiviation();
+			
+			UserDTO lUserDTO = mUserDAO.getUserByEmailId(pEntity.getEmailId());
+			UserAccountDTO lUserAccountDTO = getUserAccountForDeactivation(lUserDTO);
+			boolean lbResult = mUserAccountDAO.updateUserAccount(lUserAccountDTO);
+			daoFactory.commitTransaction();
+			
+			LOG.info("deactivateAccount : User account deactivated successfully.");
+			LOG.info("deactivateAccount : End");
+		}
+		catch(Throwable throwable)
+		{
+			LOG.error("deactivateAccount : " + throwable.getMessage(), throwable);
+			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
+		}
 	}
 	
-	public EntityAccount getAccountInfo(int pUserId){
-		UserAccountDTO lUserAccountDTO = mUserAccountDAO.getUserAccount(pUserId);
-		return getEntityAccountFromDTO(lUserAccountDTO);
+	public EntityAccount getAccountInfo(int pUserId) throws BikeHireSystemException{
+		LOG.info("getAccountInfo : Start");
+		try
+		{			
+			UserAccountDTO lUserAccountDTO = mUserAccountDAO.getUserAccount(pUserId);
+			LOG.info("getAccountInfo : End");
+			return getEntityAccountFromDTO(lUserAccountDTO);
+		}
+		catch(Throwable throwable)
+		{
+			LOG.error("getAccountInfo : " + throwable.getMessage(), throwable);
+			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
+		}
 	}
 
+	public boolean markUserAccountAsActive(int pUserId) throws BikeHireSystemException
+	{
+		LOG.info("markUserAccountAsActive : Start");
+		try
+		{		
+			daoFactory.beginTransaction();
+			UserAccountDTOImpl userAccountDTOImpl = (UserAccountDTOImpl) mUserAccountDAO.getUserAccount(pUserId);
+			userAccountDTOImpl.setAccountStatus(LoginConstants.LOGIN_ACCOUNT_STATUS_ACTIVE);
+			boolean isSuccess = mUserAccountDAO.updateUserAccount(userAccountDTOImpl);
+			daoFactory.commitTransaction();
+			LOG.info("markUserAccountAsActive : End");
+			return isSuccess;
+		}
+		catch(Throwable throwable)
+		{
+			LOG.error("markUserAccountAsActive : " + throwable.getMessage(), throwable);
+			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
+		}
+	}
+	
 	private Entity getEntityFromUserDTO(UserDTO pUserDTO, UserAccountDTO pUserAccountDTO)
 	{
 		Customer lCustomer = new Customer();
@@ -263,10 +305,108 @@ public class DBBasedLoginService implements Login {
 		return lUserAccountDTOImpl;
 	}
 	
-	public boolean markUserAccountAsActive(int pUserId)
+	private UserDTO validateAndGetUserDTO(int pUserId) throws BikeHireSystemException
 	{
-		UserAccountDTOImpl userAccountDTOImpl = (UserAccountDTOImpl) mUserAccountDAO.getUserAccount(pUserId);
-		userAccountDTOImpl.setAccountStatus(LoginConstants.LOGIN_ACCOUNT_STATUS_ACTIVE);
-		return mUserAccountDAO.updateUserAccount(userAccountDTOImpl);
+		UserDTO lLoggedInUser = mUserDAO.getUser(pUserId);
+		
+		if(lLoggedInUser == null)
+		{
+			//ERROR_MESSAGE : Invalid login credentials provided. Username doesn't exists.
+			throw new BikeHireSystemException(10024);
+		}
+		return lLoggedInUser;
+	}
+	
+	private UserDTO validateAndGetUserDTOForEmailId(String pEmailAddress) throws BikeHireSystemException
+	{
+		if(Util.isEmptyOrNullString(pEmailAddress))
+		{
+			//ERROR_MESSAGE : Invalid email address provided for reset password.
+			throw new BikeHireSystemException(10025);
+		}
+		
+		UserDTO lUserDTO = mUserDAO.getUserByEmailId(pEmailAddress);
+		
+		if(lUserDTO == null)
+		{
+			//ERROR_MESSAGE : Invalid email address {0} provided for reset password. 
+			throw new BikeHireSystemException(10026, new Object[] {pEmailAddress});
+		}
+		
+		return lUserDTO;
+	}
+	
+	private UserAccountDTO validateAndGetUserAccountDTO(int pUserId) throws BikeHireSystemException
+	{
+		UserAccountDTO lLoggedInUserAccountDTO = mUserAccountDAO.getUserAccount(pUserId);
+		
+		if(lLoggedInUserAccountDTO == null)
+		{
+			//ERROR_MESSAGE : Invalid login credentials provided. Username doesn't exists.
+			throw new BikeHireSystemException(10024);
+		}
+		
+		return lLoggedInUserAccountDTO;
+	}
+	
+	private void validateUserInfoForRegistration(Entity pEntity) throws BikeHireSystemException
+	{
+		UserDetailsValidator lUserDetailsValidator = new UserDetailsValidator(pEntity);
+		lUserDetailsValidator.validateUserInformationForRegistartion();
+		
+		UserDTO lUserDTO = mUserDAO.getUserByEmailId(pEntity.getEmailId());
+		
+		if(lUserDTO != null)
+		{
+			//ERROR_MESSAGE : User with email address {0} already exists. 
+			throw new BikeHireSystemException(10027, new Object[] {pEntity.getEmailId()});
+		}
+	}
+	
+	private void validateUserAccountForRegistration(EntityRegistrationCredential pEntityCredential) throws BikeHireSystemException
+	{
+		UserRegistrationCredentialValidator lCredentialValidator = new UserRegistrationCredentialValidator(pEntityCredential);
+		lCredentialValidator.validateEntityCredentials();
+		
+		UserAccountDTO lUserAccountDTO = mUserAccountDAO.getUserAccountUsingUserName(pEntityCredential.getUserName());
+		
+		if(lUserAccountDTO != null)
+		{
+			//ERROR_MESSAGE : User with username {0} already exists. 
+			throw new BikeHireSystemException(10028, new Object[] {pEntityCredential.getUserName()});
+		}
+	}
+	
+	private int insertRegistrationInfo(Entity pEntity, EntityRegistrationCredential pEntityCredential) throws BikeHireSystemException
+	{
+		//Insert information using mUserDAO
+		UserDTO lNewUserDTO = getUserDTOFromInputs(pEntity);
+		int liUserId = mUserDAO.addUser(lNewUserDTO);
+		LOG.info("insertRegistrationInfo : User added successfully.");
+		//Insert information using mUserAccounrDAO
+		UserAccountDTO lNewUserAccountDTO = getUserAccountDTOFromInputs(pEntity.getEntityAccount(), lNewUserDTO);
+		boolean lbIsAdded = mUserAccountDAO.addUserAccount(lNewUserAccountDTO);
+		LOG.info("insertRegistrationInfo : User account details created successfully.");
+		
+		//Insert information using mUserCredentialDAO
+		UserCredentialDTO lNewUserCredentials = getUserCredentialDTOFromInputs(pEntityCredential, lNewUserAccountDTO, lNewUserDTO);
+		boolean lbIsCredentialAdded = mUserCredentialDAO.addUserCredential(lNewUserCredentials);
+		LOG.info("insertRegistrationInfo : User credentials added successfully.");
+		
+		return liUserId;
+	}
+	
+	private UserAccountDTO validateAndGetAccountInfoForReset(EntityRegistrationCredential pEntityCredential) throws BikeHireSystemException
+	{
+		UserRegistrationCredentialValidator lCredentialValidator = new UserRegistrationCredentialValidator(pEntityCredential);
+		lCredentialValidator.validateEntityCredentials();
+		
+		UserAccountDTO lUserAccountDTO = mUserAccountDAO.getUserAccountUsingUserName(pEntityCredential.getUserName());
+		if(lUserAccountDTO == null)
+		{
+			//ERRORMESSAGE: User Account Data Transfer Object Not Found.
+			throw new BikeHireSystemException(10085);
+		}
+		return lUserAccountDTO;
 	}
 }

@@ -6,6 +6,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import edu.srh.bikehire.dao.UserCredentialDAO;
 import edu.srh.bikehire.dao.impl.util.PersistenceManager;
 import edu.srh.bikehire.dto.UserCredentialDTO;
@@ -13,41 +16,53 @@ import edu.srh.bikehire.dto.impl.UserCredentialDTOImpl;
 import edu.srh.bikehire.dto.impl.UserDTOImpl;
 
 public class UserCredentialDAOImpl implements UserCredentialDAO{
-
+	private static final Logger LOG = LogManager.getLogger(UserCredentialDAOImpl.class);
+	
+	private EntityManager em;
+	
+	public UserCredentialDAOImpl(EntityManager em)
+	{
+		this.em = em;
+	}
+	
 	public UserCredentialDTOImpl getUserCredentialByUserId(int pUserId) {
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
+		LOG.debug("getUserCredentialByUserId : Start");
 		Query lQuery = em.createQuery("from UserCredentialDTOImpl where UserID = :typeId ");
 		lQuery.setParameter("typeId", pUserId);
 		List<UserCredentialDTOImpl> results = lQuery.getResultList();
 		if(results == null || results.size() == 0)
 		{
+			LOG.debug("getUserCredentialByUserId : End");
 			return null;
 		}
+		LOG.debug("getUserCredentialByUserId : End");
 		return results.get(0);
 	}
 
 	public UserCredentialDTOImpl getUserCredentialByUserName(String pUserName) {
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
+		LOG.debug("getUserCredentialByUserName : Start");
 		Query lQuery = em.createQuery("from UserCredentialDTOImpl where UserName = :typeId ");
 		lQuery.setParameter("typeId", pUserName);
 		List<UserCredentialDTOImpl> results = lQuery.getResultList();
 		if(results == null || results.size() == 0)
 		{
+			LOG.debug("getUserCredentialByUserName : End");
 			return null;
 		}
+		LOG.debug("getUserCredentialByUserName : End");
 		return results.get(0);
 	}
 
 	public boolean addUserCredential(UserCredentialDTO pUserCredentialDTO) {
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-		em.getTransaction().begin();
+		LOG.debug("addUserCredential : Start");
 		em.persist(pUserCredentialDTO);
-		em.getTransaction().commit();
+		LOG.info("addUserCredential : new user credential added successfully.");
+		LOG.debug("addUserCredential : End");
 		return true;
 	}
 
 	public boolean updateUserCredential(UserCredentialDTO pUserCredentialDTO) {
-		EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
+		LOG.debug("updateUserCredential : Start");
 		UserCredentialDTOImpl lUserCredentialDTOImpl = null;
 		if(pUserCredentialDTO.getUserID() > 0)
 		{			
@@ -57,7 +72,6 @@ public class UserCredentialDAOImpl implements UserCredentialDAO{
 		{
 			lUserCredentialDTOImpl = getUserCredentialByUserName(pUserCredentialDTO.getUserName());
 		}
-		em.getTransaction().begin();
 		Query lQuery = em.createQuery("UPDATE UserCredentialDTOImpl ucd SET ucd.passwordHash = :ph, ucd.passwordSalt = :ps, ucd.lastModifiedTimeStamp = :lm where ucd.userDTO =:identity");
 		lQuery.setParameter("ph", pUserCredentialDTO.getPasswordHash());
 		lQuery.setParameter("ps", pUserCredentialDTO.getPasswordSalt());
@@ -66,11 +80,14 @@ public class UserCredentialDAOImpl implements UserCredentialDAO{
 		userDTO.setId(lUserCredentialDTOImpl.getUserID());
 		lQuery.setParameter("identity",userDTO);
 		int rowsUpdated = lQuery.executeUpdate();
-		em.getTransaction().commit();
 		if(rowsUpdated <= 0)
 		{
+			LOG.info("updateUserCredential : failed to update user credentials.");
+			LOG.debug("updateUserCredential : End");
 			return false;
 		}
+		LOG.info("updateUserCredential : user credential updated successfully.");
+		LOG.debug("updateUserCredential : End");
 		return true;
 	}
 

@@ -3,6 +3,7 @@ package edu.srh.bikehire.console;
 import java.io.IOException;
 import java.util.Scanner;
 
+import edu.srh.bikehire.dao.impl.util.PersistenceManager;
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.login.LoginConstants;
 import edu.srh.bikehire.service.core.Entity;
@@ -12,17 +13,19 @@ import edu.srh.bikehire.startup.AppInitializer;
 
 public class HomePage {
 	private Scanner sc = null;
+	private static AppInitializer initializer = null; 
 	public void display_menu() {
 		try {
-			String leftAlignFormat = "| %-4d | %-20s |%n";
+			String leftAlignFormat = "| %-4d | %-19s |%n";
 
-			System.out.format("+-------+---------------------+%n");
-			System.out.format("| ID    | Task Name           |%n");
-			System.out.format("+-------+---------------------+%n");
+			System.out.format("+------+---------------------+%n");
+			System.out.format("| ID   | Task Name           |%n");
+			System.out.format("+------+---------------------+%n");
 			System.out.format(leftAlignFormat, 1, "Register");
 			System.out.format(leftAlignFormat, 2, "Login");
 			System.out.format(leftAlignFormat, 3, "Forgot Password?");
-			System.out.format("+-------+---------------------+%n");
+			System.out.format(leftAlignFormat, 4, "Exit");
+			System.out.format("+------+---------------------+%n");
 			//System.out.println("1) Register \n2) Login \n 3) Forgot Password? \n");
 			System.out.println("Select option: ");
 			sc = new Scanner(System.in);
@@ -49,9 +52,12 @@ public class HomePage {
 				
 				this.callForgotPasswordUI();
 				break;
+			case 4:
+				this.terminateApplication();
+				break;
 			default:
-				// DONE: Throw new exception as it is invalid input
-				throw new BikeHireSystemException(-1);
+				//ERROR MESSAGE: Invalid option is selected
+				throw new BikeHireSystemException(10062);
 			}
 		} catch (Exception exception) {
 			// TODO: handle exception
@@ -65,8 +71,9 @@ public class HomePage {
 	}
 
 	public static void main(String[] args) throws IOException {
-		AppInitializer initializer = new AppInitializer();
-		initializer.initializeApplication();
+		AppInitializer initializerTemp = new AppInitializer();
+		initializerTemp.initializeApplication();
+		initializer = initializerTemp;
 		HomePage homepage = new HomePage();
 		homepage.display_menu();
 	}
@@ -92,8 +99,8 @@ public class HomePage {
 		EntityAccount userAccount = lDbBasedLoginService.getAccountInfo(entity.getUserId());
 		if(LoginConstants.LOGIN_ACCOUNT_STATUS_INACTIVE.equals(userAccount.getAccountStatus()))
 		{
-			//TODO:
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: Inactive Account User is trying to login.
+			throw new BikeHireSystemException(10064);
 		}
 		
 		if(LoginConstants.LOGIN_ACCOUNT_STATUS_UNVERIFIED.equals(userAccount.getAccountStatus()))
@@ -112,5 +119,16 @@ public class HomePage {
 			LandingUIForStaff landingUIForStaff = new LandingUIForStaff(entity);
 			landingUIForStaff.showMenu(sc);
 		}
+	}
+	
+	private void terminateApplication()
+	{
+		try {
+			initializer.terminateApplication();
+		} catch (InterruptedException e) {
+			System.out.println("Some error occured while terminating application.");
+		}
+		PersistenceManager.INSTANCE.close();
+		System.out.println("Successfully terminated application.");
 	}
 }

@@ -56,8 +56,8 @@ public class HomePage {
 				this.terminateApplication();
 				break;
 			default:
-				// DONE: Throw new exception as it is invalid input
-				throw new BikeHireSystemException(-1);
+				//ERROR MESSAGE: Invalid option is selected
+				throw new BikeHireSystemException(10062);
 			}
 		} catch (Exception exception) {
 			// TODO: handle exception
@@ -99,8 +99,8 @@ public class HomePage {
 		EntityAccount userAccount = lDbBasedLoginService.getAccountInfo(entity.getUserId());
 		if(LoginConstants.LOGIN_ACCOUNT_STATUS_INACTIVE.equals(userAccount.getAccountStatus()))
 		{
-			//TODO:
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: Inactive Account User is trying to login.
+			throw new BikeHireSystemException(10064);
 		}
 		
 		if(LoginConstants.LOGIN_ACCOUNT_STATUS_UNVERIFIED.equals(userAccount.getAccountStatus()))

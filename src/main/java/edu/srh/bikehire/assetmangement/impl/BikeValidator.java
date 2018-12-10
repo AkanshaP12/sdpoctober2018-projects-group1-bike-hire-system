@@ -19,40 +19,39 @@ public class BikeValidator {
 	{
 		if(mBike == null)
 		{
-			//TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: Bike not provided for Add Bike Validation.
+			throw new BikeHireSystemException(10046);
 		}
 		
 		validateBikeID();
 		
 		
-		//TODO: Resolve
 		int year = Calendar.getInstance().get(Calendar.YEAR);
 		if(mBike.getYearOfManufacture() <1960 || mBike.getYearOfManufacture() >year)
-		{		
-		throw new BikeHireSystemException(-1);
+		{	
+			//ERROR MESSAGE: Invalid Year Of Manufacture for Add Bike Validation.
+			throw new BikeHireSystemException(10047);
 		}
 		
 		if(Util.isEmptyOrNullString(mBike.getManufacturer()))
 		{
-			//TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: Invalid Manufacture for Add Bike Validation.
+			throw new BikeHireSystemException(10048);
 		}
 		
 		if(Util.isEmptyOrNullString(mBike.getBikeTitle()))
 		{
-			//TODO:Resolve
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: Invalid Bike Title for Add Bike Validation.
+			throw new BikeHireSystemException(10049);
 		
 		}
 		//TODO:OTHER WAREHOUSE EXCEPTIONS
 		validateDepositAmount();
 		
-		//TODO: Resolve
 		if(mBike.getWareHouseID() <= 0)
 		{
-			//TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: Invalid WareHouse ID for Add Bike Validation.
+			throw new BikeHireSystemException(10050);
 		}
 	
         }
@@ -60,8 +59,8 @@ public class BikeValidator {
 	{
 		if(mBike == null)
 		{
-			//TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: 	
+			throw new BikeHireSystemException(10051);
 		}
 	
 		validateBikeID();
@@ -72,8 +71,8 @@ public class BikeValidator {
 	{
 		if(mBike == null)
 		{
-			//TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: Invalid Bike not provided for Update Bike Validation.
+			throw new BikeHireSystemException(10052);
 		}
 	
 		validateDepositAmount();
@@ -84,8 +83,8 @@ public class BikeValidator {
 	{
 		if(mBike.getBikeId() < 0)
 		{
-			//TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: Invalid Bike ID for Bike Validation.
+			throw new BikeHireSystemException(10053);
 		
 		}
 	}
@@ -94,8 +93,8 @@ public class BikeValidator {
 	{
 		if(mBike.getDepositAmount() <= 0)
 		{
-			//TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: Invalid Deposit Amount for Deposit Amount Validation.
+			throw new BikeHireSystemException(10054);
 		
 		}
 	}

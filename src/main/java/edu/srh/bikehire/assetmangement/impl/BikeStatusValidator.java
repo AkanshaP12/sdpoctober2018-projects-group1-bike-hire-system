@@ -16,14 +16,14 @@ public class BikeStatusValidator {
 	{
 		if(mBikeStatus == null)
 		{
-			//TODO:Resolve
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: Invalid Bike Status for Add Bike Status Validation.
+			throw new BikeHireSystemException(10034);
 		}
 		
 		if(mBikeStatus.getBikeId() <= 0)
 		{
-			//TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: Invalid Bike Id for Add Bike Status Validation.
+			throw new BikeHireSystemException(10035);
 		
 		}
 		
@@ -31,8 +31,8 @@ public class BikeStatusValidator {
 		
 		if(Util.isEmptyOrNullString(mBikeStatus.getManufacturer()))
 		{
-			//TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: Invalid Bike Manufacturer for Add Bike Status Validation.
+			throw new BikeHireSystemException(10036);
 		
 		}
 		//TODO:OTHER BIKESTATUS EXCEPTIONS
@@ -44,8 +44,8 @@ public class BikeStatusValidator {
 	{
 		if(mBikeStatus == null)
 		{
-			//TODO:Resolve
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: Invalid Bike Status for Update Bike Status Validation.
+			throw new BikeHireSystemException(10037);
 		}
 		validateBikeRentStatus();
 	}
@@ -54,8 +54,8 @@ public class BikeStatusValidator {
 	{
 		if(Util.isEmptyOrNullString(mBikeStatus.getStatus()))
 		{
-			//TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: Invalid Bike Status for Update Bike Status Validation
+			throw new BikeHireSystemException(10038);
 		
 		}
 	}

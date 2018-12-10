@@ -1,5 +1,7 @@
 package edu.srh.bikehire.startup;
 
+import edu.srh.bikehire.exception.BikeHireSystemException;
+import edu.srh.bikehire.jasper.DBConnectionFactory;
 import edu.srh.bikehire.login.impl.ResetPasswordCache;
 import edu.srh.bikehire.login.impl.ResetPasswordCacheCleanup;
 
@@ -9,7 +11,7 @@ public class AppInitializer {
 	private ResetPasswordCacheCleanup mCacheCleanup = null;
 	private Thread mResetPasswordCacheCleanupThread = null;
 	
-	public void initializeApplication()
+	public void initializeApplication() throws BikeHireSystemException
 	{
 		
 		sResetPasswordCache = new ResetPasswordCache();
@@ -18,7 +20,7 @@ public class AppInitializer {
 		mCacheCleanup = new ResetPasswordCacheCleanup(sResetPasswordCache);
 		mResetPasswordCacheCleanupThread = new Thread(mCacheCleanup);
 		
-		
+		DBConnectionFactory.initializeFactory();
 	}
 	
 	
@@ -29,6 +31,8 @@ public class AppInitializer {
 			mCacheCleanup.stopThread();
 			mResetPasswordCacheCleanupThread.join();
 		}
+		
+		DBConnectionFactory.close();
 	}
 
 

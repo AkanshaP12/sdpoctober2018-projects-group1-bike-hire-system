@@ -10,11 +10,16 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import ar.com.fdvs.dj.core.DynamicJasperHelper;
 import ar.com.fdvs.dj.core.layout.ClassicLayoutManager;
 import ar.com.fdvs.dj.domain.DynamicReport;
 import ar.com.fdvs.dj.domain.builders.ColumnBuilderException;
 import ar.com.fdvs.dj.domain.builders.FastReportBuilder;
+import edu.srh.bikehire.exception.BikeHireSystemException;
+import edu.srh.bikehire.exception.util.ExceptionUtil;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -25,85 +30,140 @@ import net.sf.jasperreports.export.SimpleXlsxReportConfiguration;
 import net.sf.jasperreports.view.JasperViewer;
 
 public class ReportGenerator {
-
-	public void createRentedBikeReportToday()
-			throws SQLException, ColumnBuilderException, ClassNotFoundException, JRException, FileNotFoundException {
-		Calendar fromCalendar = Calendar.getInstance();
-		fromCalendar.set(Calendar.HOUR_OF_DAY, 0);
-		fromCalendar.set(Calendar.MINUTE, 0);
-		fromCalendar.set(Calendar.SECOND, 0);
-		fromCalendar.set(Calendar.MILLISECOND, 0);
-		Calendar toCalendar = (Calendar) fromCalendar.clone();
-		toCalendar.add(Calendar.DAY_OF_MONTH, 1);
-		System.out.println(fromCalendar + "  " + toCalendar);
-		String path = StoreConstants.FILE_DIRECTORY_BIKERENTEDREPORTS_DAILY;
-		createRentedBikeReport(fromCalendar, toCalendar, path);
+	private static final Logger LOG = LogManager.getLogger(ReportGenerator.class);
+	
+	public String createRentedBikeReportToday(Calendar pStartDate) throws BikeHireSystemException{
+		LOG.info("createRentedBikeReportToday : Start");
+		try
+		{			
+			Calendar fromCalendar = pStartDate;
+			fromCalendar.set(Calendar.HOUR_OF_DAY, 0);
+			fromCalendar.set(Calendar.MINUTE, 0);
+			fromCalendar.set(Calendar.SECOND, 0);
+			fromCalendar.set(Calendar.MILLISECOND, 0);
+			Calendar toCalendar = (Calendar) fromCalendar.clone();
+			toCalendar.add(Calendar.DAY_OF_MONTH, 1);
+			System.out.println(fromCalendar + "  " + toCalendar);
+			String path = ReportingConstants.FILE_DIRECTORY_BIKERENTEDREPORTS_DAILY;
+			createRentedBikeReport(fromCalendar, toCalendar, path);
+			LOG.info("createRentedBikeReportToday : End");
+			return path;
+		}
+		catch(Throwable throwable) {
+			LOG.error("createRentedBikeReportToday : " + throwable.getMessage(), throwable);
+			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
+		}
 
 	}
 
-	public void createRentedBikeReportMonthly(Calendar pStartDate)
-			throws SQLException, ColumnBuilderException, ClassNotFoundException, JRException, FileNotFoundException {
-		Calendar fromCalendar = pStartDate;
-		fromCalendar.set(Calendar.HOUR_OF_DAY, 0);
-		fromCalendar.set(Calendar.MINUTE, 0);
-		fromCalendar.set(Calendar.SECOND, 0);
-		fromCalendar.set(Calendar.MILLISECOND, 0);
-		Calendar toCalendar = (Calendar) fromCalendar.clone();
-		toCalendar.add(Calendar.DAY_OF_MONTH, 30);
-		String path = StoreConstants.FILE_DIRECTORY_BIKERENTEDREPORTS_MONTHLY;
-		createRentedBikeReport(fromCalendar, toCalendar, path);
+	public String createRentedBikeReportMonthly(Calendar pStartDate) throws BikeHireSystemException{
+		LOG.info("createRentedBikeReportMonthly : Start");
+		try
+		{			
+			Calendar fromCalendar = pStartDate;
+			fromCalendar.set(Calendar.HOUR_OF_DAY, 0);
+			fromCalendar.set(Calendar.MINUTE, 0);
+			fromCalendar.set(Calendar.SECOND, 0);
+			fromCalendar.set(Calendar.MILLISECOND, 0);
+			Calendar toCalendar = (Calendar) fromCalendar.clone();
+			toCalendar.add(Calendar.DAY_OF_MONTH, 30);
+			String path = ReportingConstants.FILE_DIRECTORY_BIKERENTEDREPORTS_MONTHLY;
+			createRentedBikeReport(fromCalendar, toCalendar, path);
+			LOG.info("createRentedBikeReportMonthly : End");
+			return path;
+		}
+		catch(Throwable throwable) {
+			LOG.error("createRentedBikeReportMonthly : " + throwable.getMessage(), throwable);
+			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
+		}
 	}
 
-	public void createRentedBikeReportWeekly(Calendar pStartDate)
-			throws SQLException, ColumnBuilderException, ClassNotFoundException, JRException, FileNotFoundException {
-		Calendar fromCalendar = pStartDate;
-		fromCalendar.set(Calendar.HOUR_OF_DAY, 0);
-		fromCalendar.set(Calendar.MINUTE, 0);
-		fromCalendar.set(Calendar.SECOND, 0);
-		fromCalendar.set(Calendar.MILLISECOND, 0);
-		Calendar toCalendar = (Calendar) fromCalendar.clone();
-		toCalendar.add(Calendar.DAY_OF_MONTH, 7);
-		String path = StoreConstants.FILE_DIRECTORY_BIKERENTEDREPORTS_WEEKLY;
-		createRentedBikeReport(fromCalendar, toCalendar, path);
+	public String createRentedBikeReportWeekly(Calendar pStartDate) throws BikeHireSystemException{
+		LOG.info("createRentedBikeReportWeekly : Start");
+		try
+		{
+			Calendar fromCalendar = pStartDate;
+			fromCalendar.set(Calendar.HOUR_OF_DAY, 0);
+			fromCalendar.set(Calendar.MINUTE, 0);
+			fromCalendar.set(Calendar.SECOND, 0);
+			fromCalendar.set(Calendar.MILLISECOND, 0);
+			Calendar toCalendar = (Calendar) fromCalendar.clone();
+			toCalendar.add(Calendar.DAY_OF_MONTH, 7);
+			String path = ReportingConstants.FILE_DIRECTORY_BIKERENTEDREPORTS_WEEKLY;
+			createRentedBikeReport(fromCalendar, toCalendar, path);
+			LOG.info("createRentedBikeReportWeekly : End");
+			return path;
+		}
+		catch(Throwable throwable) {
+			LOG.error("createRentedBikeReportWeekly : " + throwable.getMessage(), throwable);
+			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
+		}
 	}
 
-	public void createInvoiceReportToday()
-			throws SQLException, ColumnBuilderException, ClassNotFoundException, JRException, FileNotFoundException {
-		Calendar fromCalendar = Calendar.getInstance();
-		fromCalendar.set(Calendar.HOUR_OF_DAY, 0);
-		fromCalendar.set(Calendar.MINUTE, 0);
-		fromCalendar.set(Calendar.SECOND, 0);
-		fromCalendar.set(Calendar.MILLISECOND, 0);
-		Calendar toCalendar = (Calendar) fromCalendar.clone();
-		toCalendar.add(Calendar.DAY_OF_MONTH, 1);
-		String path = StoreConstants.FILE_DIRECTORY_INVOICEREPORTS_DAILY;
-		createInvoiceReport(fromCalendar, toCalendar, path);
+	public String createInvoiceReportToday(Calendar pStartDate) throws BikeHireSystemException{
+		LOG.info("createInvoiceReportToday : Start");
+		try
+		{
+			Calendar fromCalendar = pStartDate;
+			fromCalendar.set(Calendar.HOUR_OF_DAY, 0);
+			fromCalendar.set(Calendar.MINUTE, 0);
+			fromCalendar.set(Calendar.SECOND, 0);
+			fromCalendar.set(Calendar.MILLISECOND, 0);
+			Calendar toCalendar = (Calendar) fromCalendar.clone();
+			toCalendar.add(Calendar.DAY_OF_MONTH, 1);
+			String path = ReportingConstants.FILE_DIRECTORY_INVOICEREPORTS_DAILY;
+			createInvoiceReport(fromCalendar, toCalendar, path);
+			LOG.info("createInvoiceReportToday : End");
+			return path;
+		}
+		catch(Throwable throwable) {
+			LOG.error("createInvoiceReportToday : " + throwable.getMessage(), throwable);
+			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
+		}
 	}
 
-	public void createInvoiceReportMonthly(Calendar pStartDate)
-			throws SQLException, ColumnBuilderException, ClassNotFoundException, JRException, FileNotFoundException {
-		Calendar fromCalendar = pStartDate;
-		fromCalendar.set(Calendar.HOUR_OF_DAY, 0);
-		fromCalendar.set(Calendar.MINUTE, 0);
-		fromCalendar.set(Calendar.SECOND, 0);
-		fromCalendar.set(Calendar.MILLISECOND, 0);
-		Calendar toCalendar = (Calendar) fromCalendar.clone();
-		toCalendar.add(Calendar.DAY_OF_MONTH, 30);
-		String path = StoreConstants.FILE_DIRECTORY_INVOICEREPORTS_MONTHLY;
-		createInvoiceReport(fromCalendar, toCalendar, path);
+	public String createInvoiceReportMonthly(Calendar pStartDate) throws BikeHireSystemException{
+		LOG.info("createInvoiceReportMonthly : Start");
+		try
+		{
+			Calendar fromCalendar = pStartDate;
+			fromCalendar.set(Calendar.HOUR_OF_DAY, 0);
+			fromCalendar.set(Calendar.MINUTE, 0);
+			fromCalendar.set(Calendar.SECOND, 0);
+			fromCalendar.set(Calendar.MILLISECOND, 0);
+			Calendar toCalendar = (Calendar) fromCalendar.clone();
+			toCalendar.add(Calendar.DAY_OF_MONTH, 30);
+			String path = ReportingConstants.FILE_DIRECTORY_INVOICEREPORTS_MONTHLY;
+			createInvoiceReport(fromCalendar, toCalendar, path);
+			LOG.info("createInvoiceReportMonthly : End");
+			return path;
+		}
+		catch(Throwable throwable) {
+			LOG.error("createInvoiceReportMonthly : " + throwable.getMessage(), throwable);
+			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
+		}
 	}
 
-	public void createInvoiceReportWeekly(Calendar pStartDate)
-			throws SQLException, ColumnBuilderException, ClassNotFoundException, JRException, FileNotFoundException {
-		Calendar fromCalendar = pStartDate;
-		fromCalendar.set(Calendar.HOUR_OF_DAY, 0);
-		fromCalendar.set(Calendar.MINUTE, 0);
-		fromCalendar.set(Calendar.SECOND, 0);
-		fromCalendar.set(Calendar.MILLISECOND, 0);
-		Calendar toCalendar = (Calendar) fromCalendar.clone();
-		toCalendar.add(Calendar.DAY_OF_MONTH, 7);
-		String path = StoreConstants.FILE_DIRECTORY_INVOICEREPORTS_WEEKLY;
-		createInvoiceReport(fromCalendar, toCalendar, path);
+	public String createInvoiceReportWeekly(Calendar pStartDate) throws BikeHireSystemException{
+		LOG.info("createInvoiceReportWeekly : Start");
+		try
+		{
+			Calendar fromCalendar = pStartDate;
+			fromCalendar.set(Calendar.HOUR_OF_DAY, 0);
+			fromCalendar.set(Calendar.MINUTE, 0);
+			fromCalendar.set(Calendar.SECOND, 0);
+			fromCalendar.set(Calendar.MILLISECOND, 0);
+			Calendar toCalendar = (Calendar) fromCalendar.clone();
+			toCalendar.add(Calendar.DAY_OF_MONTH, 7);
+			String path = ReportingConstants.FILE_DIRECTORY_INVOICEREPORTS_WEEKLY;
+			createInvoiceReport(fromCalendar, toCalendar, path);
+			LOG.info("createInvoiceReportWeekly : End");
+			return path;
+		}
+		catch(Throwable throwable) {
+			LOG.error("createInvoiceReportWeekly : " + throwable.getMessage(), throwable);
+			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
+		}
 	}
 
 	private void createRentedBikeReport(Calendar fromTime, Calendar toTime, String path)

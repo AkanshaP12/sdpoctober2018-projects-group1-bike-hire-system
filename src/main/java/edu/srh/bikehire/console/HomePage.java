@@ -1,6 +1,5 @@
 package edu.srh.bikehire.console;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 import edu.srh.bikehire.dao.impl.util.PersistenceManager;
@@ -70,12 +69,17 @@ public class HomePage {
 
 	}
 
-	public static void main(String[] args) throws IOException {
-		AppInitializer initializerTemp = new AppInitializer();
-		initializerTemp.initializeApplication();
-		initializer = initializerTemp;
-		HomePage homepage = new HomePage();
-		homepage.display_menu();
+	public static void main(String[] args){
+		try {
+			AppInitializer initializerTemp = new AppInitializer();
+			initializerTemp.initializeApplication();
+			initializer = initializerTemp;
+			HomePage homepage = new HomePage();
+			homepage.display_menu();
+		} catch (BikeHireSystemException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
 	private void callRegistrationUI() throws BikeHireSystemException {

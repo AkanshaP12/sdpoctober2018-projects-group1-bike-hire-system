@@ -15,7 +15,7 @@ public class LandingUIForStaff {
 	}
 	public void showMenu(Scanner sc) throws BikeHireSystemException
 	{
-		System.out.println("1) Dashboard \n2) Asset management \n3) Place order \n4) Generate invoice \n5) Logout");
+		System.out.println("1) Dashboard \n2) Asset management \n3) Place order \n4) Generate invoice \n5) Generate report \n6) Logout");
 		System.out.println("Select option: ");
 		int input = sc.nextInt();
 		sc.nextLine();
@@ -38,10 +38,15 @@ public class LandingUIForStaff {
 			showMenu(sc);
 			break;
 		case 5:
+			callGenerateReport(sc);
+			showMenu(sc);
+			break;
+		case 6:
 			HomePage homepage = new HomePage();
 			homepage.display_menu();
 			break;
 		default:
+			//TODO:
 			throw new BikeHireSystemException(-1);
 		}
 	}
@@ -94,5 +99,11 @@ public class LandingUIForStaff {
 		OrderServiceImpl orderService = new OrderServiceImpl();
 		String invoiceId = orderService.generateInvoice( damageCharges, warehouseId, orderId);
 		System.out.println("Invoice generated successfully! Invoice id : " + invoiceId);
+	}
+	
+	private void callGenerateReport(Scanner sc) throws BikeHireSystemException
+	{
+		ReportGeneratorUI reportUI = new ReportGeneratorUI(loggedInEntity);
+		reportUI.processReport(sc);
 	}
 }

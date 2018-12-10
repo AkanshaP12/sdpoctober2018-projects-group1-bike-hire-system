@@ -93,8 +93,8 @@ public class EmailServerConfiguration {
 		}
 		catch(IOException lException)
 		{
-			//TODO: Resolve exception
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Unable to validate the Properties File.
+			throw new BikeHireSystemException(10066);
 		}
 		finally
 		{
@@ -106,8 +106,8 @@ public class EmailServerConfiguration {
 				}
 				catch(IOException lException)
 				{
-					//TODO: Resolve exception
-					throw new BikeHireSystemException(-1);
+					//ERRORMESSAGE: Unable to close the input stream while reading the properties file.
+					throw new BikeHireSystemException(10067);
 				}
 			}
 		}
@@ -129,8 +129,8 @@ public class EmailServerConfiguration {
 		String lAuthRequired = pProperties.getProperty("mail.smtp.auth");
 		if(Util.isEmptyOrNullString(lAuthRequired))
 		{
-			//TODO : Resolve error message
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Unable to validate the AuthRequired from Properties File.
+			throw new BikeHireSystemException(10068);
 		}
 		
 		return lAuthRequired;
@@ -141,8 +141,8 @@ public class EmailServerConfiguration {
 		String lTLSEnabled = pProperties.getProperty("mail.smtp.starttls.enable");
 		if(Util.isEmptyOrNullString(lTLSEnabled))
 		{
-			//TODO : Resolve error message
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Unable to validate the TLSEnabled from Properties File.
+			throw new BikeHireSystemException(10069);
 		}
 		
 		return lTLSEnabled;
@@ -153,8 +153,8 @@ public class EmailServerConfiguration {
 		String lHostname = pProperties.getProperty("mail.smtp.host");
 		if(Util.isEmptyOrNullString(lHostname))
 		{
-			//TODO : Resolve error message
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Unable to validate the HostName from Properties File.
+			throw new BikeHireSystemException(10070);
 		}
 		
 		return lHostname;
@@ -165,8 +165,8 @@ public class EmailServerConfiguration {
 		String lPort = pProperties.getProperty("mail.smtp.port");
 		if(Util.isEmptyOrNullString(lPort))
 		{
-			//TODO : Resolve error message
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Unable to validate the Port from Properties File.
+			throw new BikeHireSystemException(10071);
 		}
 		
 		return lPort;
@@ -177,8 +177,8 @@ public class EmailServerConfiguration {
 		String lUserEmailId = pProperties.getProperty("user.emailid");
 		if(Util.isEmptyOrNullString(lUserEmailId))
 		{
-			//TODO : Resolve error message
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Unable to validate the User Email Id from Properties File.
+			throw new BikeHireSystemException(10072);
 		}
 		
 		return lUserEmailId;
@@ -189,8 +189,8 @@ public class EmailServerConfiguration {
 		String lUserPassword = pProperties.getProperty("user.password");
 		if(Util.isEmptyOrNullString(lUserPassword))
 		{
-			//TODO : Resolve error message
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Unable to validate the User Password from Properties File.
+			throw new BikeHireSystemException(10073);
 		}
 		
 		return lUserPassword;

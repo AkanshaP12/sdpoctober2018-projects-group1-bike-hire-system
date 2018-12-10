@@ -9,6 +9,7 @@ import org.junit.Test;
 import edu.srh.bikehire.dao.BikeRentMappingDAO;
 import edu.srh.bikehire.dao.BikeStatusDAO;
 import edu.srh.bikehire.dao.DAOFactory;
+import edu.srh.bikehire.dao.DAOFactoryType;
 import edu.srh.bikehire.dao.WarehouseDAO;
 import edu.srh.bikehire.dashboard.BikeStatusType;
 import edu.srh.bikehire.dto.BikeRentMappingDTO;
@@ -64,7 +65,7 @@ public class AssetManagementServiceImplTest {
 		warehouseInfo.setLocation("Heidelberg");
 		warehouseInfo.setStorageCapacity(200);
 		boolean warehouseUpdateStatus = assetService.updateWarehouse(warehouseInfo);
-		WarehouseDAO warehouseDAO = DAOFactory.getDefaultWarehouseDAOImpl();
+		WarehouseDAO warehouseDAO = DAOFactory.getDAOFactory(DAOFactoryType.JPADAOFACTORY).getWarehouseDAO();
 		WareHouseDTO returnedWarehouse = warehouseDAO.getWarehouse(3);
 		assertEquals(200, returnedWarehouse.getStorageCapacity());
 	}
@@ -331,7 +332,7 @@ public class AssetManagementServiceImplTest {
 		bikeRentInfo.setRentPerDay(30);
 		bikeRentInfo.setRentPerHour(5);
 		boolean updateBikeRent = assetService.updateBikeRent(bikeRentInfo);
-		BikeRentMappingDAO bikeRentDAO = DAOFactory.getDefaultBikeRentMappingDAOImpl();
+		BikeRentMappingDAO bikeRentDAO = DAOFactory.getDAOFactory(DAOFactoryType.JPADAOFACTORY).getBikeRentMappingDAO();
 		BikeRentMappingDTO returnedBikeRent = bikeRentDAO.getBikeRentMapping(1);
 		assertEquals(30, returnedBikeRent.getRentPerDay());
 	}
@@ -412,7 +413,7 @@ public class AssetManagementServiceImplTest {
 		bikeStatusInfo.setManufacturer("Benz");
 		bikeStatusInfo.setStatus(BikeStatusType.RENTED_BIKE.getBikeStatus());
 		boolean updateBikeStatus = assetService.updateBikeStatus(bikeStatusInfo);
-		BikeStatusDAO bikeStatusDAO = DAOFactory.getDefaultBikeStatusDAOImpl();
+		BikeStatusDAO bikeStatusDAO = DAOFactory.getDAOFactory(DAOFactoryType.JPADAOFACTORY).getBikeStatusDAO();
 		BikeStatusDTO returnedBikeStatus = bikeStatusDAO.getBikeStatus(2);
 		assertEquals(BikeStatusType.RENTED_BIKE.getBikeStatus(), returnedBikeStatus.getStatus());
 	}

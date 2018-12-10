@@ -16,22 +16,22 @@ public class WarehouseValidator {
 	{
 		if(mWarehouse == null)
 		{
-			//TODO:
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: Warehouse not provided for Add Warehouse Validation.
+			throw new BikeHireSystemException(10055);
 		}
 		
 		validateWareHouse();
 		
 		if(Util.isEmptyOrNullString(mWarehouse.getName()))
 		{
-			//TODO:
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: Invalid Warehouse name for Add Warehouse Validation.
+			throw new BikeHireSystemException(10056);
 		}
 		
 		if(Util.isEmptyOrNullString(mWarehouse.getLocation()))
 		{
-			//TODO:
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: Invalid Warehouse location for Add Warehouse Validation.
+			throw new BikeHireSystemException(10057);
 		
 		}
 		//TODO:OTHER WAREHOUSE EXCEPTIONS
@@ -42,8 +42,8 @@ public class WarehouseValidator {
 	{
 		if(mWarehouse == null)
 		{
-			//TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: Warehouse not provided for Update Warehouse Validation.
+			throw new BikeHireSystemException(10058);
 		}
 	
 		validateWareHouse();
@@ -56,8 +56,8 @@ public class WarehouseValidator {
 	{
 		if(mWarehouse.getStorageCapacity()<=0)
 		{
-			//TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: Invalid Storage Capacity for Warehouse Validation.
+			throw new BikeHireSystemException(10059);
 		
 		}
 	}

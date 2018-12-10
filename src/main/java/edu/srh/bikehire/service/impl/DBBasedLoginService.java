@@ -404,8 +404,8 @@ public class DBBasedLoginService implements Login {
 		UserAccountDTO lUserAccountDTO = mUserAccountDAO.getUserAccountUsingUserName(pEntityCredential.getUserName());
 		if(lUserAccountDTO == null)
 		{
-			//TODO: resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: User Account Data Transfer Object Not Found.
+			throw new BikeHireSystemException(10085);
 		}
 		return lUserAccountDTO;
 	}

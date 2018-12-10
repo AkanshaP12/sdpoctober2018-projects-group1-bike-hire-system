@@ -58,8 +58,8 @@ public class AssetManagementUI {
 			break;
 			
 		default :
-			//TODO:
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: Invalid option is selected
+			throw new BikeHireSystemException(10061);
 		}
 	}
 	

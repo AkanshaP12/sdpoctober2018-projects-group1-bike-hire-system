@@ -18,52 +18,52 @@ public class UserValidator {
 	public void validateAddUser() throws BikeHireSystemException {
 		
 		if (mUser == null) {
-			// TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: User not found in User Validation.
+			throw new BikeHireSystemException(10109);
 		}
 
 		if (Util.isEmptyOrNullString(mUser.getFirstName())) {
-			// TODO:Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid User's First Name in User Validation.
+			throw new BikeHireSystemException(10110);
 
 		}
 
 		if (Util.isEmptyOrNullString(mUser.getLastName())) {
-			// TODO:Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid User's Last Name in User Validation.
+			throw new BikeHireSystemException(10111);
 
 		}
 
 		if (Util.isEmptyOrNullString(mUser.getGender())) {
-			// TODO:Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid User's Gender in User Validation.
+			throw new BikeHireSystemException(10112);
 
 		}
 
 		validateUserID();
 		
-		// TODO: Resolve
 		int year = Calendar.getInstance().get(Calendar.YEAR);
 		int ageLimit = year - mUser.getDob().YEAR;
 		if (ageLimit < 95 && ageLimit > 7) {
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: User's Age is not meeting age criteria in User Validation.
+			throw new BikeHireSystemException(10113);
 		}
 
 		if (Util.isEmptyOrNullString(mUser.getAddress())) {
-			// TODO:Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid User's Address in User Validation.
+			throw new BikeHireSystemException(10114);
 
 		}
 
 		if (Util.isValidEmailAddress(mUser.getEmailId())) {
-			// TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid User's Email Address in User Validation.
+			throw new BikeHireSystemException(10115);
 
 		}
 
 		if (Util.isEmptyOrNullString(mUser.getPhoneNo())) {
-			// TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid User's Phone Number in User Validation.
+			throw new BikeHireSystemException(10116);
 		}
 
 		
@@ -73,8 +73,8 @@ public class UserValidator {
 	public void validateUserID() throws BikeHireSystemException{
 		if(mUser.getId() <= 0)
 		{
-			//TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid User's ID in User Validation.
+			throw new BikeHireSystemException(10117);
 		
 		}
 	}

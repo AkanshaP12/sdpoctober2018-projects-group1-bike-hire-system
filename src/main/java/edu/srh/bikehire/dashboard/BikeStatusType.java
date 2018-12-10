@@ -29,5 +29,15 @@ public enum BikeStatusType {
 	public String getBikeStatus() {
 		return bikeStatus;
 	}
+
+
+	public void setBikeType(int bikeType) {
+		this.bikeType = bikeType;
+	}
+
+
+	public void setBikeStatus(String bikeStatus) {
+		this.bikeStatus = bikeStatus;
+	}
 	
 }

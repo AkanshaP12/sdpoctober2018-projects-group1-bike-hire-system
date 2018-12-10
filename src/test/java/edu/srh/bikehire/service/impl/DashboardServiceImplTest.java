@@ -73,8 +73,7 @@ public class DashboardServiceImplTest {
 	@Test
 	public void testGetUpcomingAppointments() throws BikeHireSystemException {
 		Calendar cal = Calendar.getInstance();
-		boolean isAppointment = true;
-		List upcomingAppList = dashboardTest.getUpcomingAppointments(cal, isAppointment);
+		List upcomingAppList = dashboardTest.getUpcomingAppointments(cal, true);
 		assertTrue(upcomingAppList.size() >= 0) ;
 		
 	}
@@ -82,9 +81,16 @@ public class DashboardServiceImplTest {
 	@Test
 	public void testGetUpcomingAppointmentsNoApp() throws BikeHireSystemException {
 		Calendar cal = Calendar.getInstance();
-		boolean isAppointment = false;
-		List upcomingAppList = dashboardTest.getUpcomingAppointments(cal, isAppointment);
+		List upcomingAppList = dashboardTest.getUpcomingAppointments(cal, false);
 		assertTrue(upcomingAppList.size() == 0) ;
+		
+	}
+	@Test
+	public void testGetUpcomingAppointmentsInvalid() throws BikeHireSystemException {
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, 2);
+		List upcomingAppList = dashboardTest.getUpcomingAppointments(cal, false);
+		assertTrue(upcomingAppList.size() >= 0) ;
 		
 	}
 

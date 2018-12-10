@@ -17,46 +17,36 @@ public class AccountUI {
 		this.loggedInUser = loggedInUser;
 	}
 	
-	public void showAccountInfo() throws BikeHireSystemException
+	public void showAccountInfo(Scanner sc) throws BikeHireSystemException
 	{
 		System.out.println("Name : " + loggedInUser.getFirstName() + " " + loggedInUser.getLastName());
 		System.out.println("Email address : " + loggedInUser.getEmailId());
 		System.out.println("Gender : " + loggedInUser.getGender());
-		System.out.println("1) Change password\n 2) Deactivate account\n 3) Back");
+		System.out.println("1) Change password\n2) Deactivate account\n3) Back");
 		System.out.println("Select option: ");
-		Scanner sc = null;
-		try
-		{
-			sc = new Scanner(System.in);
-			int input = sc.nextInt();
-			DBBasedLoginService loginService = new DBBasedLoginService();
-			switch(input) {
-			case 1 :
-				changePassword(sc, loginService);
-				break;
-			case 2:
-				boolean status = deactivateAccount(sc, loginService);
-				if(status)
-				{
-					return;
-				}
-				showAccountInfo();
-				break;
-			case 3:
-				LandingUIForCustomer landingUI = new LandingUIForCustomer(loggedInUser);
-				landingUI.showMenu();
-				return;
-			default:
-				//TODO:
-				throw new BikeHireSystemException(-1);
-			}
-		}
-		finally
-		{
-			if(sc != null)
+		
+		int input = sc.nextInt();
+		sc.nextLine();
+		DBBasedLoginService loginService = new DBBasedLoginService();
+		switch(input) {
+		case 1 :
+			changePassword(sc, loginService);
+			break;
+		case 2:
+			boolean status = deactivateAccount(sc, loginService);
+			if(status)
 			{
-				sc.close();
+				return;
 			}
+			showAccountInfo(sc);
+			break;
+		case 3:
+			LandingUIForCustomer landingUI = new LandingUIForCustomer(loggedInUser);
+			landingUI.showMenu(sc);
+			return;
+		default:
+			//TODO:
+			throw new BikeHireSystemException(-1);
 		}
 	}
 	
@@ -66,8 +56,11 @@ public class AccountUI {
 		System.out.println("Enter New Password: ");
 		String password = sc.nextLine();
 		System.out.println("Re-Enter Password: ");
-		String resetpassword = sc.nextLine();
-		EntityRegistrationCredential lCredential = new CustomerRegistrationCredential();
+		String confirmPassword = sc.nextLine();
+		CustomerRegistrationCredential lCredential = new CustomerRegistrationCredential();
+		lCredential.setUserName(loggedInUser.getEntityAccount().getUserName());
+		lCredential.setNewPassword(password);
+		lCredential.setConfirmPassword(confirmPassword);
 		loginService.resetPassword(lCredential);
 		System.out.println("Your password has been changed!");
 	}

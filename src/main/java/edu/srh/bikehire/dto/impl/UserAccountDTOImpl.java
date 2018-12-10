@@ -1,5 +1,6 @@
 package edu.srh.bikehire.dto.impl;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.persistence.Column;
@@ -15,20 +16,26 @@ import edu.srh.bikehire.dto.UserDTO;
 
 @Entity
 @Table(name = "UserAccount")
-public class UserAccountDTOImpl implements UserAccountDTO{
+public class UserAccountDTOImpl implements UserAccountDTO, Serializable{
 
-	@Id
+	
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "ID")
 	private UserDTOImpl userDTO;
+	
+	@Id
 	@Column(name = "UserName")
 	private String userName;
+	
 	@Column(name = "Role")
 	private String role;
+	
 	@Column(name = "AccountStatus")
 	private String accountStatus;
+	
 	@Column(name = "CreationTimeStamp")
 	private Calendar creationTimeStamp;
+	
 	@Column(name = "LastModifiedTimeStamp")
 	private Calendar lastModifiedTimeStamp;
 	

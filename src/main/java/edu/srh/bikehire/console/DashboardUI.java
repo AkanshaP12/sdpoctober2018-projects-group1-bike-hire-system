@@ -22,53 +22,41 @@ public class DashboardUI {
 		loggedInStaff = loggedInEntity;
 	}
 	
-	public void showDashboard() throws BikeHireSystemException
+	public void showDashboard(Scanner sc) throws BikeHireSystemException
 	{
-		Scanner sc = null;
 		DashboardServiceImpl dashboardService = new DashboardServiceImpl();
 		BikeServiceImpl bikeService = new BikeServiceImpl();
-		try
+		System.out.println("1) View Bike Status\n2) Upcoming Appointments \n3) Back");
+		System.out.println("Select option: ");
+		int option = sc.nextInt();
+		sc.nextLine();
+		switch(option)
 		{
-			System.out.println("1) View Bike Status\n2) Upcoming Appointments \n3) Back");
-			System.out.println("Select option: ");
-			int option = sc.nextInt();
-			switch(option)
-			{
-			case 1:
-				showBikeStatus(dashboardService, bikeService);
-				showDashboard();
-				break;
-				
-			case 2:
-				upcomingAppointments(dashboardService);
-				showDashboard();
-				break;
-				
-			case 3:
-				LandingUIForStaff landingUI = new LandingUIForStaff(loggedInStaff);
-				landingUI.showMenu();
-				return;
-			default:
-				//TODO:
-				throw new BikeHireSystemException(-1);
-			}
+		case 1:
+			showBikeStatus(dashboardService, bikeService);
+			showDashboard(sc);
+			break;
+			
+		case 2:
+			upcomingAppointments( dashboardService);
+			showDashboard(sc);
+			break;
+			
+		case 3:
+			LandingUIForStaff landingUI = new LandingUIForStaff(loggedInStaff);
+			landingUI.showMenu(sc);
+			return;
+		default:
+			//TODO:
+			throw new BikeHireSystemException(-1);
 		}
-		finally
-		{
-			if(sc != null)
-			{
-				sc.close();
-			}
-		}
-		
-		
 		
 	}
 	
-	private void showBikeStatus(DashboardService dashboardService, BikeService bikeService)
+	private void showBikeStatus(DashboardService dashboardService, BikeService bikeService) throws BikeHireSystemException
 	{
 		List<BikeTypeDTO> allBikeTypes = bikeService.getBikeTypes();
-		
+		System.out.println("No Bikes are available");
 		for(BikeTypeDTO bikeTypeDTO : allBikeTypes)
 		{
 			System.out.println("Bike Type Id : " + bikeTypeDTO.getBikeTypeId());
@@ -99,7 +87,7 @@ public class DashboardUI {
 			System.out.println("Customer Name : " + pickupAppointment.getName());
 			System.out.println("Bike Id : " + pickupAppointment.getBikeId());
 			System.out.println("Bike Name : " + pickupAppointment.getBikeName());
-			System.out.println("Pickup Time : " + pickupAppointment.getPickupTimestamp());
+			System.out.println("Pickup Time : " + ConsoleUtil.getStringForDate(pickupAppointment.getPickupTimestamp()));
 			System.out.println("---------------------");
 		}
 		
@@ -116,7 +104,7 @@ public class DashboardUI {
 			System.out.println("Customer Name : " + dropOffAppointment.getName());
 			System.out.println("Bike Id : " + dropOffAppointment.getBikeId());
 			System.out.println("Bike Name : " + dropOffAppointment.getBikeName());
-			System.out.println("Drop Off Time : " + dropOffAppointment.getDropoffTimestamp());
+			System.out.println("Drop Off Time : " + ConsoleUtil.getStringForDate(dropOffAppointment.getDropoffTimestamp()));
 			System.out.println("---------------------");
 		}
 		

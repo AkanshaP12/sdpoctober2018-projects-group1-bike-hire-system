@@ -45,18 +45,6 @@ public class MailSender {
 			
 			EmailServerConfiguration lEmailServerConfiguration = EmailServerConfiguration.getInstance();
 			
-			final String lUsername = lEmailServerConfiguration.getUserEmailId();
-			final String lPassword = lEmailServerConfiguration.getPassword();
-			
-			// Get the default Session object.
-			Session session = Session.getInstance(getConfigProperties(lEmailServerConfiguration), new javax.mail.Authenticator() {
-				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication( lUsername, lPassword);
-				}
-			});
-			
-			lMailSender.setSession(session);
-			
 			sMailSender = lMailSender;
 		}
 		
@@ -66,8 +54,26 @@ public class MailSender {
 	public void sendEmail(List<String> pListOfTo,String pEmailSubject, String pEmailBodyText) throws BikeHireSystemException{ 
 		
 		try {
+			
+			EmailServerConfiguration lEmailServerConfiguration = EmailServerConfiguration.getInstance();
+			final String lUsername = lEmailServerConfiguration.getUserEmailId();
+			final String lPassword = lEmailServerConfiguration.getPassword();
+			
+			Properties lProperties = new Properties();
+			lProperties.setProperty("mail.smtp.auth", lEmailServerConfiguration.getAuthRequired());
+			lProperties.setProperty("mail.smtp.starttls.enable", lEmailServerConfiguration.getTLSEnabled());
+			lProperties.setProperty("mail.smtp.host",lEmailServerConfiguration.getHostname());
+			lProperties.setProperty("mail.smtp.port",lEmailServerConfiguration.getPortNumber());
+			
+			// Get the default Session object.
+			Session session = Session.getInstance(lProperties, new javax.mail.Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication( lUsername, lPassword);
+				}
+			});
+			
 			// Create a default MimeMessage object.
-			MimeMessage message = new MimeMessage(this.getSession());
+			MimeMessage message = new MimeMessage(session);
 
 			// Set From: header field of the header.
 			message.setFrom(new InternetAddress(EmailServerConfiguration.getInstance().getUserEmailId()));
@@ -78,7 +84,7 @@ public class MailSender {
 				llistOfTo.add(new InternetAddress(lToEmailAddress));
 			}
 
-			Address[] lAddresses = null;
+			Address[] lAddresses = new Address[llistOfTo.size()];
 			llistOfTo.toArray(lAddresses);
 			// Set To: header field of the header.
 			message.addRecipients(Message.RecipientType.TO, lAddresses);
@@ -94,7 +100,7 @@ public class MailSender {
 			
 		} catch (MessagingException mex) {
 			//TODO: Resolve exception
-			throw new BikeHireSystemException(-1);
+			throw new BikeHireSystemException(-1, new Object[] {}, mex);
 		}
 	}
 	

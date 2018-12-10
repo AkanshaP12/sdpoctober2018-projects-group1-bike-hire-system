@@ -1,24 +1,55 @@
 package edu.srh.bikehire.service;
 
-import edu.srh.bikehire.service.core.Invoice;
-import edu.srh.bikehire.exception.BikeHireSystemException;
-import edu.srh.bikehire.service.core.Entity;
-import edu.srh.bikehire.service.core.Order;
 
+import edu.srh.bikehire.exception.BikeHireSystemException;
+
+/**
+ * This class provides different notification services required for this system 
+ *
+ */
 public interface NotificationService {
 
-	//pType = 1 : For Registration
-	//pType = 2 : For forgot password
-	public void emailVerification(Entity pEntity, String pSecurityCode, int pType) throws BikeHireSystemException;
+	/**
+	 * This method sends notification verification token for onboarding and forgot password password.
+	 * @param emailId
+	 * @param pSecurityCode
+	 * @param isOnBoardingEmail
+	 * @throws BikeHireSystemException
+	 */
+	public void emailVerification(String emailId, String pSecurityCode, boolean isOnBoardingEmail) throws BikeHireSystemException;
 	
+	/**
+	 * This method sends notification password reset successful.
+	 * @param emailId
+	 * @throws BikeHireSystemException
+	 */
+	public void passwordResetSuccess(String emailId) throws BikeHireSystemException;
 	
-	public void passwordResetSuccess(Entity pEntity) throws BikeHireSystemException;
+	/**
+	 * This method sends notification for booking confirmation.
+	 * @param orderId
+	 * @param emailId
+	 * @throws BikeHireSystemException
+	 */
+	public void bookingConfirmation(int orderId, String emailId) throws BikeHireSystemException;
 	
-	public void bookingConfirmation(Order pOrder, Entity pEntity) throws BikeHireSystemException;
+	/**
+	 * This method sends notification for booking cancellation
+	 * @param orderId
+	 * @param emailId
+	 * @throws BikeHireSystemException
+	 */
+	public void cancelBooking(int orderId, String emailId) throws BikeHireSystemException;
 	
-	public void cancelBooking(Order pOrder, Entity pEntity) throws BikeHireSystemException;
-	
-	public void orderInvoice(Order pOrder, Invoice pInvoice, Entity pEntity) throws BikeHireSystemException;
+	/**
+	 * This method sends notification for order invoice
+	 * @param orderId
+	 * @param invoiceId
+	 * @param finalAmount
+	 * @param emailId
+	 * @throws BikeHireSystemException
+	 */
+	public void orderInvoice(int orderId, String invoiceId, int finalAmount ,String emailId) throws BikeHireSystemException;
 	
 	
 	

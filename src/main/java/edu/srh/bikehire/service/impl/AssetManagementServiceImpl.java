@@ -2,6 +2,9 @@ package edu.srh.bikehire.service.impl;
 
 import java.util.Calendar;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import edu.srh.bikehire.assetmangement.impl.BikeRentMappingValidator;
 import edu.srh.bikehire.assetmangement.impl.BikeStatusValidator;
 import edu.srh.bikehire.assetmangement.impl.BikeStockValidator;
@@ -14,6 +17,7 @@ import edu.srh.bikehire.dao.BikeStatusDAO;
 import edu.srh.bikehire.dao.BikeStockDAO;
 import edu.srh.bikehire.dao.BikeTypeDAO;
 import edu.srh.bikehire.dao.DAOFactory;
+import edu.srh.bikehire.dao.DAOFactoryType;
 import edu.srh.bikehire.dao.WarehouseDAO;
 import edu.srh.bikehire.dto.BikeDTO;
 import edu.srh.bikehire.dto.BikeRentMappingDTO;
@@ -28,6 +32,7 @@ import edu.srh.bikehire.dto.impl.BikeStockDTOImpl;
 import edu.srh.bikehire.dto.impl.BikeTypeDTOImpl;
 import edu.srh.bikehire.dto.impl.WareHouseDTOImpl;
 import edu.srh.bikehire.exception.BikeHireSystemException;
+import edu.srh.bikehire.exception.util.ExceptionUtil;
 import edu.srh.bikehire.service.AssetManagementService;
 import edu.srh.bikehire.service.core.Bike;
 import edu.srh.bikehire.service.core.BikeRent;
@@ -37,6 +42,8 @@ import edu.srh.bikehire.service.core.BikeType;
 import edu.srh.bikehire.service.core.Warehouse;
 
 public class AssetManagementServiceImpl implements AssetManagementService {
+	private static final Logger LOG = LogManager.getLogger(AssetManagementServiceImpl.class);
+	
 	private BikeTypeDAO bikeTypeDAO;
 	
 	private BikeStockDAO bikeStockDAO;
@@ -49,132 +56,234 @@ public class AssetManagementServiceImpl implements AssetManagementService {
 	
 	private WarehouseDAO warehouseDAO;
 	
-	public void initializeService()
+	private DAOFactory daoFactory;
+	
+	public AssetManagementServiceImpl()
 	{
-		bikeTypeDAO = DAOFactory.getDefaultBikeTypeDAOImpl();
-		bikeStockDAO = DAOFactory.getDefaultBikeStockDAOImpl();
-		bikeRentMappingDAO = DAOFactory.getDefaultBikeRentMappingDAOImpl();
-		bikeDAO = DAOFactory.getDefualtBikeDAOImpl();
-		bikeStatusDAO = DAOFactory.getDefaultBikeStatusDAOImpl();
-		warehouseDAO = DAOFactory.getDefaultWarehouseDAOImpl();
+		daoFactory = DAOFactory.getDAOFactory(DAOFactoryType.JPADAOFACTORY);
+		bikeTypeDAO = daoFactory.getBikeTypeDAO();
+		bikeStockDAO = daoFactory.getBikeStockDAO();
+		bikeRentMappingDAO = daoFactory.getBikeRentMappingDAO();
+		bikeDAO = daoFactory.getBikeDAO();
+		bikeStatusDAO = daoFactory.getBikeStatusDAO();
+		warehouseDAO = daoFactory.getWarehouseDAO();
 	}
 	
 	public int addNewBikeType(BikeType pNewBikeType, BikeStock pBikeStock, BikeRent pRentMapping) throws BikeHireSystemException {
-		
-		BikeTypeDTO lBikeTypeDTO = getBikeTypeDTOFromInputs(pNewBikeType);
-		BikeStockDTO lBikeStockDTO = getBikeStockDTOFromInputs(pBikeStock, false);
-		BikeRentMappingDTO lBikeRentMappingDTO = getBikeRentMappingDTOFromInputs(pRentMapping);
-		
-		BikeTypeValidator lBikeTypeValidator = new BikeTypeValidator(lBikeTypeDTO);
-		lBikeTypeValidator.validateAddBikeType();
-		
-		int bikeTypeId = bikeTypeDAO.saveBikeType(lBikeTypeDTO);
-		
-		lBikeStockDTO.setBikeTypeDTO(lBikeTypeDTO);
-		BikeStockValidator lBikeStockValidator = new BikeStockValidator(lBikeStockDTO);
-		lBikeStockValidator.validateAddBikeStock();
-		
-		bikeStockDAO.addBikeStock(lBikeStockDTO);
-		
-		lBikeRentMappingDTO.setBikeType(lBikeTypeDTO);
-		BikeRentMappingValidator lBikeRentMappingValidator = new BikeRentMappingValidator(lBikeRentMappingDTO);
-		lBikeRentMappingValidator.validateAddBikeRentDetails();
-		
-		bikeRentMappingDAO.addBikeRentMapping(lBikeRentMappingDTO);
-		
-		return bikeTypeId;
+		LOG.info("addNewBikeType : Start");
+		try
+		{	
+			daoFactory.beginTransaction();
+			BikeTypeDTO lBikeTypeDTO = getBikeTypeDTOFromInputs(pNewBikeType);
+			BikeStockDTO lBikeStockDTO = getBikeStockDTOFromInputs(pBikeStock, false);
+			BikeRentMappingDTO lBikeRentMappingDTO = getBikeRentMappingDTOFromInputs(pRentMapping);
+			
+			BikeTypeValidator lBikeTypeValidator = new BikeTypeValidator(lBikeTypeDTO);
+			lBikeTypeValidator.validateAddBikeType();
+			
+			int bikeTypeId = bikeTypeDAO.saveBikeType(lBikeTypeDTO);
+			LOG.info("addNewBikeType : new bike type added successfully.");
+			lBikeStockDTO.setBikeTypeDTO(lBikeTypeDTO);
+			BikeStockValidator lBikeStockValidator = new BikeStockValidator(lBikeStockDTO);
+			lBikeStockValidator.validateAddBikeStock();
+			
+			bikeStockDAO.addBikeStock(lBikeStockDTO);
+			LOG.info("addNewBikeType : bike stock added successfully.");
+			lBikeRentMappingDTO.setBikeType(lBikeTypeDTO);
+			BikeRentMappingValidator lBikeRentMappingValidator = new BikeRentMappingValidator(lBikeRentMappingDTO);
+			lBikeRentMappingValidator.validateAddBikeRentDetails();
+			
+			bikeRentMappingDAO.addBikeRentMapping(lBikeRentMappingDTO);
+			daoFactory.commitTransaction();
+			
+			LOG.info("addNewBikeType : bike rent mapping added successfully.");
+			LOG.info("addNewBikeType : End");
+			return bikeTypeId;
+		}
+		catch(Throwable throwable)
+		{
+			LOG.error("addNewBikeType : " + throwable.getMessage(), throwable);
+			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
+		}
 	}
 
 	public int addNewBikeDetails(Bike pNewBike, BikeStatus pBikeStatus) throws BikeHireSystemException {
-		
-		BikeDTO lBikeDTO = getBikeDTOFromInputs(pNewBike, false);
-		BikeStatusDTO lBikeStatusDTO = getBikeStatusDTOFromInputs(pBikeStatus);
-		
-		BikeValidator lBikeValidator = new BikeValidator(lBikeDTO);
-		lBikeValidator.validateAddBike();
-		
-		int bikeId = bikeDAO.addBike(lBikeDTO);
-		
-		lBikeStatusDTO.setBikeDTO(lBikeDTO);
-		BikeStatusValidator lBikeStatusValidator = new BikeStatusValidator(lBikeStatusDTO);
-		lBikeStatusValidator.validateAddBikeStatus();
-		
-		bikeStatusDAO.addBikeStatus(lBikeStatusDTO);
-		
-		return bikeId;
+		LOG.info("addNewBikeDetails : Start");
+		try
+		{			
+			daoFactory.beginTransaction();
+			BikeDTO lBikeDTO = getBikeDTOFromInputs(pNewBike, false);
+			BikeStatusDTO lBikeStatusDTO = getBikeStatusDTOFromInputs(pBikeStatus);
+			
+			BikeValidator lBikeValidator = new BikeValidator(lBikeDTO);
+			lBikeValidator.validateAddBike();
+			
+			int bikeId = bikeDAO.addBike(lBikeDTO);
+			LOG.info("addNewBikeDetails : new bike added successfully.");
+			
+			lBikeStatusDTO.setBikeDTO(lBikeDTO);
+			BikeStatusValidator lBikeStatusValidator = new BikeStatusValidator(lBikeStatusDTO);
+			lBikeStatusValidator.validateAddBikeStatus();
+			
+			bikeStatusDAO.addBikeStatus(lBikeStatusDTO);
+			daoFactory.commitTransaction();
+			
+			LOG.info("addNewBikeDetails : bike status added successfully.");
+			LOG.info("addNewBikeDetails : End");
+			return bikeId;
+		}
+		catch(Throwable throwable)
+		{
+			LOG.error("addNewBikeDetails : " + throwable.getMessage(), throwable);
+			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
+		}
 	}
 
 	public int addNewWarehouse(Warehouse pNewWarehouse) throws BikeHireSystemException {
-		WareHouseDTO lWareHouseDTO = getWarehouseDTOFromInputs(pNewWarehouse, false);
-		
-		WarehouseValidator lWarehouseValidator = new WarehouseValidator(lWareHouseDTO);
-		lWarehouseValidator.validateAddWarehouse();
-		
-		int warehouseId = warehouseDAO.addWarehouse(lWareHouseDTO);
-		
-		return warehouseId;
-	}
-
-	public boolean deleteBikeDetails(Bike pDeleteBike) throws BikeHireSystemException {
-		// TODO Auto-generated method stub
-		
-		return false;
+		LOG.info("addNewWarehouse : Start");
+		try
+		{	
+			daoFactory.beginTransaction();
+			WareHouseDTO lWareHouseDTO = getWarehouseDTOFromInputs(pNewWarehouse, false);
+			
+			WarehouseValidator lWarehouseValidator = new WarehouseValidator(lWareHouseDTO);
+			lWarehouseValidator.validateAddWarehouse();
+			LOG.info("addNewWarehouse : warehouse details validated");
+			
+			int warehouseId = warehouseDAO.addWarehouse(lWareHouseDTO);
+			daoFactory.commitTransaction();
+			
+			LOG.info("addNewWarehouse : new warehouse added successfully.");
+			LOG.info("addNewWarehouse : End");
+			return warehouseId;
+		}
+		catch(Throwable throwable)
+		{
+			LOG.error("addNewWarehouse : " + throwable.getMessage(), throwable);
+			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
+		}
 	}
 
 	public boolean updateWarehouse(Warehouse pUpdatedWarehouse) throws BikeHireSystemException {
-		WareHouseDTO lWareHouseDTO = getWarehouseDTOFromInputs(pUpdatedWarehouse, true);
-
-		WarehouseValidator lWarehouseValidator = new WarehouseValidator(lWareHouseDTO);
-		lWarehouseValidator.validateUpdateWareHouse();
-		
-		boolean lWarehouseUpdateStatus = warehouseDAO.updateWarehouse(lWareHouseDTO);
-		
-		return lWarehouseUpdateStatus;
+		LOG.info("updateWarehouse : Start");
+		try
+		{			
+			daoFactory.beginTransaction();
+			WareHouseDTO lWareHouseDTO = getWarehouseDTOFromInputs(pUpdatedWarehouse, true);
+			
+			WarehouseValidator lWarehouseValidator = new WarehouseValidator(lWareHouseDTO);
+			lWarehouseValidator.validateUpdateWareHouse();
+			LOG.info("updateWarehouse : warehouse updated successfully.");
+			
+			boolean lWarehouseUpdateStatus = warehouseDAO.updateWarehouse(lWareHouseDTO);
+			daoFactory.commitTransaction();
+			
+			LOG.info("updateWarehouse : End");
+			return lWarehouseUpdateStatus;
+		}
+		catch(Throwable throwable)
+		{
+			LOG.error("updateWarehouse : " + throwable.getMessage(), throwable);
+			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
+		}
 	}
 
 	public boolean updateBikeDetails(Bike pUpdatedBikeDetails) throws BikeHireSystemException {
-		BikeDTO lBikeDTO = getBikeDTOFromInputs(pUpdatedBikeDetails, true);
-		
-		BikeValidator lBikeValidator = new BikeValidator(lBikeDTO);
-		lBikeValidator.validateUpdateBike();
-		
-		boolean lBikeUpdateStatus = bikeDAO.updateBike(lBikeDTO);
-		
-		return lBikeUpdateStatus;
+		LOG.info("updateBikeDetails : Start");
+		try
+		{	
+			daoFactory.beginTransaction();
+			BikeDTO lBikeDTO = getBikeDTOFromInputs(pUpdatedBikeDetails, true);
+			
+			BikeValidator lBikeValidator = new BikeValidator(lBikeDTO);
+			lBikeValidator.validateUpdateBike();
+			
+			boolean lBikeUpdateStatus = bikeDAO.updateBike(lBikeDTO);
+			daoFactory.commitTransaction();
+			LOG.info("updateBikeDetails : Bike details updated successfully.");
+			
+			LOG.info("updateBikeDetails : End");
+			return lBikeUpdateStatus;
+		}
+		catch(Throwable throwable)
+		{
+			LOG.error("updateBikeDetails : " + throwable.getMessage(), throwable);
+			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
+		}
 	}
 
 	public boolean updateBikeRent(BikeRent pUpdatedBikeRent) throws BikeHireSystemException {
-		BikeRentMappingDTO lBikeRentMappingDTO = getBikeRentMappingDTOFromInputs(pUpdatedBikeRent);
-
-		BikeRentMappingValidator lRentMappingValidator = new BikeRentMappingValidator(lBikeRentMappingDTO);
-		lRentMappingValidator.validateUpdateBikeRentDetails();
-		
-		boolean lBikeRentMappingUpdateStatus = bikeRentMappingDAO.updateBikeRentMapping(lBikeRentMappingDTO);
-		
-		return lBikeRentMappingUpdateStatus;
+		LOG.info("updateBikeRent : Start");
+		try
+		{			
+			daoFactory.beginTransaction();
+			BikeRentMappingDTO lBikeRentMappingDTO = getBikeRentMappingDTOFromInputs(pUpdatedBikeRent);
+			
+			BikeRentMappingValidator lRentMappingValidator = new BikeRentMappingValidator(lBikeRentMappingDTO);
+			lRentMappingValidator.validateUpdateBikeRentDetails();
+			
+			boolean lBikeRentMappingUpdateStatus = bikeRentMappingDAO.updateBikeRentMapping(lBikeRentMappingDTO);
+			daoFactory.commitTransaction();
+			
+			LOG.info("updateBikeRent : bike rent updated successfully.");
+			LOG.info("updateBikeRent : End");
+			return lBikeRentMappingUpdateStatus;
+		}
+		catch(Throwable throwable)
+		{
+			LOG.error("updateBikeRent : " + throwable.getMessage(), throwable);
+			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
+		}
 		
 	}
 
 	public boolean updateBikeStock(BikeStock pUpdatedBikeStock, BikeType pUpdatedBikeType) throws BikeHireSystemException {
-		BikeStockDTO lBikeStockDTO = getBikeStockDTOFromInputs(pUpdatedBikeStock, true);
-		BikeTypeDTO lBikeTypeDTO = getBikeTypeDTOFromInputs(pUpdatedBikeType);
-		
-		BikeStockValidator lBikeStockValidator = new BikeStockValidator(lBikeStockDTO);
-		lBikeStockValidator.validateUpdateBikeStock();
-		
-		boolean lBikeStockUpdateStatus = bikeStockDAO.updateBikeStock(lBikeStockDTO, lBikeTypeDTO);
-		
-		return lBikeStockUpdateStatus;
+		LOG.info("updateBikeStock : Start");
+		try
+		{			
+			daoFactory.beginTransaction();
+			BikeStockDTO lBikeStockDTO = getBikeStockDTOFromInputs(pUpdatedBikeStock, true);
+			BikeTypeDTO lBikeTypeDTO = getBikeTypeDTOFromInputs(pUpdatedBikeType);
+			
+			BikeStockValidator lBikeStockValidator = new BikeStockValidator(lBikeStockDTO);
+			lBikeStockValidator.validateUpdateBikeStock();
+			
+			boolean lBikeStockUpdateStatus = bikeStockDAO.updateBikeStock(lBikeStockDTO, lBikeTypeDTO);
+			daoFactory.commitTransaction();
+			LOG.info("updateBikeStock : bike stock updated successfully.");
+			
+			LOG.info("updateBikeStock : End");
+			return lBikeStockUpdateStatus;
+		}
+		catch(Throwable throwable)
+		{
+			LOG.error("updateBikeStock : " + throwable.getMessage(), throwable);
+			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
+		}
 	}
 
 	public boolean updateBikeStatus(BikeStatus pUpdatedBikeStatus) throws BikeHireSystemException {
-		BikeStatusDTO lBikeStatusDTO = getBikeStatusDTOFromInputs(pUpdatedBikeStatus);
-		
-		BikeStatusValidator lBikeStatusValidator = new BikeStatusValidator(lBikeStatusDTO);
-		lBikeStatusValidator.validateUpdateBikeStatus();
-		
-		boolean lBikeUpdateStatus = bikeStatusDAO.updateBikeStatus(lBikeStatusDTO);
-		return lBikeUpdateStatus;
+		LOG.info("updateBikeStatus : Start");
+		try
+		{			
+			daoFactory.beginTransaction();
+			BikeStatusDTO lBikeStatusDTO = getBikeStatusDTOFromInputs(pUpdatedBikeStatus);
+			
+			BikeStatusValidator lBikeStatusValidator = new BikeStatusValidator(lBikeStatusDTO);
+			lBikeStatusValidator.validateUpdateBikeStatus();
+			
+			boolean lBikeUpdateStatus = bikeStatusDAO.updateBikeStatus(lBikeStatusDTO);
+			daoFactory.commitTransaction();
+			LOG.info("updateBikeStatus : bike status changed successfully.");
+			
+			LOG.info("updateBikeStatus : End");
+			return lBikeUpdateStatus;
+		}
+		catch(Throwable throwable)
+		{
+			LOG.error("updateBikeStatus : " + throwable.getMessage(), throwable);
+			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
+		}
 	}
 
 	private BikeTypeDTO getBikeTypeDTOFromInputs(BikeType pBikeType)

@@ -35,7 +35,7 @@ public class CustomerCredentialValidator {
 		
 		boolean lbIsValidPassword = PasswordHashGenerator.verifyPasswordHash(lstrOriginPasswordHash, mEntityLoginCredential.getPassword(), lstrPasswordSalt);
 		
-		if(lbIsValidPassword)
+		if(!lbIsValidPassword)
 		{
 			//ERROR_MESSAGE : Invalid login credentials provided. Password hash matching failed.
 			throw new BikeHireSystemException(10023);

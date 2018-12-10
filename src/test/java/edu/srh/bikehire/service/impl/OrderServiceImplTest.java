@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.Test;
 
 import edu.srh.bikehire.dao.DAOFactory;
+import edu.srh.bikehire.dao.DAOFactoryType;
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.service.core.Invoice;
 import edu.srh.bikehire.service.core.Order;
@@ -203,8 +204,7 @@ public class OrderServiceImplTest {
 		//first add damage charges, warehouseId, payment reference and then return invoiceId
 		int damagecharges= 12;
 		int warehouseId	= 2;
-		String paymentReference= DAOFactory.getDefaultOrderPaymentImpl().getOrderPaymentByOrderId(1).getPaymentReference();
-		invoiceID = orderService.generateInvoice(damagecharges,warehouseId,paymentReference);
+		invoiceID = orderService.generateInvoice(damagecharges,warehouseId,1);
 		
 	}
 	
@@ -212,8 +212,8 @@ public class OrderServiceImplTest {
 	public void testGenerateInvoiceInvalidDamageCharge() throws BikeHireSystemException {
 		int damagecharges= -12;
 		int warehouseId	= 2;
-		String paymentReference= "67";
-		String invoiceID = orderService.generateInvoice(damagecharges,warehouseId,paymentReference);
+		int orderId = 1;
+		String invoiceID = orderService.generateInvoice(damagecharges,warehouseId,orderId);
 		
 	}
 	
@@ -221,17 +221,16 @@ public class OrderServiceImplTest {
 	public void testGenerateInvoiceInvalidWarehouseId() throws BikeHireSystemException {
 		int damagecharges= 12;
 		int warehouseId	= -2;
-		String paymentReference= "67";
-		String invoiceID = orderService.generateInvoice(damagecharges,warehouseId,paymentReference);
+		int orderId = 1;
+		String invoiceID = orderService.generateInvoice(damagecharges,warehouseId,orderId);
 		
 	}
 	
 	@Test(expected = BikeHireSystemException.class)
-	public void testGenerateInvoiceInvalidPaymentReference() throws BikeHireSystemException {
+	public void testGenerateInvoiceInvalidOrderId() throws BikeHireSystemException {
 		int damagecharges= 12;
 		int warehouseId	= 2;
-		String paymentReference= null;
-		String invoiceID = orderService.generateInvoice(damagecharges,warehouseId,paymentReference);
+		String invoiceID = orderService.generateInvoice(damagecharges,warehouseId,-1);
 		
 	}
 

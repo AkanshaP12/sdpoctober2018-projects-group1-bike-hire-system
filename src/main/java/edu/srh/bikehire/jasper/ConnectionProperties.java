@@ -85,9 +85,8 @@ public class ConnectionProperties {
 		String connectionString = pProperties.getProperty("connection.url");
 		if(Util.isEmptyOrNullString(connectionString))
 		{
-			//ERRORMESSAGE: 
-			//TODO:
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid connection string. 
+			throw new BikeHireSystemException(10120);
 		}
 		return connectionString;
 	}
@@ -97,9 +96,8 @@ public class ConnectionProperties {
 		String username = pProperties.getProperty("connection.username");
 		if(Util.isEmptyOrNullString(username))
 		{
-			//ERRORMESSAGE: 
-			//TODO:
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid connection user name.
+			throw new BikeHireSystemException(10121);
 		}
 		return username;
 	}
@@ -109,9 +107,8 @@ public class ConnectionProperties {
 		String password = pProperties.getProperty("connection.password");
 		if(Util.isEmptyOrNullString(password))
 		{
-			//ERRORMESSAGE: 
-			//TODO:
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid connection user password.
+			throw new BikeHireSystemException(10122);
 		}
 		return password;
 	}
@@ -121,9 +118,8 @@ public class ConnectionProperties {
 		String classname = pProperties.getProperty("connection.class.name");
 		if(Util.isEmptyOrNullString(classname))
 		{
-			//ERRORMESSAGE: 
-			//TODO:
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid connection class name.
+			throw new BikeHireSystemException(10123);
 		}
 		return classname;
 	}

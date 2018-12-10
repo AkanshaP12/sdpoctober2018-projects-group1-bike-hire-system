@@ -31,7 +31,7 @@ public class ForgotPasswordUI {
 		
 		//STEP 4 : Change password (Ideally ask for new password and confirm password)
 		sc =new Scanner(System.in);
-		System.out.println("Enter New Password: ");
+		System.out.println("Enter New Password (Password must be 8 characters long, should have atleast 1 Uppercase character, 1 Lowercase character, 1 Numeric character and 1 Special Character from '@#$%^&+!='): ");
 		String password = sc.nextLine();
 		System.out.println("Re-Enter Password: ");
 		String resetpassword = sc.nextLine();

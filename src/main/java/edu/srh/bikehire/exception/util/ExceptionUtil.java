@@ -132,6 +132,12 @@ public class ExceptionUtil {
 		smapErrorCodesToMessages.put(10115L, new ErrorMessage("Invalid User's Email Address in User Validation.", "Unexpected error occurred. Please try after some time.") );
 		smapErrorCodesToMessages.put(10116L, new ErrorMessage("Invalid User's Phone Number in User Validation.", "Unexpected error occurred. Please try after some time.") );
 		smapErrorCodesToMessages.put(10117L, new ErrorMessage("Invalid User's ID in User Validation.", "Unexpected error occurred. Please try after some time.") );
+		smapErrorCodesToMessages.put(10118L, new ErrorMessage("Invalid option selected.", "Please select a valid option.") );
+		smapErrorCodesToMessages.put(10119L, new ErrorMessage("Invalid file path.", "Please provide a valid file path.") );
+		smapErrorCodesToMessages.put(10120L, new ErrorMessage("Invalid connection string.", "Unexpected error occurred. Please try after some time.") );
+		smapErrorCodesToMessages.put(10121L, new ErrorMessage("Invalid connection user name.", "Unexpected error occurred. Please try after some time.") );
+		smapErrorCodesToMessages.put(10122L, new ErrorMessage("Invalid connection user password.", "Unexpected error occurred. Please try after some time.") );
+		smapErrorCodesToMessages.put(10123L, new ErrorMessage("Invalid connection class name.", "Unexpected error occurred. Please try after some time.") );
 	}
 	
 	public static String getErrorMessage(long pErrorCode, Object[] pPlaceHolderValues)

@@ -16,7 +16,7 @@ public class ReportGeneratorUI {
 		loggedInEntity = entity;
 	}
 	
-	public void processReport(Scanner sc) throws BikeHireSystemException
+	public int processReport(Scanner sc) throws BikeHireSystemException
 	{
 		System.out.println("1) Rented Bike Report \n2) Invoice Report \n3) Back");
 		System.out.println("Select option: ");
@@ -26,17 +26,15 @@ public class ReportGeneratorUI {
 		{
 		case 1:
 			showRentedBikeReport(sc);
-			break;
+			return 0;
 		case 2:
 			showInvoiceReport(sc);
-			break;
+			return 0;
 		case 3:
-			LandingUIForStaff landingUI = new LandingUIForStaff(loggedInEntity);
-			landingUI.showMenu(sc);
-			return;
+			return -1;
 		default:
-			//TODO:
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid option selected.
+			throw new BikeHireSystemException(10118);
 		}
 	}
 	
@@ -66,8 +64,8 @@ public class ReportGeneratorUI {
 				System.out.println("Report successfully generated at : " + filePath);
 				break;
 			default:
-				//TODO:
-				throw new BikeHireSystemException(-1);
+				//ERRORMESSAGE: Invalid option selected.
+				throw new BikeHireSystemException(10118);
 		}
 	}
 	
@@ -97,8 +95,8 @@ public class ReportGeneratorUI {
 				System.out.println("Report successfully generated at : " + filePath);
 				break;
 			default:
-				//TODO:
-				throw new BikeHireSystemException(-1);
+				//ERRORMESSAGE: Invalid option selected.
+				throw new BikeHireSystemException(10118);
 		}
 	}
 	

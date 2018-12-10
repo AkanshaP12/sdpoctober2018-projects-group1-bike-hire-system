@@ -51,7 +51,7 @@ public class DBBasedResetPasswordValidator implements ResetPasswordValidator {
 			throw new BikeHireSystemException(10002);
 		}
 		
-		if(mstrToken.equals(pToken) == false)
+		if(mstrToken.equals(pToken.trim()) == false)
 		{
 			//ERROR_MESSAGE : Invalid token provided.
 			throw new BikeHireSystemException(10001); 

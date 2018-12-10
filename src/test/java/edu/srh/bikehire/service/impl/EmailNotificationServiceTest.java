@@ -8,10 +8,6 @@ import edu.srh.bikehire.exception.BikeHireSystemException;
 
 public class EmailNotificationServiceTest {
 
-	@Test
-	public void testEmailVerification() {
-		fail("Not yet implemented");
-	}
 	
 	@Test (expected = BikeHireSystemException.class)
 	public void testEmailIdNotValid() throws BikeHireSystemException {
@@ -40,11 +36,6 @@ public class EmailNotificationServiceTest {
 	}
 	
 	
-	@Test
-	public void testPasswordResetSuccess() {
-		fail("Not yet implemented");
-	}
-	
 	@Test (expected = BikeHireSystemException.class)
 	public void passwordUnsuccessEmail() throws BikeHireSystemException {
 		EmailNotificationService resetEmailUnSuccess = new EmailNotificationService();
@@ -60,11 +51,6 @@ public class EmailNotificationServiceTest {
 		
 	}
 	
-
-	@Test
-	public void testBookingConfirmation() {
-		fail("Not yet implemented");
-	}
 	
 	@Test (expected = BikeHireSystemException.class)
 	public void bookingConfirmIncorrect()throws BikeHireSystemException {
@@ -85,11 +71,6 @@ public class EmailNotificationServiceTest {
 	}
 	
 	
-	
-	@Test
-	public void testCancelBooking() {
-		fail("Not yet implemented");
-	}
      
 	@Test (expected = BikeHireSystemException.class)
 	public void cancelBookingIncorrect() throws BikeHireSystemException {
@@ -106,11 +87,7 @@ public class EmailNotificationServiceTest {
 		EmailNotificationService cancellationCredential = new EmailNotificationService();
 		cancellationCredential.cancelBooking(1, "emailId@gmail.com");
 	}
-	
-	@Test
-	public void testOrderInvoice() {
-		fail("Not yet implemented");
-	}
+
 
 	@Test (expected = BikeHireSystemException.class)
 	public void invalidOrderInvoice() throws BikeHireSystemException {

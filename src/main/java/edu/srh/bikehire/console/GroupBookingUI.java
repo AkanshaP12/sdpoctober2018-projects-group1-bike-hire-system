@@ -29,7 +29,7 @@ public class GroupBookingUI {
 		this.isOnlineOrder = isOnlineOrder;
 	}
 
-	public void processGroupBooking(Scanner sc) throws BikeHireSystemException
+	public int processGroupBooking(Scanner sc) throws BikeHireSystemException
 	{
 		int userId = 0;
 		if(isOnlineOrder)
@@ -66,8 +66,7 @@ public class GroupBookingUI {
 		{
 			System.out.println("Sorry, not enough bikes are available for this bike type. Please try again.");
 			LandingUIForCustomer landingUI = new LandingUIForCustomer(loggedInEntity);
-			landingUI.showMenu(sc);
-			return;
+			return landingUI.showMenu(sc);
 		}
 		
 		System.out.println("Bikes are available for booking, do you want to book now? (y/n)");
@@ -75,7 +74,7 @@ public class GroupBookingUI {
 		
 		if(input.equalsIgnoreCase("n"))
 		{
-			return;
+			return 1;
 		}
 		
 		System.out.println("Please enter pick up date (dd/MM/yyyy) : ");
@@ -121,8 +120,8 @@ public class GroupBookingUI {
 		}
 		
 		System.out.println("Booking confirmed! Please check email for more details.");
-		return;
-	}
+		return 1;
+	} 
 	
 	private Calendar getCalendarFromInput(String input)
 	{

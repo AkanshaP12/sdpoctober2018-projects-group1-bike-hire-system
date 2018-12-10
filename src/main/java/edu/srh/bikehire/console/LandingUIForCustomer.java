@@ -14,7 +14,7 @@ public class LandingUIForCustomer {
 		this.loggedInEntity = loggedInEntity;
 	}
 	
-	public void showMenu(Scanner sc) throws BikeHireSystemException
+	public int showMenu(Scanner sc) throws BikeHireSystemException
 	{
 		System.out.println("1) View bike catalog \n2) Your Account \n3) Your Orders \n4) Logout");
 		System.out.println("Select option: ");
@@ -23,43 +23,48 @@ public class LandingUIForCustomer {
 		switch(input)
 		{
 		case 1:
-			callCatalogUI(sc);
-			showMenu(sc);
-			break;
+			if(callCatalogUI(sc) < 0)
+			{
+				return -1;
+			}
+			return showMenu(sc);
 		case 2:
-			callAccountUI(sc);
-			showMenu(sc);
-			break;
+			int returnValue = callAccountUI(sc);
+			if(returnValue < 0)
+			{
+				return -1;
+			}
+			return showMenu(sc);
 		case 3:
-			callOrdersUI(sc);
-			showMenu(sc);
-			break;
+			if(callOrdersUI(sc) < 0)
+			{
+				return -1;
+			}
+			return showMenu(sc);
 		case 4:
-			HomePage homepage = new HomePage();
-			homepage.display_menu();
-			break;
+			return -1;
 		default:
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid option selected.
+			throw new BikeHireSystemException(10118);
 		}
 	}
 	
-	private void callCatalogUI(Scanner sc) throws BikeHireSystemException
+	private int callCatalogUI(Scanner sc) throws BikeHireSystemException
 	{
 		CatalogUI lCatalogUI = new CatalogUI(loggedInEntity);
-		lCatalogUI.showCatalog(sc);
+		return lCatalogUI.showCatalog(sc);
 	}
 	
-	private void callAccountUI(Scanner sc) throws BikeHireSystemException
+	private int callAccountUI(Scanner sc) throws BikeHireSystemException
 	{
 		AccountUI lAccountUI = new AccountUI(loggedInEntity);
-		lAccountUI.showAccountInfo(sc);
+		return lAccountUI.showAccountInfo(sc);
 	}
 	
-	private void callOrdersUI(Scanner sc) throws BikeHireSystemException
+	private int callOrdersUI(Scanner sc) throws BikeHireSystemException
 	{
 		OrdersUI lOrders = new OrdersUI(loggedInEntity);
-		lOrders.showOrders(sc);
-		
+		return lOrders.showOrders(sc);
 	}
 	
 }

@@ -56,7 +56,8 @@ public class RegistrationUI {
 			customer.setIdentityProofBytes(Files.readAllBytes(new File(idProofFilePath).toPath()));
 		} catch (IOException e) {
 			System.out.println("Please provide valid file path.");
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid file path.
+			throw new BikeHireSystemException(10119);
 		}
 		CustomerAccount account = new CustomerAccount();
 		account.setAccountStatus(LoginConstants.LOGIN_ACCOUNT_STATUS_ACTIVE);
@@ -64,7 +65,7 @@ public class RegistrationUI {
 		account.setUserName(userName);
 		customer.setEntityAccount(account);
 		
-		System.out.println("Choose new password for your profile : ");
+		System.out.println("Choose new password for your profile ((Password must be 8 characters long, should have atleast 1 Uppercase character, 1 Lowercase character, 1 Numeric character and 1 Special Character from '@#$%^&+!=')) : ");
 		String newPassword = in.nextLine();
 		System.out.println("Confirm password for your profile : ");
 		String confirmPasword = in.nextLine();

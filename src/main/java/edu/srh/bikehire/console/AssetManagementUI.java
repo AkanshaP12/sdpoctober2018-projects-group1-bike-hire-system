@@ -23,7 +23,7 @@ public class AssetManagementUI {
 		loggedInStaff = loggedInEntity;
 	}
 	
-	public void manageAssets(Scanner sc) throws BikeHireSystemException
+	public int manageAssets(Scanner sc) throws BikeHireSystemException
 	{
 		System.out.println("1) Add Bike Type \n2) Add Warehouse \n3) Add Bike \n4) Update Bike Rent \n5) Back");
 		System.out.println("Select option: ");
@@ -34,28 +34,22 @@ public class AssetManagementUI {
 		{
 		case 1:
 			addNewBikeType(sc, assetManagementService);
-			manageAssets(sc);
-			break;
+			return manageAssets(sc);
 			
 		case 2:
 			addNewWarehouse(sc, assetManagementService);
-			manageAssets(sc);
-			break;
+			return manageAssets(sc);
 			
 		case 3:
 			addNewBike(sc, assetManagementService);
-			manageAssets(sc);
-			break;
+			return manageAssets(sc);
 			
 		case 4:
 			updateBikeRent(sc, assetManagementService);
-			manageAssets(sc);
-			break;
+			return manageAssets(sc);
 			
 		case 5:
-			LandingUIForStaff landingUI = new LandingUIForStaff(loggedInStaff);
-			landingUI.showMenu(sc);
-			break;
+			return 0;
 			
 		default :
 			//ERROR MESSAGE: Invalid option is selected

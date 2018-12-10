@@ -17,7 +17,7 @@ public class AccountUI {
 		this.loggedInUser = loggedInUser;
 	}
 	
-	public void showAccountInfo(Scanner sc) throws BikeHireSystemException
+	public int showAccountInfo(Scanner sc) throws BikeHireSystemException
 	{
 		System.out.println("Name : " + loggedInUser.getFirstName() + " " + loggedInUser.getLastName());
 		System.out.println("Email address : " + loggedInUser.getEmailId());
@@ -31,19 +31,19 @@ public class AccountUI {
 		switch(input) {
 		case 1 :
 			changePassword(sc, loginService);
-			break;
+			return 1;
 		case 2:
 			boolean status = deactivateAccount(sc, loginService);
 			if(status)
 			{
-				return;
+				return -1;
 			}
-			showAccountInfo(sc);
-			break;
+			return showAccountInfo(sc);
+			
 		case 3:
 			LandingUIForCustomer landingUI = new LandingUIForCustomer(loggedInUser);
-			landingUI.showMenu(sc);
-			return;
+			return landingUI.showMenu(sc);
+			
 		default:
 			//ERROR MESSAGE: Invalid option is selected
 			throw new BikeHireSystemException(10060);
@@ -52,7 +52,6 @@ public class AccountUI {
 	
 	private void changePassword(Scanner sc, Login loginService) throws BikeHireSystemException
 	{
-		
 		System.out.println("Enter New Password: ");
 		String password = sc.nextLine();
 		System.out.println("Re-Enter Password: ");

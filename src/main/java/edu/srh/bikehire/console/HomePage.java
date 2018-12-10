@@ -1,6 +1,5 @@
 package edu.srh.bikehire.console;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 import edu.srh.bikehire.dao.impl.util.PersistenceManager;
@@ -12,7 +11,7 @@ import edu.srh.bikehire.service.impl.DBBasedLoginService;
 import edu.srh.bikehire.startup.AppInitializer;
 
 public class HomePage {
-	private Scanner sc = null;
+	private static Scanner sc = null;
 	private static AppInitializer initializer = null; 
 	public void display_menu() {
 		try {
@@ -28,7 +27,7 @@ public class HomePage {
 			System.out.format("+------+---------------------+%n");
 			//System.out.println("1) Register \n2) Login \n 3) Forgot Password? \n");
 			System.out.println("Select option: ");
-			sc = new Scanner(System.in);
+			
 			ConsoleUtil.clearConsole();
 			int option = sc.nextInt();
 			sc.nextLine();
@@ -45,9 +44,14 @@ public class HomePage {
 					return;
 				}
 				else {
-					this.processLoggedInUser(loggedInUser);
+					int returnValue = this.processLoggedInUser(loggedInUser);
+					if(returnValue < 0)
+					{
+						System.out.println("You have successfully logged out of the system.");
+					}
+					this.display_menu();
+					return;
 				}
-				break;
 			case 3:
 				
 				this.callForgotPasswordUI();
@@ -60,8 +64,7 @@ public class HomePage {
 				throw new BikeHireSystemException(10062);
 			}
 		} catch (Exception exception) {
-			// TODO: handle exception
-			exception.printStackTrace();
+			System.out.println(exception.getMessage());
 		} finally {
 			if (sc != null) {
 				sc.close();
@@ -70,12 +73,23 @@ public class HomePage {
 
 	}
 
-	public static void main(String[] args) throws IOException {
-		AppInitializer initializerTemp = new AppInitializer();
-		initializerTemp.initializeApplication();
-		initializer = initializerTemp;
-		HomePage homepage = new HomePage();
-		homepage.display_menu();
+	public static void main(String[] args){
+		HomePage homepage = null;
+		try {
+			AppInitializer initializerTemp = new AppInitializer();
+			initializerTemp.initializeApplication();
+			initializer = initializerTemp;
+			homepage = new HomePage();
+			homepage.initializeScanner();
+			homepage.display_menu();
+		} catch (BikeHireSystemException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		finally
+		{
+			homepage.closeScanner();
+		}
 	}
 
 	private void callRegistrationUI() throws BikeHireSystemException {
@@ -93,7 +107,7 @@ public class HomePage {
 		forgotPasswordUI.startFPProcess(sc);
 	}
 
-	private void processLoggedInUser(Entity entity) throws BikeHireSystemException
+	private int processLoggedInUser(Entity entity) throws BikeHireSystemException
 	{
 		DBBasedLoginService lDbBasedLoginService = new DBBasedLoginService();
 		EntityAccount userAccount = lDbBasedLoginService.getAccountInfo(entity.getUserId());
@@ -106,18 +120,18 @@ public class HomePage {
 		if(LoginConstants.LOGIN_ACCOUNT_STATUS_UNVERIFIED.equals(userAccount.getAccountStatus()))
 		{
 			System.out.println("Please verify your account!");
-			return;
+			return -1;
 		}
 		
 		if(LoginConstants.LOGIN_ACCOUNT_ROLE_CUSTOMER.equals(userAccount.getUserRole()))
 		{
 			LandingUIForCustomer landingUIForCustomer = new LandingUIForCustomer(entity);
-			landingUIForCustomer.showMenu(sc);
+			return landingUIForCustomer.showMenu(sc);
 		}
 		else
 		{
 			LandingUIForStaff landingUIForStaff = new LandingUIForStaff(entity);
-			landingUIForStaff.showMenu(sc);
+			return landingUIForStaff.showMenu(sc);
 		}
 	}
 	
@@ -130,5 +144,17 @@ public class HomePage {
 		}
 		PersistenceManager.INSTANCE.close();
 		System.out.println("Successfully terminated application.");
+	}
+	
+	private void initializeScanner()
+	{
+		sc = new Scanner(System.in);
+	}
+	
+	private void closeScanner()
+	{
+		if (sc != null) {
+			sc.close();
+		}
 	}
 }

@@ -12,12 +12,12 @@ public class LoginUtil {
 		<br/> (?=.*[0-9])       # a digit must occur at least once
 		<br/> (?=.*[a-z])       # a lower case letter must occur at least once
 		<br/> (?=.*[A-Z])       # an upper case letter must occur at least once
-		<br/> (?=.*[@#$%^&+=])  # a special character must occur at least once
+		<br/> (?=.*[@#$%^&+!=])  # a special character must occur at least once
 		<br/> (?=\S+$)          # no whitespace allowed in the entire string
 		<br/> .{8,}             # anything, at least eight places though
 		<br/> $                 # end-of-string
 	 */
-	private static final String PASSWORD_REGEX_STRING = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+	private static final String PASSWORD_REGEX_STRING = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+!=])(?=\\S+$).{8,}$";
 	
 	public static String getResetPasswordToken()
 	{

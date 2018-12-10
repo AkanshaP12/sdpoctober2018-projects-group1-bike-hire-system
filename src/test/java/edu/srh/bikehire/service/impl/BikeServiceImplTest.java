@@ -20,11 +20,6 @@ public class BikeServiceImplTest {
 	BikeServiceImpl bikeServiceImplTest = new BikeServiceImpl();
 
 	@Test
-	public void testInitializeService() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testGetAllBikes() throws BikeHireSystemException
 	{
 		boolean sortDescending = true;

@@ -33,7 +33,11 @@ public class HomePage {
 			sc.nextLine();
 			switch (option) {
 			case 1:
-				this.callRegistrationUI();
+				int returnValueRU = this.callRegistrationUI();
+				if(returnValueRU >= 0)
+				{
+					this.display_menu();
+				}
 				break;
 			case 2:
 				Entity loggedInUser = this.callLoginUI();
@@ -92,9 +96,9 @@ public class HomePage {
 		}
 	}
 
-	private void callRegistrationUI() throws BikeHireSystemException {
+	private int callRegistrationUI() throws BikeHireSystemException {
 		RegistrationUI registrationUI = new RegistrationUI();
-		registrationUI.register(sc);
+		return registrationUI.register(sc);
 	}
 
 	private Entity callLoginUI() {

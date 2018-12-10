@@ -24,9 +24,8 @@ public class CatalogUI {
 		this.loggedInEntity = loggedInEntity;
 	}
 	
-	public void showCatalog(Scanner sc) throws BikeHireSystemException
+	public int showCatalog(Scanner sc) throws BikeHireSystemException
 	{
-		
 		BikeServiceImpl bikeService = new BikeServiceImpl();
 		List<BikeDTO> listOfBikes = bikeService.getAllBikesBasedOnStatus(BikeStatusType.AVALIABLE_BIKE, false);
 		
@@ -34,12 +33,10 @@ public class CatalogUI {
 		{
 			System.out.println("Sorry no bikes available for now. Please try after some time.");
 			LandingUIForCustomer landingUI = new LandingUIForCustomer(loggedInEntity);
-			landingUI.showMenu(sc);
-			return;
+			return landingUI.showMenu(sc);
 		}
 		
-		nextInput(sc, listOfBikes, bikeService);
-		
+		return nextInput(sc, listOfBikes, bikeService);
 	}
 	
 	private void displayBikes(List<BikeDTO> listOfBikes, BikeService bikeService) throws BikeHireSystemException
@@ -60,7 +57,7 @@ public class CatalogUI {
 		}
 	}
 	
-	private void nextInput(Scanner sc, List<BikeDTO> listOfBikes, BikeService bikeService) throws BikeHireSystemException
+	private int nextInput(Scanner sc, List<BikeDTO> listOfBikes, BikeService bikeService) throws BikeHireSystemException
 	{
 		if(listOfBikes != null)
 		{			
@@ -77,31 +74,25 @@ public class CatalogUI {
 			boolean orderStatus = placeBikeOrderUI(sc);
 			if(!orderStatus)
 			{
-				this.showCatalog(sc);
-				return;
+				return this.showCatalog(sc);
 			}
 			
 			LandingUIForCustomer landingUI = new LandingUIForCustomer(loggedInEntity);
-			landingUI.showMenu(sc);
-			return;
+			return landingUI.showMenu(sc);
 		case 2:
-			sortByDeposit(sc, bikeService);
-			break;
+			return sortByDeposit(sc, bikeService);
 		case 3:
-			viewBikeByTypes(sc, bikeService);
-			break;
+			return viewBikeByTypes(sc, bikeService);
 		case 4:
-			viewBikeByWarehouse(sc, bikeService);
-			break;
+			return viewBikeByWarehouse(sc, bikeService);
 		case 5:
-			groupBookingOption(sc, bikeService);
-			break;
+			return groupBookingOption(sc, bikeService);
 		case 6:
 			LandingUIForCustomer customerLandingUi = new LandingUIForCustomer(loggedInEntity);
-			customerLandingUi.showMenu(sc);
-			break;
+			return customerLandingUi.showMenu(sc);
 		default:
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid option selected.
+			throw new BikeHireSystemException(10118);
 		}
 
 	}
@@ -115,7 +106,7 @@ public class CatalogUI {
 		return placeOrder.processOrder(sc, true, loggedInEntity.getUserId());
 	}
 	
-	private void sortByDeposit(Scanner sc, BikeService bikeService) throws BikeHireSystemException
+	private int sortByDeposit(Scanner sc, BikeService bikeService) throws BikeHireSystemException
 	{
 		List<BikeDTO> listOfBikes = bikeService.getAllBikesBasedOnStatus(BikeStatusType.AVALIABLE_BIKE, true);
 		
@@ -123,14 +114,13 @@ public class CatalogUI {
 		{
 			System.out.println("Sorry no bikes available for now. Please try after some time.");
 			LandingUIForCustomer landingUI = new LandingUIForCustomer(loggedInEntity);
-			landingUI.showMenu(sc);
-			return;
+			return landingUI.showMenu(sc);
 		}
 		
-		nextInput(sc, listOfBikes, bikeService);
+		return nextInput(sc, listOfBikes, bikeService);
 	}
 	
-	private void viewBikeByTypes(Scanner sc, BikeService bikeService) throws BikeHireSystemException
+	private int viewBikeByTypes(Scanner sc, BikeService bikeService) throws BikeHireSystemException
 	{
 		List<BikeTypeDTO> bikeTypes = bikeService.getBikeTypes();
 		System.out.println("Following bike types are available : ");
@@ -166,10 +156,10 @@ public class CatalogUI {
 		}
 		
 		List<BikeDTO> lAllBikesForType = bikeService.getAllBikesBasedOnType(bikeTypeId, isSortDescending);
-		nextInput(sc, lAllBikesForType, bikeService);
+		return nextInput(sc, lAllBikesForType, bikeService);
 	}
 	
-	private void viewBikeByWarehouse(Scanner sc, BikeService bikeService) throws BikeHireSystemException
+	private int viewBikeByWarehouse(Scanner sc, BikeService bikeService) throws BikeHireSystemException
 	{
 		List<WareHouseDTO> warehouses = bikeService.getAllWarehouses();
 		System.out.println("Following warehouses are available : ");
@@ -206,15 +196,14 @@ public class CatalogUI {
 		}
 		
 		List<BikeDTO> lAllBikesForType = bikeService.getAllBikesBasedOnWarehouse(warehouseId, isSortDescending);
-		nextInput(sc, lAllBikesForType, bikeService);
+		return nextInput(sc, lAllBikesForType, bikeService);
 	}
 	
-	private void groupBookingOption(Scanner sc, BikeService bikeService) throws BikeHireSystemException
+	private int groupBookingOption(Scanner sc, BikeService bikeService) throws BikeHireSystemException
 	{
 		GroupBookingUI groupBookingUi = new GroupBookingUI(loggedInEntity, true);
 		groupBookingUi.processGroupBooking(sc);
 		LandingUIForCustomer landingUI = new LandingUIForCustomer(loggedInEntity);
-		landingUI.showMenu(sc);
-		return;
+		return landingUI.showMenu(sc);
 	}
 }

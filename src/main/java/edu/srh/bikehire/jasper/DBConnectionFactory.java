@@ -4,8 +4,13 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import edu.srh.bikehire.exception.BikeHireSystemException;
 
 public class DBConnectionFactory {
+	private static final Logger LOG = LogManager.getLogger(ReportGenerator.class);
 	
 	private static BasicDataSource basicDataSource  = null;
 	
@@ -16,7 +21,7 @@ public class DBConnectionFactory {
 		
 	}
 	
-	public static void initializeFactory()
+	public static void initializeFactory() throws BikeHireSystemException
 	{
 		synchronized (DB_LOCK) {
 			if(basicDataSource != null)
@@ -24,10 +29,11 @@ public class DBConnectionFactory {
 				return;
 			}
 			BasicDataSource basicDataSourceTemp = new BasicDataSource();
-			basicDataSourceTemp.setDriverClassName(StoreConstants.SQL_DRIVER_CLASS_NAME);
-			basicDataSourceTemp.setUrl(StoreConstants.SQL_CONNECTION_STRING);
-			basicDataSourceTemp.setUsername(StoreConstants.SQL_USERNAME);
-			basicDataSourceTemp.setPassword(StoreConstants.SQL_PASSWORD);
+			ConnectionProperties connectionProperties = ConnectionProperties.getInstance();
+			basicDataSourceTemp.setDriverClassName(connectionProperties.getClassName());
+			basicDataSourceTemp.setUrl(connectionProperties.getConnectionString());
+			basicDataSourceTemp.setUsername(connectionProperties.getUsername());
+			basicDataSourceTemp.setPassword(connectionProperties.getPassword());
 			
 			basicDataSource = basicDataSourceTemp;
 		}
@@ -36,5 +42,17 @@ public class DBConnectionFactory {
 	public static Connection getNewConnection() throws SQLException
 	{
 		return basicDataSource.getConnection();
+	}
+	
+	public static void close()
+	{
+		if(basicDataSource != null)
+		{
+			try {
+				basicDataSource.close();
+			} catch (SQLException e) {
+				LOG.error("createRentedBikeReportToday : " + e.getMessage(), e);
+			}
+		}
 	}
 }

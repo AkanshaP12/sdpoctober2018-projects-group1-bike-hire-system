@@ -19,7 +19,7 @@ public class OrdersUI {
 		this.loggedInUser = loggedInUser;
 	}
 	
-	public void showOrders(Scanner sc) throws BikeHireSystemException
+	public int showOrders(Scanner sc) throws BikeHireSystemException
 	{
 		OrderServiceImpl orderServiceImpl = new OrderServiceImpl();
 		List<Order> orders = orderServiceImpl.getCurrentOrdersForUser(loggedInUser.getUserId());
@@ -61,8 +61,7 @@ public class OrdersUI {
 				if(lCurrentOrder == null)
 				{
 					System.out.println("Please enter valid order id.");
-					this.showOrders(sc);
-					return;
+					return this.showOrders(sc);
 				}
 				
 				if(Calendar.getInstance().before(lCurrentOrder.getPickupTimestamp()))
@@ -79,8 +78,7 @@ public class OrdersUI {
 				{
 					System.out.println("You cannot cancel this order as bike has already been rented. Contact customer support.");
 					LandingUIForCustomer uiCustomer = new LandingUIForCustomer(loggedInUser);
-					uiCustomer.showMenu(sc);
-					return;
+					return uiCustomer.showMenu(sc);
 				}
 			}
 			
@@ -90,26 +88,24 @@ public class OrdersUI {
 		String input = sc.nextLine(); 
 		if(input.equalsIgnoreCase("y"))
 		{
-			showOrderHistory(sc, orderServiceImpl);
+			return showOrderHistory(sc, orderServiceImpl);
 		}
 		else
 		{
 			LandingUIForCustomer landingUI = new LandingUIForCustomer(loggedInUser);
-			landingUI.showMenu(sc);
-			return;
+			return landingUI.showMenu(sc);
 		}
 		
 	}
 	
-	private void showOrderHistory(Scanner sc, OrderService orderServiceImpl) throws BikeHireSystemException
+	private int showOrderHistory(Scanner sc, OrderService orderServiceImpl) throws BikeHireSystemException
 	{
 		List<OrderHistory> orderHistories = orderServiceImpl.getOrderHistory(loggedInUser.getUserId());
 		if(orderHistories == null || orderHistories.isEmpty())
 		{
 			System.out.println("No previous orders!");
 			LandingUIForCustomer landingUI = new LandingUIForCustomer(loggedInUser);
-			landingUI.showMenu(sc);
-			return;
+			return landingUI.showMenu(sc);
 		}
 		
 		System.out.println("Number of orders : " + orderHistories.size());
@@ -122,5 +118,6 @@ public class OrdersUI {
 			System.out.println("Booking time : " + ConsoleUtil.getStringForDate(orderHistory.getBookingTimeStamp()));
 			System.out.println("-------------------------------------------------");
 		}
+		return 1;
 	}
 }

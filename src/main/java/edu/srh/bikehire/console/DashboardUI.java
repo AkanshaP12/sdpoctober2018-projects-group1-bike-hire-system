@@ -22,7 +22,7 @@ public class DashboardUI {
 		loggedInStaff = loggedInEntity;
 	}
 	
-	public void showDashboard(Scanner sc) throws BikeHireSystemException
+	public int showDashboard(Scanner sc) throws BikeHireSystemException
 	{
 		DashboardServiceImpl dashboardService = new DashboardServiceImpl();
 		BikeServiceImpl bikeService = new BikeServiceImpl();
@@ -34,18 +34,14 @@ public class DashboardUI {
 		{
 		case 1:
 			showBikeStatus(dashboardService, bikeService);
-			showDashboard(sc);
-			break;
+			return showDashboard(sc);
 			
 		case 2:
 			upcomingAppointments( dashboardService);
-			showDashboard(sc);
-			break;
+			return showDashboard(sc);
 			
 		case 3:
-			LandingUIForStaff landingUI = new LandingUIForStaff(loggedInStaff);
-			landingUI.showMenu(sc);
-			return;
+			return 0;
 		default:
 			//ERROR MESSAGE: Invalid option is selected
 			throw new BikeHireSystemException(10062);

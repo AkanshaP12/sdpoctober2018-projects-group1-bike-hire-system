@@ -13,52 +13,70 @@ public class LandingUIForStaff {
 	{
 		this.loggedInEntity = loggedInEntity;
 	}
-	public void showMenu(Scanner sc) throws BikeHireSystemException
+	public int showMenu(Scanner sc) throws BikeHireSystemException
 	{
-		System.out.println("1) Dashboard \n2) Asset management \n3) Place order \n4) Generate invoice \n5) Logout");
+		System.out.println("1) Dashboard \n2) Asset management \n3) Place order \n4) Generate invoice \n5) Generate report \n6) Logout");
 		System.out.println("Select option: ");
 		int input = sc.nextInt();
 		sc.nextLine();
 		switch(input)
 		{
 		case 1:
-			callDashboardUI(sc);
-			showMenu(sc);
-			break;
+			int returnValueUi = callDashboardUI(sc);
+			if(returnValueUi < 0)
+			{
+				return -1;
+			}
+			return showMenu(sc);
 		case 2:
-			callAssetManagementUI(sc);
-			showMenu(sc);
-			break;
+			int returnValueAM = callAssetManagementUI(sc);
+			if(returnValueAM < 0)
+			{
+				return -1;
+			}
+			return showMenu(sc);
 		case 3:
-			callPlaceOrderUI(sc);
-			showMenu(sc);
-			break;
+			int returnValuePO = callPlaceOrderUI(sc);
+			if(returnValuePO < 0)
+			{
+				return -1;
+			}
+			return showMenu(sc);
 		case 4:
-			callGenerateInvoice(sc);
-			showMenu(sc);
-			break;
+			int returnValueGI = callGenerateInvoice(sc);
+			if(returnValueGI < 0)
+			{
+				return -1;
+			}
+			return showMenu(sc);
 		case 5:
-			HomePage homepage = new HomePage();
-			homepage.display_menu();
-			break;
+			int returnValueGR = callGenerateReport(sc);
+			if(returnValueGR < 0)
+			{
+				return -1;
+			}
+			return showMenu(sc);
+		case 6:
+			return -1;
 		default:
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid option selected.
+			throw new BikeHireSystemException(10118);
 		}
 	}
 	
-	private void callDashboardUI(Scanner sc) throws BikeHireSystemException
+	private int callDashboardUI(Scanner sc) throws BikeHireSystemException
 	{
 		DashboardUI dashboardUI = new DashboardUI(loggedInEntity);
-		dashboardUI.showDashboard(sc);
+		return dashboardUI.showDashboard(sc);
 	}
 	
-	private void callAssetManagementUI(Scanner sc) throws BikeHireSystemException
+	private int callAssetManagementUI(Scanner sc) throws BikeHireSystemException
 	{
 		AssetManagementUI assetManagementUI = new AssetManagementUI(loggedInEntity);
-		assetManagementUI.manageAssets(sc);
+		return assetManagementUI.manageAssets(sc);
 	}
 	
-	private void callPlaceOrderUI(Scanner sc) throws BikeHireSystemException
+	private int callPlaceOrderUI(Scanner sc) throws BikeHireSystemException
 	{
 		System.out.println("Do you want to do group booking? (y/n) ");
 		String input = sc.nextLine();
@@ -66,8 +84,7 @@ public class LandingUIForStaff {
 		{
 			GroupBookingUI groupBookingUI = new GroupBookingUI(loggedInEntity, false);
 			groupBookingUI.processGroupBooking(sc);
-			this.showMenu(sc);
-			return;
+			return this.showMenu(sc);
 		}
 		
 		System.out.println("Enter Bike Id : ");
@@ -78,9 +95,10 @@ public class LandingUIForStaff {
 		sc.nextLine();
 		PlaceOrderUI placeOrderUI = new PlaceOrderUI(loggedInEntity, bikeId);
 		boolean status = placeOrderUI.processOrder(sc, false, userId);
+		return 0;
 	}
 	
-	private void callGenerateInvoice(Scanner sc) throws BikeHireSystemException
+	private int callGenerateInvoice(Scanner sc) throws BikeHireSystemException
 	{
 		System.out.println("Enter order id : ");
 		int orderId = sc.nextInt();
@@ -94,5 +112,12 @@ public class LandingUIForStaff {
 		OrderServiceImpl orderService = new OrderServiceImpl();
 		String invoiceId = orderService.generateInvoice( damageCharges, warehouseId, orderId);
 		System.out.println("Invoice generated successfully! Invoice id : " + invoiceId);
+		return 0;
+	}
+	
+	private int callGenerateReport(Scanner sc) throws BikeHireSystemException
+	{
+		ReportGeneratorUI reportUI = new ReportGeneratorUI(loggedInEntity);
+		return reportUI.processReport(sc);
 	}
 }

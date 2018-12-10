@@ -87,8 +87,8 @@ public class BikeServiceImpl implements BikeService {
 			BikeDTO bikeDTO = bikeDAO.getBike(id);
 			if(bikeDTO == null)
 			{
-				//TODO: Resolve
-				throw new BikeHireSystemException(-1);
+				//ERRORMESSAGE: Bike Data Transfer Object Not Found.
+				throw new BikeHireSystemException(10082);
 			}
 			
 			BikeStatusDTOImpl bikeStatusDTOImpl = new BikeStatusDTOImpl();
@@ -120,8 +120,8 @@ public class BikeServiceImpl implements BikeService {
 			BikeTypeDTO bikeTypeDTO = bikeTypeDAO.getBikeType(bikeTypeId);
 			if(bikeTypeDTO == null)
 			{
-				//TODO: Resolve
-				throw new BikeHireSystemException(-1);
+				//ERRORMESSAGE: Bike Type Data Transfer Object Not Found.
+				throw new BikeHireSystemException(10083);
 			}
 			
 			List<BikeDTO> allBikes = bikeDAO.getBikeForBikeType(bikeTypeId, sortPriceDescending);
@@ -143,8 +143,8 @@ public class BikeServiceImpl implements BikeService {
 			WareHouseDTO warehouseDTO = warehouseDAO.getWarehouse(warehouseId);
 			if(warehouseDTO == null)
 			{
-				//TODO: Resolve
-				throw new BikeHireSystemException(-1);
+				//ERRORMESSAGE: WareHouse Data Transfer Object Not Found.
+				throw new BikeHireSystemException(10084);
 			}
 			
 			List<BikeDTO> allBikes = bikeDAO.getBikeForWarehouseId(warehouseId, sortPriceDescending);

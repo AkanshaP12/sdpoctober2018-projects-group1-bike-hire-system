@@ -16,14 +16,14 @@ public class BikeStockValidator {
 	{
 		if(mBikeStock == null)
 		{
-			//TODO:Resolve
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: Invalid Bike Stock for Add Bike Stock Validation.
+			throw new BikeHireSystemException(10039);
 		}
 		
 		if(mBikeStock.getBikeTypeId() <= 0)
 		{
-			//TODO:Resolve
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: Invalid Bike Type Id for Add Bike Stock Validation.
+			throw new BikeHireSystemException(10040);
 		
 		}
 		
@@ -35,8 +35,8 @@ public class BikeStockValidator {
 	{
 		if(mBikeStock == null)
 		{
-			//TODO:Resolve
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: Invalid Bike Stock for Update Bike Stock Validation
+			throw new BikeHireSystemException(10041);
 		}
 		validateBikeQuantity();
 	}
@@ -45,8 +45,8 @@ public class BikeStockValidator {
 	{
 		if(mBikeStock.getTotalQuantity()<=0)
 		{
-			//TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERROR MESSAGE: Invalid Total Quantity for Bike Quantity Validation.
+			throw new BikeHireSystemException(10042);
 		
 		}
 	}

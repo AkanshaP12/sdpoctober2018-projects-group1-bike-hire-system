@@ -79,23 +79,23 @@ public class UserDetailsValidator {
 		int year = Calendar.getInstance().get(Calendar.YEAR);
 		int age = year - mEntity.getDOB().get(Calendar.YEAR);
 		if (age > 95 && age < 7) {
-			//TODO : Resolve later
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Age is not meeting the criteria.
+			throw new BikeHireSystemException(10075);
 		}
 		
 		if (mEntity.getPhoto() == null) {
-			// TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Photo is not provided.
+			throw new BikeHireSystemException(10076);
 		}
 		
 		if (mEntity.getIdentityProof() == null) {
-			// TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Identity Proof is not provided.
+			throw new BikeHireSystemException(10077);
 		}
 		
 		if(mEntity.getEntityAccount() == null) {
-			//TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Entity Account is not available.
+			throw new BikeHireSystemException(10078);
 		}
 		
 		validateUserAccountInformation();
@@ -105,20 +105,20 @@ public class UserDetailsValidator {
 	{
 		if(Util.isEmptyOrNullString(mEntity.getEntityAccount().getUserName()))
 		{
-			//TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid User name.
+			throw new BikeHireSystemException(10079);
 		}
 		
 		if(Util.isEmptyOrNullString(mEntity.getEntityAccount().getUserRole()))
 		{
-			//TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid User role.
+			throw new BikeHireSystemException(10080);
 		}
 		
 		if(Util.isEmptyOrNullString(mEntity.getEntityAccount().getAccountStatus()))
 		{
-			//TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Invalid Account status.
+			throw new BikeHireSystemException(10081);
 		}
 	}
 	

@@ -1,7 +1,6 @@
 package edu.srh.bikehire.assetmangement.impl;
 
 import edu.srh.bikehire.dto.BikeRentMappingDTO;
-import edu.srh.bikehire.dto.impl.BikeRentMappingDTOImpl;
 import edu.srh.bikehire.exception.BikeHireSystemException;
 import edu.srh.bikehire.util.Util;
 
@@ -16,15 +15,15 @@ public class BikeRentMappingValidator {
 	{
 		if(mBikeRentDetails == null)
 		{
-			//TODO:
-			throw new BikeHireSystemException(-1);
+			//ERROR_MESSAGE : 
+			throw new BikeHireSystemException(10029);
 		}
 		
 		
 		if(mBikeRentDetails.getBikeTypeId() <= 0)
 		{
-			//TODO:
-			throw new BikeHireSystemException(-1);
+			//ERROR_MESSAGE :
+			throw new BikeHireSystemException(10030);
 		}
 		
 		validateRentPerHour();
@@ -36,8 +35,8 @@ public class BikeRentMappingValidator {
 	{
 		if(mBikeRentDetails == null)
 		{
-			//TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERROR_MESSAGE :
+			throw new BikeHireSystemException(10031);
 		}
 	
 		validateRentPerHour();
@@ -51,8 +50,8 @@ public class BikeRentMappingValidator {
 	{
 		if(mBikeRentDetails.getRentPerHour()<=0)
 		{
-			//TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERROR_MESSAGE :
+			throw new BikeHireSystemException(10032);
 		
 		}
 	}
@@ -61,8 +60,8 @@ public class BikeRentMappingValidator {
 	{
 		if(mBikeRentDetails.getRentPerDay()<=0)
 		{
-			//TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERROR_MESSAGE :
+			throw new BikeHireSystemException(10033);
 		
 		}
 	}

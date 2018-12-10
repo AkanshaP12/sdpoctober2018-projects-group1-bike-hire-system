@@ -168,8 +168,8 @@ public class OrderServiceImpl implements OrderService {
 			CurrentOrderDTO currentOrderDTO = currentOrderDAO.getCurrentOrderByOrderId(orderID);
 			if(currentOrderDTO == null)
 			{
-				//TODO: Resolve
-				throw new BikeHireSystemException(-1);
+				//ERRORMESSAGE: Current Order Data Transfer Object Not Found.
+				throw new BikeHireSystemException(10086);
 			}
 			currentOrderDAO.deleteCurrentOrder(currentOrderDTO);
 			LOG.info("cancelOrder : order deleted from orders.");
@@ -220,8 +220,8 @@ public class OrderServiceImpl implements OrderService {
 			CurrentOrderDTO currentOrderDTO = currentOrderDAO.getCurrentOrderByOrderId(orderID);
 			if(currentOrderDTO == null)
 			{
-				//TODO: Resolve
-				throw new BikeHireSystemException(-1);
+				//ERRORMESSAGE: Current Order Data Transfer Object Not Found.
+				throw new BikeHireSystemException(10086);
 			}
 			
 			Order lReturnOrder = getOrderFromDTO(currentOrderDTO);
@@ -243,8 +243,8 @@ public class OrderServiceImpl implements OrderService {
 			List<CurrentOrderDTO> currentOrderDTOs = currentOrderDAO.getCurrentOrderByUserId(userId);
 			if(currentOrderDTOs == null)
 			{
-				//TODO: Resolve
-				throw new BikeHireSystemException(-1);
+				//ERRORMESSAGE: List of Current Order Data Transfer Objects Not Found.
+				throw new BikeHireSystemException(10087);
 			}
 			
 			System.out.println("You have " + currentOrderDTOs.size() + " order(s)");
@@ -273,15 +273,15 @@ public class OrderServiceImpl implements OrderService {
 			OrderPaymentDTO orderPaymentDTO = orderPaymentDAO.getOrderPaymentByOrderId(orderId);
 			if(orderPaymentDTO == null)
 			{
-				//TODO: Resolve
-				throw new BikeHireSystemException(-1);
+				//ERRORMESSAGE: Order Payment Data Transfer Object Not Found.
+				throw new BikeHireSystemException(10088);
 			}
 			
 			CurrentOrderDTO currentOrderDTO = currentOrderDAO.getCurrentOrderByOrderId(orderPaymentDTO.getOrderID());
 			if(currentOrderDTO == null)
 			{
-				//TODO: Resolve
-				throw new BikeHireSystemException(-1);
+				//ERRORMESSAGE: Current Order Data Transfer Object Not Found.
+				throw new BikeHireSystemException(10086);
 			}
 			
 			WareHouseDTO warehouseDTO = warehouseDAO.getWarehouse(warehouseId);
@@ -369,14 +369,14 @@ public class OrderServiceImpl implements OrderService {
 	private void validateUserStatus(UserAccountDTO userAccountDTO) throws BikeHireSystemException
 	{
 		if (userAccountDTO == null) {
-			// TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: User Account Data Transfer Object Not Found.
+			throw new BikeHireSystemException(10085);
 		}
 		
 		if(!userAccountDTO.getAccountStatus().equals(LoginConstants.LOGIN_ACCOUNT_STATUS_ACTIVE))
 		{
-			// TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: User Account status is not active.
+			throw new BikeHireSystemException(10089);
 		}
 	}
 	
@@ -384,14 +384,14 @@ public class OrderServiceImpl implements OrderService {
 	{
 		if(bikeStatusDTO == null)
 		{
-			// TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: Bike Status Data Transfer Object Not Found.
+			throw new BikeHireSystemException(10090);
 		}
 		
 		if(!bikeStatusDTO.getStatus().equals(BikeStatusType.AVALIABLE_BIKE.getBikeStatus()))
 		{
-			// TODO: Resolve
-			throw new BikeHireSystemException(-1);
+			//ERRORMESSAGE: No bike is available. 
+			throw new BikeHireSystemException(10091);
 		}
 	}
 	

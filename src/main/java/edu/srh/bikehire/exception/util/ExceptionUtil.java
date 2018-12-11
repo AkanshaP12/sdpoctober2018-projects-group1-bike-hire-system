@@ -100,7 +100,7 @@ public class ExceptionUtil {
 		smapErrorCodesToMessages.put(10083L, new ErrorMessage("Bike Type Data Transfer Object Not Found.", "Unexpected error occurred. Please try after some time.") );
 		smapErrorCodesToMessages.put(10084L, new ErrorMessage("WareHouse Data Transfer Object Not Found.", "Unexpected error occurred. Please try after some time.") );
 		smapErrorCodesToMessages.put(10085L, new ErrorMessage("User Account Data Transfer Object Not Found.", "Unexpected error occurred. Please try after some time.") );
-		smapErrorCodesToMessages.put(10086L, new ErrorMessage("Current Order Data Transfer Object Not Found.", "Unexpected error occurred. Please try after some time.") );
+		smapErrorCodesToMessages.put(10086L, new ErrorMessage("Current Order Data Transfer Object Not Found.", "Invalid order id provided.") );
 		smapErrorCodesToMessages.put(10087L, new ErrorMessage("List of Current Order Data Transfer Objects Not Found.", "Unexpected error occurred. Please try after some time.") );
 		smapErrorCodesToMessages.put(10088L, new ErrorMessage("Order Payment Data Transfer Object Not Found.", "Unexpected error occurred. Please try after some time.") );
 		smapErrorCodesToMessages.put(10089L, new ErrorMessage("User Account status is not active.", "Unexpected error occurred. Please try after some time.") );

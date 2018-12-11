@@ -92,8 +92,7 @@ public class LandingUIForStaff {
 		if(input.equalsIgnoreCase("y"))
 		{
 			GroupBookingUI groupBookingUI = new GroupBookingUI(loggedInEntity, false);
-			groupBookingUI.processGroupBooking(sc);
-			return this.showMenu(sc);
+			return groupBookingUI.processGroupBooking(sc);
 		}
 		
 		System.out.println("Enter Bike Id : ");

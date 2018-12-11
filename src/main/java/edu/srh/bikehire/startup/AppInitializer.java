@@ -19,7 +19,7 @@ public class AppInitializer {
 		
 		mCacheCleanup = new ResetPasswordCacheCleanup(sResetPasswordCache);
 		mResetPasswordCacheCleanupThread = new Thread(mCacheCleanup);
-		
+		mResetPasswordCacheCleanupThread.start();
 		DBConnectionFactory.initializeFactory();
 	}
 	

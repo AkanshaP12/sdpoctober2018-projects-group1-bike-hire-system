@@ -16,7 +16,7 @@ public class LoginUI {
 	
 	public Entity login(Scanner in)
 	{
-		System.out.println("login");
+		System.out.println("Login");
 		
 		try
 		{			

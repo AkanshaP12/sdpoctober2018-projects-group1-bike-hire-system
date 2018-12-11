@@ -116,7 +116,7 @@ public class CatalogUI {
 	
 	private int sortByDeposit(Scanner sc, BikeService bikeService, boolean sortDescending) throws BikeHireSystemException
 	{
-		List<BikeDTO> listOfBikes = bikeService.getAllBikesBasedOnStatus(BikeStatusType.AVALIABLE_BIKE, true);
+		List<BikeDTO> listOfBikes = bikeService.getAllBikesBasedOnStatus(BikeStatusType.AVALIABLE_BIKE, sortDescending);
 		
 		if(listOfBikes == null || listOfBikes.isEmpty())
 		{
@@ -210,8 +210,6 @@ public class CatalogUI {
 	private int groupBookingOption(Scanner sc, BikeService bikeService) throws BikeHireSystemException
 	{
 		GroupBookingUI groupBookingUi = new GroupBookingUI(loggedInEntity, true);
-		groupBookingUi.processGroupBooking(sc);
-		LandingUIForCustomer landingUI = new LandingUIForCustomer(loggedInEntity);
-		return landingUI.showMenu(sc);
+		return groupBookingUi.processGroupBooking(sc);
 	}
 }

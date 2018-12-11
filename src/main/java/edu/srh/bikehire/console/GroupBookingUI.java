@@ -65,8 +65,7 @@ public class GroupBookingUI {
 		if(noOfBikes > noOfBikesAvailable)
 		{
 			System.out.println("Sorry, not enough bikes are available for this bike type. Please try again.");
-			LandingUIForCustomer landingUI = new LandingUIForCustomer(loggedInEntity);
-			return landingUI.showMenu(sc);
+			return 0;
 		}
 		
 		System.out.println("Bikes are available for booking, do you want to book now? (y/n)");

@@ -19,7 +19,7 @@ public class LoginUtil {
 	 */
 	private static final String PASSWORD_REGEX_STRING = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+!=])(?=\\S+$).{8,}$";
 	
-	private static final String PHONE_NO_REGEX_STRING = "^(\\+\\d{1,3}[- ]?)?\\d{10}$";
+	private static final String PHONE_NO_REGEX_STRING = "^(\\+\\d{1,3}[- ]?)?\\d{10,12}$";
 	
 	public static String getResetPasswordToken()
 	{

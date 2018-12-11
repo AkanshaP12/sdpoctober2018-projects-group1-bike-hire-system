@@ -27,7 +27,7 @@ public class ConsoleUtil {
 	
 	public static String getStringForDate(Calendar calendar)
 	{
-		SimpleDateFormat format = new SimpleDateFormat();
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/YYYY hh:mm:ss");
 		return format.format(calendar.getTime());
 	}
 }

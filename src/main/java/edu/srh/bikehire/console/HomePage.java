@@ -28,13 +28,12 @@ public class HomePage {
 			//System.out.println("1) Register \n2) Login \n 3) Forgot Password? \n");
 			System.out.println("Select option: ");
 			
-			ConsoleUtil.clearConsole();
 			int option = sc.nextInt();
 			sc.nextLine();
 			switch (option) {
 			case 1:
 				int returnValueRU = this.callRegistrationUI();
-				if(returnValueRU >= 0)
+				if(returnValueRU <= 0)
 				{
 					this.display_menu();
 				}

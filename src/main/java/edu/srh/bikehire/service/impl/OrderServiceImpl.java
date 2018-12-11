@@ -172,6 +172,7 @@ public class OrderServiceImpl implements OrderService {
 				//ERRORMESSAGE: Current Order Data Transfer Object Not Found.
 				throw new BikeHireSystemException(10086);
 			}
+			int orderId = currentOrderDTO.getOrderID();
 			currentOrderDAO.deleteCurrentOrder(currentOrderDTO);
 			LOG.info("cancelOrder : order deleted from orders.");
 			
@@ -190,6 +191,7 @@ public class OrderServiceImpl implements OrderService {
 			UserDTOImpl userDTOImpl = new UserDTOImpl();
 			userDTOImpl.setId(currentOrderDTO.getUserID());
 			orderHistoryDTOImpl.setUserDTO(userDTOImpl);
+			orderHistoryDTOImpl.setOrderID(orderId);
 			orderHistoryDTOImpl.setBookingTimeStamp(currentOrderDTO.getBookingTimeStamp());
 			orderHistoryDTOImpl.setPickupTimeStamp(currentOrderDTO.getPickupTimeStamp());
 			orderHistoryDTOImpl.setReturnedTimeStamp(currentOrderDTO.getPickupTimeStamp());

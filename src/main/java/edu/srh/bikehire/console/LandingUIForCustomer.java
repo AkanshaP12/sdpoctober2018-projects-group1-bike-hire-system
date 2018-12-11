@@ -20,33 +20,41 @@ public class LandingUIForCustomer {
 		System.out.println("Select option: ");
 		int input = sc.nextInt();
 		sc.nextLine();
-		switch(input)
-		{
-		case 1:
-			if(callCatalogUI(sc) < 0)
+		try
+		{			
+			switch(input)
 			{
+			case 1:
+				if(callCatalogUI(sc) < 0)
+				{
+					return -1;
+				}
+				return showMenu(sc);
+			case 2:
+				int returnValue = callAccountUI(sc);
+				if(returnValue < 0)
+				{
+					return -1;
+				}
+				return showMenu(sc);
+			case 3:
+				if(callOrdersUI(sc) < 0)
+				{
+					return -1;
+				}
+				return showMenu(sc);
+			case 4:
 				return -1;
+			default:
+				//ERRORMESSAGE: Invalid option selected.
+				throw new BikeHireSystemException(10118);
 			}
-			return showMenu(sc);
-		case 2:
-			int returnValue = callAccountUI(sc);
-			if(returnValue < 0)
-			{
-				return -1;
-			}
-			return showMenu(sc);
-		case 3:
-			if(callOrdersUI(sc) < 0)
-			{
-				return -1;
-			}
-			return showMenu(sc);
-		case 4:
-			return -1;
-		default:
-			//ERRORMESSAGE: Invalid option selected.
-			throw new BikeHireSystemException(10118);
 		}
+		catch(BikeHireSystemException exp)
+		{
+			System.out.println(exp.getDisplayMessage());
+		}
+		return this.showMenu(sc);
 	}
 	
 	private int callCatalogUI(Scanner sc) throws BikeHireSystemException

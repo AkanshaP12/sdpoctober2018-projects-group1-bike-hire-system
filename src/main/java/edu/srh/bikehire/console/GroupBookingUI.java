@@ -104,7 +104,6 @@ public class GroupBookingUI {
 		Calendar bookingDate = Calendar.getInstance();
 		Calendar actualDropOffDate = dropOffDate;
 		OrderServiceImpl orderService = new OrderServiceImpl();
-		
 		for(int bikeId : allSelectedBikeIds)
 		{
 			OrderInfo lOrderInfo = new OrderInfo();

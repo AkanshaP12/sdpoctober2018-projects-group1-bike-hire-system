@@ -19,49 +19,58 @@ public class LandingUIForStaff {
 		System.out.println("Select option: ");
 		int input = sc.nextInt();
 		sc.nextLine();
-		switch(input)
+		try
 		{
-		case 1:
-			int returnValueUi = callDashboardUI(sc);
-			if(returnValueUi < 0)
+			
+			switch(input)
 			{
+			case 1:
+				int returnValueUi = callDashboardUI(sc);
+				if(returnValueUi < 0)
+				{
+					return -1;
+				}
+				return showMenu(sc);
+			case 2:
+				int returnValueAM = callAssetManagementUI(sc);
+				if(returnValueAM < 0)
+				{
+					return -1;
+				}
+				return showMenu(sc);
+			case 3:
+				int returnValuePO = callPlaceOrderUI(sc);
+				if(returnValuePO < 0)
+				{
+					return -1;
+				}
+				return showMenu(sc);
+			case 4:
+				int returnValueGI = callGenerateInvoice(sc);
+				if(returnValueGI < 0)
+				{
+					return -1;
+				}
+				return showMenu(sc);
+			case 5:
+				int returnValueGR = callGenerateReport(sc);
+				if(returnValueGR < 0)
+				{
+					return -1;
+				}
+				return showMenu(sc);
+			case 6:
 				return -1;
+			default:
+				//ERRORMESSAGE: Invalid option selected.
+				throw new BikeHireSystemException(10118);
 			}
-			return showMenu(sc);
-		case 2:
-			int returnValueAM = callAssetManagementUI(sc);
-			if(returnValueAM < 0)
-			{
-				return -1;
-			}
-			return showMenu(sc);
-		case 3:
-			int returnValuePO = callPlaceOrderUI(sc);
-			if(returnValuePO < 0)
-			{
-				return -1;
-			}
-			return showMenu(sc);
-		case 4:
-			int returnValueGI = callGenerateInvoice(sc);
-			if(returnValueGI < 0)
-			{
-				return -1;
-			}
-			return showMenu(sc);
-		case 5:
-			int returnValueGR = callGenerateReport(sc);
-			if(returnValueGR < 0)
-			{
-				return -1;
-			}
-			return showMenu(sc);
-		case 6:
-			return -1;
-		default:
-			//ERRORMESSAGE: Invalid option selected.
-			throw new BikeHireSystemException(10118);
 		}
+		catch(BikeHireSystemException exp)
+		{
+			System.out.println(exp.getDisplayMessage());
+		}
+		return this.showMenu(sc);
 	}
 	
 	private int callDashboardUI(Scanner sc) throws BikeHireSystemException
@@ -94,7 +103,14 @@ public class LandingUIForStaff {
 		int userId = sc.nextInt();
 		sc.nextLine();
 		PlaceOrderUI placeOrderUI = new PlaceOrderUI(loggedInEntity, bikeId);
-		boolean status = placeOrderUI.processOrder(sc, false, userId);
+		try
+		{			
+			boolean status = placeOrderUI.processOrder(sc, false, userId);
+		}
+		catch(BikeHireSystemException exp)
+		{
+			System.out.println(exp.getDisplayMessage());
+		}
 		return 0;
 	}
 	

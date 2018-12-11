@@ -37,6 +37,11 @@ public class LoginUI {
 			}
 			return loggedInEntity;
 		}
+		catch(BikeHireSystemException exception)
+		{
+			System.out.println(exception.getDisplayMessage());
+			return this.login(in);
+		}
 		catch(Exception exception)
 		{
 			System.out.println(exception.getMessage());

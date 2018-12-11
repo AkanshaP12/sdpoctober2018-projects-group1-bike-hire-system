@@ -103,7 +103,15 @@ public class CatalogUI {
 		int bikeId = sc.nextInt();
 		sc.nextLine();
 		PlaceOrderUI placeOrder = new PlaceOrderUI(loggedInEntity, bikeId);
-		return placeOrder.processOrder(sc, true, loggedInEntity.getUserId());
+		try
+		{			
+			return placeOrder.processOrder(sc, true, loggedInEntity.getUserId());
+		}
+		catch(BikeHireSystemException exp)
+		{
+			System.out.println(exp.getDisplayMessage());
+			return false;
+		}
 	}
 	
 	private int sortByDeposit(Scanner sc, BikeService bikeService, boolean sortDescending) throws BikeHireSystemException

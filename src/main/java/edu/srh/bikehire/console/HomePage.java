@@ -67,14 +67,21 @@ public class HomePage {
 				//ERROR MESSAGE: Invalid option is selected
 				throw new BikeHireSystemException(10062);
 			}
-		} catch (Exception exception) {
+		}catch (BikeHireSystemException exception) {
+			System.out.println(exception.getDisplayMessage());
+			this.display_menu();
+			return;
+		} 
+		catch (Exception exception) {
 			System.out.println(exception.getMessage());
+			this.display_menu();
+			return;
 		} finally {
 			if (sc != null) {
 				sc.close();
 			}
 		}
-
+		
 	}
 
 	public static void main(String[] args){

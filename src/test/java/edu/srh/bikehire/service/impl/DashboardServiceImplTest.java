@@ -35,7 +35,7 @@ public class DashboardServiceImplTest {
 	}
 	
 	@Test
-	public void testGetBikeCountUnderHired() throws BikeHireSystemException {
+	public void testGetBikeCountHired() throws BikeHireSystemException {
 		//add bike type id 3
 		int bikeTypeId = 3;
 
@@ -77,20 +77,13 @@ public class DashboardServiceImplTest {
 		assertTrue(upcomingAppList.size() >= 0) ;
 		
 	}
-	
-	@Test
-	public void testGetUpcomingAppointmentsNoApp() throws BikeHireSystemException {
-		Calendar cal = Calendar.getInstance();
-		List upcomingAppList = dashboardTest.getUpcomingAppointments(cal, false);
-		assertTrue(upcomingAppList.size() == 0) ;
-		
-	}
+
 	@Test
 	public void testGetUpcomingAppointmentsInvalid() throws BikeHireSystemException {
 		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DATE, 2);
+		cal.add(Calendar.DATE, 7);
 		List upcomingAppList = dashboardTest.getUpcomingAppointments(cal, false);
-		assertTrue(upcomingAppList.size() >= 0) ;
+		assertTrue(upcomingAppList.size() <= 0) ;
 		
 	}
 

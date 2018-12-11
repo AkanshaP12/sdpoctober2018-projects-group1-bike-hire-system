@@ -1,5 +1,6 @@
 package edu.srh.bikehire.console;
 
+import java.io.Console;
 import java.util.Scanner;
 
 import edu.srh.bikehire.exception.BikeHireSystemException;
@@ -46,8 +47,26 @@ public class LoginUI {
 	{
 		System.out.println("Enter UserName : ");
 		username=in.nextLine();
-		System.out.println("Enter password: ");
-		password=in.nextLine();
+		String enterPwdMsg = "Enter password: ";
+		Console cons = System.console();
+		password=getPasswordMasked(cons, enterPwdMsg);
 	}
+	
+   public static String getPasswordMasked(Console cons, String msg)
+   {
+       char[] passwd;
+       while (true) {
+           passwd = cons.readPassword("%s", msg);
+           if (passwd != null) {
+               if (passwd.length > 0) {
+                   String lpassword  = new String(passwd);
+                   System.out.println(lpassword);
+                   return lpassword;
+               } else {
+                   System.out.println("Invalid input\n");
+               }
+           }
+       }
+   }
 
 }

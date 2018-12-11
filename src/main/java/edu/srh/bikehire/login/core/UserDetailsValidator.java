@@ -3,6 +3,7 @@ package edu.srh.bikehire.login.core;
 import java.util.Calendar;
 
 import edu.srh.bikehire.exception.BikeHireSystemException;
+import edu.srh.bikehire.login.util.LoginUtil;
 import edu.srh.bikehire.service.core.Entity;
 import edu.srh.bikehire.util.Util;
 
@@ -65,6 +66,12 @@ public class UserDetailsValidator {
 		}
 		
 		if(mEntity.getPhoneNumber().length() < 10)
+		{
+			//Error_Message: Entity phone number is invalid.
+			throw new BikeHireSystemException(10016);
+		}
+		
+		if(!LoginUtil.isValidMobileNumber(mEntity.getPhoneNumber()))
 		{
 			//Error_Message: Entity phone number is invalid.
 			throw new BikeHireSystemException(10016);

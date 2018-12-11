@@ -44,4 +44,6 @@ public abstract class DAOFactory {
 	public abstract void beginTransaction();
 	
 	public abstract void commitTransaction();
+	
+	public abstract void rollbackTransaction();
 }

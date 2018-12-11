@@ -31,7 +31,7 @@ public class ReportGeneratorUI {
 			showInvoiceReport(sc);
 			return 0;
 		case 3:
-			return -1;
+			return 0;
 		default:
 			//ERRORMESSAGE: Invalid option selected.
 			throw new BikeHireSystemException(10118);

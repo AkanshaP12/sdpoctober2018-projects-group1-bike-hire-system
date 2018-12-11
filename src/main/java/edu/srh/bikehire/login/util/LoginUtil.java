@@ -19,6 +19,8 @@ public class LoginUtil {
 	 */
 	private static final String PASSWORD_REGEX_STRING = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+!=])(?=\\S+$).{8,}$";
 	
+	private static final String PHONE_NO_REGEX_STRING = "^(\\+\\d{1,3}[- ]?)?\\d{10}$";
+	
 	public static String getResetPasswordToken()
 	{
 		int leftLimitCharacter = 65; // letter 'A'
@@ -56,6 +58,20 @@ public class LoginUtil {
 		}
 		
 		if(pInputPassword.matches(PASSWORD_REGEX_STRING))
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	public static boolean isValidMobileNumber(String pMobileNumber)
+	{
+		if(Util.isEmptyOrNullString(pMobileNumber))
+		{
+			return false;
+		}
+		
+		if(pMobileNumber.matches(PHONE_NO_REGEX_STRING))
 		{
 			return true;
 		}

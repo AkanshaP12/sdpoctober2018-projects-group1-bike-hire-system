@@ -58,19 +58,6 @@ public class AssetManagementServiceImplTest {
 	}
 
 	@Test
-	public void testUpdateWarehouseAndValidate() throws BikeHireSystemException {
-		WarehouseInfo warehouseInfo = new WarehouseInfo();
-		warehouseInfo.setWarehouseId(1);
-		warehouseInfo.setName("Heidelberg Main Warehouse");
-		warehouseInfo.setLocation("Heidelberg");
-		warehouseInfo.setStorageCapacity(200);
-		boolean warehouseUpdateStatus = assetService.updateWarehouse(warehouseInfo);
-		WarehouseDAO warehouseDAO = DAOFactory.getDAOFactory(DAOFactoryType.JPADAOFACTORY).getWarehouseDAO();
-		WareHouseDTO returnedWarehouse = warehouseDAO.getWarehouse(3);
-		assertEquals(200, returnedWarehouse.getStorageCapacity());
-	}
-
-	@Test
 	public void testAddNewBikeType() throws BikeHireSystemException {
 		BikeTypeInfo bikeTypeInfo = new BikeTypeInfo();
 		bikeTypeInfo.setBikeType("sports bike");

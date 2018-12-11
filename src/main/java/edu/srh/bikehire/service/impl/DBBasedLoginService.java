@@ -108,7 +108,7 @@ public class DBBasedLoginService implements Login {
 			validateUserInfoForRegistration(pEntity);
 			LOG.info("registerUserAccount : No user exists with email address. Proceed to user creation.");
 			
-			validateUserAccountForRegistration(pEntityCredential);
+			validateUserCredentialsForRegistration(pEntityCredential);
 			
 			int userId = insertRegistrationInfo(pEntity, pEntityCredential);
 			
@@ -126,9 +126,11 @@ public class DBBasedLoginService implements Login {
 		}
 		catch(Throwable throwable)
 		{
+			daoFactory.rollbackTransaction();
 			LOG.error("registerUserAccount : " + throwable.getMessage(), throwable);
 			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
 		}
+		
 	}
 	
 	public void resetPassword(EntityRegistrationCredential pEntityCredential) throws BikeHireSystemException
@@ -153,6 +155,7 @@ public class DBBasedLoginService implements Login {
 		}
 		catch(Throwable throwable)
 		{
+			daoFactory.rollbackTransaction();
 			LOG.error("resetPassword : " + throwable.getMessage(), throwable);
 			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
 		}
@@ -177,6 +180,7 @@ public class DBBasedLoginService implements Login {
 		}
 		catch(Throwable throwable)
 		{
+			daoFactory.rollbackTransaction();
 			LOG.error("deactivateAccount : " + throwable.getMessage(), throwable);
 			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
 		}
@@ -212,6 +216,7 @@ public class DBBasedLoginService implements Login {
 		}
 		catch(Throwable throwable)
 		{
+			daoFactory.rollbackTransaction();
 			LOG.error("markUserAccountAsActive : " + throwable.getMessage(), throwable);
 			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
 		}
@@ -363,7 +368,7 @@ public class DBBasedLoginService implements Login {
 		}
 	}
 	
-	private void validateUserAccountForRegistration(EntityRegistrationCredential pEntityCredential) throws BikeHireSystemException
+	private void validateUserCredentialsForRegistration(EntityRegistrationCredential pEntityCredential) throws BikeHireSystemException
 	{
 		UserRegistrationCredentialValidator lCredentialValidator = new UserRegistrationCredentialValidator(pEntityCredential);
 		lCredentialValidator.validateEntityCredentials();

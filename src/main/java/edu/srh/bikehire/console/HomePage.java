@@ -87,8 +87,12 @@ public class HomePage {
 			homepage.initializeScanner();
 			homepage.display_menu();
 		} catch (BikeHireSystemException e) {
+			System.out.println(e.getDisplayMessage());
+			//e.printStackTrace();
+		}
+		catch(Exception e)
+		{
 			System.out.println(e.getMessage());
-			e.printStackTrace();
 		}
 		finally
 		{

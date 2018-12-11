@@ -1,7 +1,5 @@
 package edu.srh.bikehire.console;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
 
@@ -64,7 +62,7 @@ public class CatalogUI {
 			displayBikes(listOfBikes, bikeService);
 		}
 		
-		System.out.println("1) Select bike \n2) Sort bike by deposit amount \n3) View bikes by type \n4) View bike by warehouse\n5) Group Booking \n6) Back");
+		System.out.println("1) Select bike \n2) Sort bikes in descending order of deposit amount \n3) Sort bikes in ascending order of deposit amount \n4) View bikes by type \n5) View bike by warehouse \n6) Group Booking \n7) Back");
 		System.out.println("Select option: ");
 		int input = sc.nextInt();
 		sc.nextLine();
@@ -80,14 +78,16 @@ public class CatalogUI {
 			LandingUIForCustomer landingUI = new LandingUIForCustomer(loggedInEntity);
 			return landingUI.showMenu(sc);
 		case 2:
-			return sortByDeposit(sc, bikeService);
+			return sortByDeposit(sc, bikeService, true);
 		case 3:
-			return viewBikeByTypes(sc, bikeService);
+			return sortByDeposit(sc, bikeService, false);
 		case 4:
-			return viewBikeByWarehouse(sc, bikeService);
+			return viewBikeByTypes(sc, bikeService);
 		case 5:
-			return groupBookingOption(sc, bikeService);
+			return viewBikeByWarehouse(sc, bikeService);
 		case 6:
+			return groupBookingOption(sc, bikeService);
+		case 7:
 			LandingUIForCustomer customerLandingUi = new LandingUIForCustomer(loggedInEntity);
 			return customerLandingUi.showMenu(sc);
 		default:
@@ -106,7 +106,7 @@ public class CatalogUI {
 		return placeOrder.processOrder(sc, true, loggedInEntity.getUserId());
 	}
 	
-	private int sortByDeposit(Scanner sc, BikeService bikeService) throws BikeHireSystemException
+	private int sortByDeposit(Scanner sc, BikeService bikeService, boolean sortDescending) throws BikeHireSystemException
 	{
 		List<BikeDTO> listOfBikes = bikeService.getAllBikesBasedOnStatus(BikeStatusType.AVALIABLE_BIKE, true);
 		

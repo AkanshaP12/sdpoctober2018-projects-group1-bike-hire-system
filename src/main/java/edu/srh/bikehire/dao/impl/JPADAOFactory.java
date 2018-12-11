@@ -99,7 +99,16 @@ public class JPADAOFactory extends DAOFactory {
 
 	@Override
 	public void commitTransaction() {
-		em.getTransaction().commit();
+		if(em.getTransaction().isActive())
+		{			
+			em.getTransaction().commit();
+		}
 	}
 	
+	public void rollbackTransaction() {
+		if(em.getTransaction().isActive())
+		{			
+			em.getTransaction().rollback();
+		}
+	}
 }

@@ -49,7 +49,7 @@ public class DBBasedLoginServiceTest {
 		customer.setGender("Male");
 		customer.setIdentityProofBytes(new byte[] {23,35,5,53,34,12,2});
 		customer.setPhotoBytes(new byte[] {23,12,45,23,7,3,7,23,78,23,5});
-		customer.setPhoneNumber("56262949562626");
+		customer.setPhoneNumber("+49 1517123456");
 		CustomerAccount customerAccount = new CustomerAccount();
 		customerAccount.setUserName("virajab-patel");
 		customerAccount.setUserRole("Customer");
@@ -76,7 +76,7 @@ public class DBBasedLoginServiceTest {
 		customer.setGender("Male");
 		customer.setIdentityProofBytes(new byte[] {23,35,5,53,34,12,2});
 		customer.setPhotoBytes(new byte[] {23,12,45,23,7,3,7,23,78,23,5});
-		customer.setPhoneNumber("56262949562626");
+		customer.setPhoneNumber("+49 1517123456");
 		CustomerAccount customerAccount = new CustomerAccount();
 		customerAccount.setUserName("virajab-patel");
 		customerAccount.setUserRole("Customer");
@@ -103,7 +103,7 @@ public class DBBasedLoginServiceTest {
 		customer.setGender("Male");
 		customer.setIdentityProofBytes(new byte[] {23,35,5,53,34,12,2});
 		customer.setPhotoBytes(new byte[] {23,12,45,23,7,3,7,23,78,23,5});
-		customer.setPhoneNumber("56262949562626");
+		customer.setPhoneNumber("+49 1517123456");
 		CustomerAccount customerAccount = new CustomerAccount();
 		customerAccount.setUserName("virajab-patel");
 		customerAccount.setUserRole("Customer");
@@ -130,7 +130,7 @@ public class DBBasedLoginServiceTest {
 		customer.setGender("Male");
 		customer.setIdentityProofBytes(new byte[] {23,35,5,53,34,12,2});
 		customer.setPhotoBytes(new byte[] {23,12,45,23,7,3,7,23,78,23,5});
-		customer.setPhoneNumber("56262949562626");
+		customer.setPhoneNumber("+49 1517123456");
 		CustomerAccount customerAccount = new CustomerAccount();
 		customerAccount.setUserName("virajab-patel");
 		customerAccount.setUserRole("Customer");
@@ -157,7 +157,7 @@ public class DBBasedLoginServiceTest {
 		customer.setGender("Male");
 		customer.setIdentityProofBytes(new byte[] {23,35,5,53,34,12,2});
 		customer.setPhotoBytes(new byte[] {23,12,45,23,7,3,7,23,78,23,5});
-		customer.setPhoneNumber("56262949562626");
+		customer.setPhoneNumber("+49 1517123456");
 		CustomerAccount customerAccount = new CustomerAccount();
 		customerAccount.setUserName("virajab-patel");
 		customerAccount.setUserRole("Customer");
@@ -184,7 +184,7 @@ public class DBBasedLoginServiceTest {
 		customer.setGender("Male");
 		customer.setIdentityProofBytes(new byte[] {23,35,5,53,34,12,2});
 		customer.setPhotoBytes(new byte[] {23,12,45,23,7,3,7,23,78,23,5});
-		customer.setPhoneNumber("56262949562626");
+		customer.setPhoneNumber("+49 1517123456");
 		CustomerAccount customerAccount = new CustomerAccount();
 		customerAccount.setUserName("virajab-patel");
 		customerAccount.setUserRole("Customer");
@@ -211,7 +211,7 @@ public class DBBasedLoginServiceTest {
 		customer.setGender(null);
 		customer.setIdentityProofBytes(new byte[] {23,35,5,53,34,12,2});
 		customer.setPhotoBytes(new byte[] {23,12,45,23,7,3,7,23,78,23,5});
-		customer.setPhoneNumber("56262949562626");
+		customer.setPhoneNumber("+49 1517123456");
 		CustomerAccount customerAccount = new CustomerAccount();
 		customerAccount.setUserName("virajab-patel");
 		customerAccount.setUserRole("Customer");
@@ -238,7 +238,7 @@ public class DBBasedLoginServiceTest {
 		customer.setGender("Male");
 		customer.setIdentityProofBytes(null);
 		customer.setPhotoBytes(new byte[] {23,12,45,23,7,3,7,23,78,23,5});
-		customer.setPhoneNumber("56262949562626");
+		customer.setPhoneNumber("+49 1517123456");
 		CustomerAccount customerAccount = new CustomerAccount();
 		customerAccount.setUserName("virajab-patel");
 		customerAccount.setUserRole("Customer");
@@ -265,7 +265,7 @@ public class DBBasedLoginServiceTest {
 		customer.setGender("Male");
 		customer.setIdentityProofBytes(new byte[] {23,35,5,53,34,12,2});
 		customer.setPhotoBytes(null);
-		customer.setPhoneNumber("56262949562626");
+		customer.setPhoneNumber("+49 1517123456");
 		CustomerAccount customerAccount = new CustomerAccount();
 		customerAccount.setUserName("virajab-patel");
 		customerAccount.setUserRole("Customer");
@@ -319,7 +319,7 @@ public class DBBasedLoginServiceTest {
 		customer.setGender("Male");
 		customer.setIdentityProofBytes(new byte[] {23,35,5,53,34,12,2});
 		customer.setPhotoBytes(new byte[] {23,12,45,23,7,3,7,23,78,23,5});
-		customer.setPhoneNumber("56262");
+		customer.setPhoneNumber("562622342424242");
 		CustomerAccount customerAccount = new CustomerAccount();
 		customerAccount.setUserName("virajab-patel");
 		customerAccount.setUserRole("Customer");
@@ -346,7 +346,7 @@ public class DBBasedLoginServiceTest {
 		customer.setGender("Male");
 		customer.setIdentityProofBytes(new byte[] {23,35,5,53,34,12,2});
 		customer.setPhotoBytes(new byte[] {23,12,45,23,7,3,7,23,78,23,5});
-		customer.setPhoneNumber("56262949562626");
+		customer.setPhoneNumber("+49 1517123456");
 		CustomerAccount customerAccount = new CustomerAccount();
 		customerAccount.setUserName(null);
 		customerAccount.setUserRole("Customer");
@@ -374,7 +374,7 @@ public class DBBasedLoginServiceTest {
 		customer.setGender("Male");
 		customer.setIdentityProofBytes(new byte[] {23,35,5,53,34,12,2});
 		customer.setPhotoBytes(new byte[] {23,12,45,23,7,3,7,23,78,23,5});
-		customer.setPhoneNumber("56262949562626");
+		customer.setPhoneNumber("+49 1517123456");
 		CustomerAccount customerAccount = new CustomerAccount();
 		customerAccount.setUserName("virajab-patel");
 		customerAccount.setUserRole(null);
@@ -401,7 +401,7 @@ public class DBBasedLoginServiceTest {
 		customer.setGender("Male");
 		customer.setIdentityProofBytes(new byte[] {23,35,5,53,34,12,2});
 		customer.setPhotoBytes(new byte[] {23,12,45,23,7,3,7,23,78,23,5});
-		customer.setPhoneNumber("56262949562626");
+		customer.setPhoneNumber("+49 1517123456");
 		CustomerAccount customerAccount = new CustomerAccount();
 		customerAccount.setUserName("virajab-patel");
 		customerAccount.setUserRole("Customer");
@@ -428,7 +428,7 @@ public class DBBasedLoginServiceTest {
 		customer.setGender("Male");
 		customer.setIdentityProofBytes(new byte[] {23,35,5,53,34,12,2});
 		customer.setPhotoBytes(new byte[] {23,12,45,23,7,3,7,23,78,23,5});
-		customer.setPhoneNumber("56262949562626");
+		customer.setPhoneNumber("+49 1517123456");
 		CustomerAccount customerAccount = new CustomerAccount();
 		customerAccount.setUserName("virajab-patel");
 		customerAccount.setUserRole("Customer");
@@ -455,7 +455,7 @@ public class DBBasedLoginServiceTest {
 		customer.setGender("Male");
 		customer.setIdentityProofBytes(new byte[] {23,35,5,53,34,12,2});
 		customer.setPhotoBytes(new byte[] {23,12,45,23,7,3,7,23,78,23,5});
-		customer.setPhoneNumber("56262949562626");
+		customer.setPhoneNumber("+49 1517123456");
 		CustomerAccount customerAccount = new CustomerAccount();
 		customerAccount.setUserName("virajab-patel");
 		customerAccount.setUserRole("Customer");
@@ -482,7 +482,7 @@ public class DBBasedLoginServiceTest {
 		customer.setGender("Male");
 		customer.setIdentityProofBytes(new byte[] {23,35,5,53,34,12,2});
 		customer.setPhotoBytes(new byte[] {23,12,45,23,7,3,7,23,78,23,5});
-		customer.setPhoneNumber("56262949562626");
+		customer.setPhoneNumber("+49 1517123456");
 		CustomerAccount customerAccount = new CustomerAccount();
 		customerAccount.setUserName("virajab-patel");
 		customerAccount.setUserRole("Customer");
@@ -509,7 +509,7 @@ public class DBBasedLoginServiceTest {
 		customer.setGender("Male");
 		customer.setIdentityProofBytes(new byte[] {23,35,5,53,34,12,2});
 		customer.setPhotoBytes(new byte[] {23,12,45,23,7,3,7,23,78,23,5});
-		customer.setPhoneNumber("56262949562626");
+		customer.setPhoneNumber("+49 1517123456");
 		CustomerAccount customerAccount = new CustomerAccount();
 		customerAccount.setUserName("virajab-patel");
 		customerAccount.setUserRole("Customer");
@@ -536,7 +536,7 @@ public class DBBasedLoginServiceTest {
 		customer.setGender("Male");
 		customer.setIdentityProofBytes(new byte[] {23,35,5,53,34,12,2});
 		customer.setPhotoBytes(new byte[] {23,12,45,23,7,3,7,23,78,23,5});
-		customer.setPhoneNumber("56262949562626");
+		customer.setPhoneNumber("+49 1517123456");
 		CustomerAccount customerAccount = new CustomerAccount();
 		customerAccount.setUserName("virajab-patel");
 		customerAccount.setUserRole("Customer");
@@ -729,7 +729,7 @@ public class DBBasedLoginServiceTest {
 	public void testZNDeactivateAccount() throws BikeHireSystemException {
 		DBBasedLoginService dbBasedLoginService = new DBBasedLoginService();
 		Customer customer = new Customer();
-		customer.setUserId(userId);
+		customer.setEmailID("somethingggg123@mailinator.com");
 		dbBasedLoginService.deactivateAccount(customer);
 	}
 	

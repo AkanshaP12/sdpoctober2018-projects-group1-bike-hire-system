@@ -102,6 +102,7 @@ public class AssetManagementServiceImpl implements AssetManagementService {
 		}
 		catch(Throwable throwable)
 		{
+			daoFactory.rollbackTransaction();
 			LOG.error("addNewBikeType : " + throwable.getMessage(), throwable);
 			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
 		}
@@ -134,6 +135,7 @@ public class AssetManagementServiceImpl implements AssetManagementService {
 		}
 		catch(Throwable throwable)
 		{
+			daoFactory.rollbackTransaction();
 			LOG.error("addNewBikeDetails : " + throwable.getMessage(), throwable);
 			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
 		}
@@ -159,6 +161,7 @@ public class AssetManagementServiceImpl implements AssetManagementService {
 		}
 		catch(Throwable throwable)
 		{
+			daoFactory.rollbackTransaction();
 			LOG.error("addNewWarehouse : " + throwable.getMessage(), throwable);
 			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
 		}
@@ -183,6 +186,7 @@ public class AssetManagementServiceImpl implements AssetManagementService {
 		}
 		catch(Throwable throwable)
 		{
+			daoFactory.rollbackTransaction();
 			LOG.error("updateWarehouse : " + throwable.getMessage(), throwable);
 			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
 		}
@@ -207,6 +211,7 @@ public class AssetManagementServiceImpl implements AssetManagementService {
 		}
 		catch(Throwable throwable)
 		{
+			daoFactory.rollbackTransaction();
 			LOG.error("updateBikeDetails : " + throwable.getMessage(), throwable);
 			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
 		}
@@ -231,6 +236,7 @@ public class AssetManagementServiceImpl implements AssetManagementService {
 		}
 		catch(Throwable throwable)
 		{
+			daoFactory.rollbackTransaction();
 			LOG.error("updateBikeRent : " + throwable.getMessage(), throwable);
 			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
 		}
@@ -257,6 +263,7 @@ public class AssetManagementServiceImpl implements AssetManagementService {
 		}
 		catch(Throwable throwable)
 		{
+			daoFactory.rollbackTransaction();
 			LOG.error("updateBikeStock : " + throwable.getMessage(), throwable);
 			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
 		}
@@ -281,6 +288,7 @@ public class AssetManagementServiceImpl implements AssetManagementService {
 		}
 		catch(Throwable throwable)
 		{
+			daoFactory.rollbackTransaction();
 			LOG.error("updateBikeStatus : " + throwable.getMessage(), throwable);
 			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
 		}

@@ -26,7 +26,7 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 	
 	public InvoiceDTOImpl getInvoiceByInvoiceId(String pInvoiceId) {
 		LOG.debug("getInvoiceByInvoiceId : Start");
-		Query lQuery = em.createQuery("from InvoiceDAOImpl where InvoiceID = :typeId ");
+		Query lQuery = em.createQuery("from InvoiceDAOImpl where invoiceID = :typeId ");
 		lQuery.setParameter("typeId", pInvoiceId);
 		List<InvoiceDTOImpl> results = lQuery.getResultList();
 		if(results == null || results.size() == 0)
@@ -40,7 +40,7 @@ public class InvoiceDAOImpl implements InvoiceDAO {
 
 	public InvoiceDTO getInvoiceByOrderId(int pOrderId) {
 		LOG.debug("getInvoiceByOrderId : Start");
-		Query lQuery = em.createQuery("from InvoiceDAOImpl where OrderID = :typeId ");
+		Query lQuery = em.createQuery("from InvoiceDAOImpl where invoiceID = :typeId ");
 		lQuery.setParameter("typeId", pOrderId);
 		List<InvoiceDTOImpl> results = lQuery.getResultList();
 		if(results == null || results.size() == 0)

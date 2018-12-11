@@ -154,6 +154,7 @@ public class OrderServiceImpl implements OrderService {
 		}
 		catch(Throwable throwable)
 		{
+			daoFactory.rollbackTransaction();
 			LOG.error("placeOrder : " + throwable.getMessage(), throwable);
 			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
 		}
@@ -208,6 +209,7 @@ public class OrderServiceImpl implements OrderService {
 		}
 		catch(Throwable throwable)
 		{
+			daoFactory.rollbackTransaction();
 			LOG.error("cancelOrder : " + throwable.getMessage(), throwable);
 			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
 		}
@@ -336,6 +338,7 @@ public class OrderServiceImpl implements OrderService {
 		}
 		catch(Throwable throwable)
 		{
+			daoFactory.rollbackTransaction();
 			LOG.error("getCurrentOrdersForUser : " + throwable.getMessage(), throwable);
 			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
 		}

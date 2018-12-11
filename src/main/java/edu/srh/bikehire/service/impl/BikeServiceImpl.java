@@ -107,6 +107,7 @@ public class BikeServiceImpl implements BikeService {
 		}
 		catch(Throwable throwable)
 		{
+			daoFactory.rollbackTransaction();
 			LOG.error("updateBikeStatus : " + throwable.getMessage(), throwable);
 			throw ExceptionUtil.wrapThrowableToBHSException(throwable);
 		}

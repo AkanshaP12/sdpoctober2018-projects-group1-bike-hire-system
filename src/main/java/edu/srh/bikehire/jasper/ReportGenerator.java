@@ -43,7 +43,6 @@ public class ReportGenerator {
 			fromCalendar.set(Calendar.MILLISECOND, 0);
 			Calendar toCalendar = (Calendar) fromCalendar.clone();
 			toCalendar.add(Calendar.DAY_OF_MONTH, 1);
-			System.out.println(fromCalendar + "  " + toCalendar);
 			String path = ReportingConstants.FILE_DIRECTORY_BIKERENTEDREPORTS_DAILY;
 			createRentedBikeReport(fromCalendar, toCalendar, path);
 			LOG.info("createRentedBikeReportToday : End");

@@ -75,21 +75,29 @@ public class RegistrationUI {
 		registrationCredential.setNewPassword(newPassword);
 		registrationCredential.setConfirmPassword(confirmPasword);
 		
+		System.out.println("Please wait...");
+		
 		DBBasedLoginService loginService = new DBBasedLoginService();
 		ResetPasswordValidator resetPasswordValidator = loginService.registerUserAccount(customer, registrationCredential);
 		
 		System.out.println("User Successfully Registered! We have sent an email to verify your account.");
 		
 		System.out.println("Please enter security code to verify your account.");
-		boolean isVerified = false;
+		boolean isVerified = true;
+		int attemptCount = 0;
 		do
 		{
+			if(attemptCount >= 3)
+			{
+				System.out.println("Maximum unsuccessful verify attempts reached.");
+				return -1;
+			}
 			String securityCode = in.nextLine();
 			try
-			{				
+			{	
+				attemptCount++;
 				resetPasswordValidator.validateToken(securityCode);
 				System.out.println("User account verified successfully.");
-				isVerified = true;
 				loginService.markUserAccountAsActive(resetPasswordValidator.getUserId());
 				return 0;
 			}

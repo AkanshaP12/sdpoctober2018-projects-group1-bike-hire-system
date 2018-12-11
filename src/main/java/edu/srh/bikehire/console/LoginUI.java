@@ -27,6 +27,7 @@ public class LoginUI {
 			credentials.setUserName(username);
 			credentials.setPassword(password);
 			DBBasedLoginService loginService = new DBBasedLoginService();
+			System.out.println("Please wait...");
 			Entity loggedInEntity = loginService.authenticate(credentials);
 			
 			if(loggedInEntity == null)

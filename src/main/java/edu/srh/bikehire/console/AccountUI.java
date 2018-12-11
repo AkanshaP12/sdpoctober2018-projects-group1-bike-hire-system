@@ -72,8 +72,6 @@ public class AccountUI {
 		{
 			loginService.deactivateAccount(loggedInUser);
 			System.out.println("Your account has been deactivated!");
-			HomePage homePage = new HomePage();
-			homePage.display_menu();
 			return true;
 		}
 		return false;

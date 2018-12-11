@@ -115,11 +115,6 @@ public class UserDetailsValidator {
 			throw new BikeHireSystemException(10080);
 		}
 		
-		if(Util.isEmptyOrNullString(mEntity.getEntityAccount().getAccountStatus()))
-		{
-			//ERRORMESSAGE: Invalid Account status.
-			throw new BikeHireSystemException(10081);
-		}
 	}
 	
 	public void validateUserInformationForDeactiviation() throws BikeHireSystemException

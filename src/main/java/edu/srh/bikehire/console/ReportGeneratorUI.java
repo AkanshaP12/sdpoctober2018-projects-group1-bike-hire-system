@@ -40,7 +40,7 @@ public class ReportGeneratorUI {
 	
 	private void showRentedBikeReport(Scanner sc) throws BikeHireSystemException
 	{
-		System.out.println("Do you want report for? 1) Daily \n2) Weekly \n3) Monthly");
+		System.out.println("Do you want report for? \n1) Daily \n2) Weekly \n3) Monthly");
 		System.out.println("Select option: ");
 		int input = sc.nextInt();
 		sc.nextLine();
@@ -71,7 +71,7 @@ public class ReportGeneratorUI {
 	
 	private void showInvoiceReport(Scanner sc) throws BikeHireSystemException
 	{
-		System.out.println("Do you want report for? 1) Daily \n2) Weekly \n3) Monthly");
+		System.out.println("Do you want report for? \n1) Daily \n2) Weekly \n3) Monthly");
 		System.out.println("Select option: ");
 		int input = sc.nextInt();
 		sc.nextLine();

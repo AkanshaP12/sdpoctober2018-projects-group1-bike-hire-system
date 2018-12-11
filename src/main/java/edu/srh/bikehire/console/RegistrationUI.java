@@ -17,7 +17,7 @@ import edu.srh.bikehire.service.impl.DBBasedLoginService;
 
 public class RegistrationUI {
 	
-	public void register(Scanner in) throws BikeHireSystemException
+	public int register(Scanner in) throws BikeHireSystemException
 	{
 		System.out.println("Registration");
 		
@@ -91,9 +91,7 @@ public class RegistrationUI {
 				System.out.println("User account verified successfully.");
 				isVerified = true;
 				loginService.markUserAccountAsActive(resetPasswordValidator.getUserId());
-				HomePage homePage = new HomePage();
-				homePage.display_menu();
-				return;
+				return 0;
 			}
 			catch(BikeHireSystemException exception)
 			{
@@ -102,6 +100,7 @@ public class RegistrationUI {
 			
 		}
 		while(isVerified);
+		return -1;
 	}
 	private Calendar getCalendarFromInput(String input)
 	{

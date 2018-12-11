@@ -44,7 +44,11 @@ public class ReportGenerator {
 			Calendar toCalendar = (Calendar) fromCalendar.clone();
 			toCalendar.add(Calendar.DAY_OF_MONTH, 1);
 			String path = ReportingConstants.FILE_DIRECTORY_BIKERENTEDREPORTS_DAILY;
-			createRentedBikeReport(fromCalendar, toCalendar, path);
+			int rowCount = createRentedBikeReport(fromCalendar, toCalendar, path);
+			if(rowCount <= 0)
+			{
+				return null;
+			}
 			LOG.info("createRentedBikeReportToday : End");
 			return path;
 		}
@@ -67,7 +71,11 @@ public class ReportGenerator {
 			Calendar toCalendar = (Calendar) fromCalendar.clone();
 			toCalendar.add(Calendar.DAY_OF_MONTH, 30);
 			String path = ReportingConstants.FILE_DIRECTORY_BIKERENTEDREPORTS_MONTHLY;
-			createRentedBikeReport(fromCalendar, toCalendar, path);
+			int rowCount = createRentedBikeReport(fromCalendar, toCalendar, path);
+			if(rowCount <= 0)
+			{
+				return null;
+			}
 			LOG.info("createRentedBikeReportMonthly : End");
 			return path;
 		}
@@ -89,7 +97,11 @@ public class ReportGenerator {
 			Calendar toCalendar = (Calendar) fromCalendar.clone();
 			toCalendar.add(Calendar.DAY_OF_MONTH, 7);
 			String path = ReportingConstants.FILE_DIRECTORY_BIKERENTEDREPORTS_WEEKLY;
-			createRentedBikeReport(fromCalendar, toCalendar, path);
+			int rowCount = createRentedBikeReport(fromCalendar, toCalendar, path);
+			if(rowCount <= 0)
+			{
+				return null;
+			}
 			LOG.info("createRentedBikeReportWeekly : End");
 			return path;
 		}
@@ -111,7 +123,11 @@ public class ReportGenerator {
 			Calendar toCalendar = (Calendar) fromCalendar.clone();
 			toCalendar.add(Calendar.DAY_OF_MONTH, 1);
 			String path = ReportingConstants.FILE_DIRECTORY_INVOICEREPORTS_DAILY;
-			createInvoiceReport(fromCalendar, toCalendar, path);
+			int rowCount = createInvoiceReport(fromCalendar, toCalendar, path);
+			if(rowCount <= 0)
+			{
+				return null;
+			}
 			LOG.info("createInvoiceReportToday : End");
 			return path;
 		}
@@ -133,7 +149,11 @@ public class ReportGenerator {
 			Calendar toCalendar = (Calendar) fromCalendar.clone();
 			toCalendar.add(Calendar.DAY_OF_MONTH, 30);
 			String path = ReportingConstants.FILE_DIRECTORY_INVOICEREPORTS_MONTHLY;
-			createInvoiceReport(fromCalendar, toCalendar, path);
+			int rowCount = createInvoiceReport(fromCalendar, toCalendar, path);
+			if(rowCount <= 0)
+			{
+				return null;
+			}
 			LOG.info("createInvoiceReportMonthly : End");
 			return path;
 		}
@@ -155,7 +175,11 @@ public class ReportGenerator {
 			Calendar toCalendar = (Calendar) fromCalendar.clone();
 			toCalendar.add(Calendar.DAY_OF_MONTH, 7);
 			String path = ReportingConstants.FILE_DIRECTORY_INVOICEREPORTS_WEEKLY;
-			createInvoiceReport(fromCalendar, toCalendar, path);
+			int rowCount = createInvoiceReport(fromCalendar, toCalendar, path);
+			if(rowCount <= 0)
+			{
+				return null;
+			}
 			LOG.info("createInvoiceReportWeekly : End");
 			return path;
 		}
@@ -165,12 +189,13 @@ public class ReportGenerator {
 		}
 	}
 
-	private void createRentedBikeReport(Calendar fromTime, Calendar toTime, String path)
+	private int createRentedBikeReport(Calendar fromTime, Calendar toTime, String path)
 			throws SQLException, JRException, ColumnBuilderException, ClassNotFoundException, FileNotFoundException {
 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
+		int rowCount = 0;
 		try {
 			connection = DBConnectionFactory.getNewConnection();
 			String query = "select * from RENTEDBIKEINFO where modifiedtime > ? AND modifiedtime < ?";
@@ -180,6 +205,11 @@ public class ReportGenerator {
 
 			resultSet = preparedStatement.executeQuery();
 
+			if (resultSet.last()) {
+				rowCount = resultSet.getRow();
+				resultSet.beforeFirst(); 
+			}
+			
 			FastReportBuilder reportBuilder = new FastReportBuilder();
 			DynamicReport djReport = reportBuilder.addColumn("ORDER ID", "ORDERID", String.class.getName(), 50)
 					.addColumn("BIKE ID", "BIKEID", String.class.getName(), 50)
@@ -194,7 +224,7 @@ public class ReportGenerator {
 			JRResultSetDataSource resultsetdatasource = new JRResultSetDataSource(resultSet);
 			JasperPrint jp = DynamicJasperHelper.generateJasperPrint(djReport, new ClassicLayoutManager(),
 					resultsetdatasource);
-			JasperViewer.viewReport(jp);
+			//JasperViewer.viewReport(jp);
 
 			// excel
 			generateExcelReport(jp, path);
@@ -215,6 +245,7 @@ public class ReportGenerator {
 				resultSet.close();
 			}
 		}
+		return rowCount;
 	}
 
 	/**
@@ -236,11 +267,12 @@ public class ReportGenerator {
 		xlsExporter.exportReport();
 	}
 
-	private void createInvoiceReport(Calendar fromTime, Calendar toTime, String path)
+	private int createInvoiceReport(Calendar fromTime, Calendar toTime, String path)
 			throws SQLException, ColumnBuilderException, ClassNotFoundException, JRException, FileNotFoundException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
+		int rowCount = 0;
 		try {
 			connection = DBConnectionFactory.getNewConnection();
 			String query = "select * from INVOICEINFO where modifiedtime > ? AND modifiedtime < ?";
@@ -250,6 +282,11 @@ public class ReportGenerator {
 
 			resultSet = preparedStatement.executeQuery();
 
+			if (resultSet.last()) {
+				rowCount = resultSet.getRow();
+				resultSet.beforeFirst(); 
+			}
+			
 			FastReportBuilder reportBuilder = new FastReportBuilder();
 			DynamicReport djReport = reportBuilder.addColumn("INVOICE ID", "INVOICEID", String.class.getName(), 50)
 					.addColumn("BIKE TYPE", "BIKETYPE", String.class.getName(), 50)
@@ -262,8 +299,7 @@ public class ReportGenerator {
 			JRResultSetDataSource resultsetdatasource = new JRResultSetDataSource(resultSet);
 			JasperPrint jp = DynamicJasperHelper.generateJasperPrint(djReport, new ClassicLayoutManager(),
 					resultsetdatasource);
-			JasperViewer.viewReport(jp);
-
+			// JasperViewer.viewReport(jp);
 			// excel
 			generateExcelReport(jp, path);
 
@@ -283,6 +319,7 @@ public class ReportGenerator {
 				resultSet.close();
 			}
 		}
+		return rowCount;
 	}
 
 }

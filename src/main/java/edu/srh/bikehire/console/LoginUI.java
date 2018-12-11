@@ -49,7 +49,15 @@ public class LoginUI {
 		username=in.nextLine();
 		String enterPwdMsg = "Enter password: ";
 		Console cons = System.console();
-		password=getPasswordMasked(cons, enterPwdMsg);
+		if(cons == null)
+		{
+			System.out.println(enterPwdMsg);
+			password=in.nextLine();
+		}
+		else
+		{			
+			password=getPasswordMasked(cons, enterPwdMsg);
+		}
 	}
 	
    public static String getPasswordMasked(Console cons, String msg)

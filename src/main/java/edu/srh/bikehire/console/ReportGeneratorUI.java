@@ -53,14 +53,29 @@ public class ReportGeneratorUI {
 		{
 			case 1: 
 				filePath = generator.createRentedBikeReportToday(startDate);
+				if(filePath == null || filePath.isEmpty())
+				{
+					System.out.println("Report not generated. Please try again.");
+					break;
+				}
 				System.out.println("Report successfully generated at : " + filePath);
 				break;
 			case 2:
 				filePath = generator.createRentedBikeReportWeekly(startDate);
+				if(filePath == null || filePath.isEmpty())
+				{
+					System.out.println("Report not generated. Please try again.");
+					break;
+				}
 				System.out.println("Report successfully generated at : " + filePath);
 				break;
 			case 3:
 				filePath = generator.createRentedBikeReportMonthly(startDate);
+				if(filePath == null || filePath.isEmpty())
+				{
+					System.out.println("Report not generated. Please try again.");
+					break;
+				}
 				System.out.println("Report successfully generated at : " + filePath);
 				break;
 			default:
@@ -84,14 +99,29 @@ public class ReportGeneratorUI {
 		{
 			case 1:
 				filePath = generator.createInvoiceReportToday(startDate);
+				if(filePath == null || filePath.isEmpty())
+				{
+					System.out.println("Report not generated. Please try again.");
+					break;
+				}
 				System.out.println("Report successfully generated at : " + filePath);
 				break;
 			case 2:
 				filePath = generator.createInvoiceReportWeekly(startDate);
+				if(filePath == null || filePath.isEmpty())
+				{
+					System.out.println("Report not generated. Please try again.");
+					break;
+				}
 				System.out.println("Report successfully generated at : " + filePath);
 				break;
 			case 3:
 				filePath = generator.createInvoiceReportMonthly(startDate);
+				if(filePath == null || filePath.isEmpty())
+				{
+					System.out.println("Report not generated. Please select ");
+					break;
+				}
 				System.out.println("Report successfully generated at : " + filePath);
 				break;
 			default:

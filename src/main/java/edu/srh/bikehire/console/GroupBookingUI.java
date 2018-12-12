@@ -103,8 +103,13 @@ public class GroupBookingUI {
 		Calendar bookingDate = Calendar.getInstance();
 		Calendar actualDropOffDate = dropOffDate;
 		OrderServiceImpl orderService = new OrderServiceImpl();
+		int bikeBooked = 0;
 		for(int bikeId : allSelectedBikeIds)
 		{
+			if(bikeBooked >= noOfBikes)
+			{
+				break;
+			}
 			OrderInfo lOrderInfo = new OrderInfo();
 			lOrderInfo.setBikeId(bikeId);
 			lOrderInfo.setUserId(userId);
@@ -115,6 +120,7 @@ public class GroupBookingUI {
 			lOrderInfo.setPickupTimestamp(pickupDate);
 			
 			int orderId = orderService.placeOrder(lOrderInfo);
+			bikeBooked++;
 		}
 		
 		System.out.println("Booking confirmed! Please check email for more details.");

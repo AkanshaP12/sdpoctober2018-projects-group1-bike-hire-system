@@ -32,3 +32,4 @@ Bike Hire System where shop owner can manage assets and track user orders. It ha
     * Individual
     * Group Order
   * Generate Invoice
+  * Generate Report
